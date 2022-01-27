@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.7">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..1] OF BOOL</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>2</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{A95E4D60-597C-2A3F-8E4A-A0564CC93A32}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..4] OF INT</Name>
+			<BitSize>80</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>5</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..7] OF BOOL</Name>
+			<BitSize>64</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>8</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E5E}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..1] OF INT</Name>
+			<BitSize>32</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>2</Elements>
+			</ArrayInfo>
+		</DataType>
+	</DataTypes>
+	<Project ProjectGUID="{EBEDE9C2-27D4-4251-A51C-97F54F0F8AAD}" Target64Bit="true" Utf8Encoding="true" ShowHideConfigurations="#x106">
+		<System>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="1000000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{68DF6248-9C35-4E7D-958C-7CF15591487B}" Name="Simulator" PrjFilePath="Simulator\Simulator.plcproj" TmcFilePath="Simulator\Simulator.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Simulator\Simulator.tmc">
+					<Name>Simulator Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>IO.PhysicalIO.R1_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R2_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R3_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R4_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R5_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.AA1_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.AA2_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.MVB_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.DCM_LS</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.RV_AI</Name>
+							<Type GUID="{A95E4D60-597C-2A3F-8E4A-A0564CC93A32}">ARRAY [0..4] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.MVA_AI</Name>
+							<Type GUID="{A95E4D60-597C-2A3F-8E4A-A0564CC93A32}">ARRAY [0..4] OF INT</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>IO.PhysicalIO.R1_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R1_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R2_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R2_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R3_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R3_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R4_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R4_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R5_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.R5_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.AA1_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.AA1_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.AA2_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.AA2_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.MVB_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.MVB_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.DCM_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.DCM_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.RV_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.RV_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.RV_AO</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E5E}">ARRAY [0..1] OF INT</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.MVA_Valves</Name>
+							<Type GUID="{B06D26C8-71DC-62D0-9A93-9E8C7ADB9810}">ARRAY [0..7] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.MVA_Pumps</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E68}">ARRAY [0..1] OF BOOL</Type>
+						</Var>
+						<Var>
+							<Name>IO.PhysicalIO.MVA_AO</Name>
+							<Type GUID="{11F20A4A-90D4-35C7-DB3B-0E8659E05E5E}">ARRAY [0..1] OF INT</Type>
+						</Var>
+					</Vars>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+	</Project>
+</TcSmProject>

@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="Anathem.Ui.Views.ProcessFlowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Anathem.Ui.Views"
+             xmlns:uc_1="clr-namespace:E3.ReactorManager.Interfaces.UI.UserControls;assembly=E3.ReactorManager.Interfaces"
+             xmlns:uc_2="clr-namespace:Anathem.Ui.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" d:DesignWidth="1920"
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:viewmodels="clr-namespace:Anathem.Ui.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:ProcessFlowViewModel}"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <Style TargetType="uc_2:BoolParameter">
+            <Setter Property="BorderBrush" Value="#1d2532" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="#1d2532">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="#555c6e"/>
+        <uc_1:NavigateButtonType_1 VerticalAlignment="Top" Grid.Column="0" ButtonCommand="{Binding NavigateCommand}" ButtonCommandParameter="Dashboard"/>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.ColumnSpan="7" HorizontalAlignment="Center"  Name="MyImg" Source="/Anathem.Ui;component/Images/PID_New.bmp" Margin="-35,-3,264.333,3" Width="1606" />
+            <uc_2:BoolParameter ParamLabel="V6" Margin="1000,2000,500,1000"/>
+
+            <Grid Grid.Column="7">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.8*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.6*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style x:Key="LabelStyle" TargetType="Label">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="#272e3e"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Padding" Value="20"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    </Style>
+                </Grid.Resources>
+                <Label Grid.Column="0" Grid.Row="0" Content="MVA Mass&#xa;Temperature" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Temperature_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="0" Content="°C" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="MVA Stirrer&#xa;Feedback" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                    <!--<TextBox Name="PresBox" Text="{Binding Pressure_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                <Label Grid.Column="2" Grid.Row="1" Content="RPM" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="2" Content="MVA Pressure" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                 <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Pressure_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="2" Content="mmHG" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="3" Content="MVA Level" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Level_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="3" Content="Lts" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="4" Content="RV-50L Mass&#xa;Temperature" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Temperature_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="4" Content="°C" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="5" Content="RV-50L Stirrer&#xa;Feedback" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Pressure_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="5" Content="RPM" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="6" Content="RV-50L&#xa;Pressure" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding Pressure_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="6" Content="mmHG" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="7" Content="RV-50L Level" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="7" Content="Lts" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="8" Content="RV-25L Mass&#xa;Temperature" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="8" Content="°C" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="9" Content="RV-25L Stirrer&#xa;Feedback" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="9" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="9" Content="RPM" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="10" Content="RV-25L&#xa;Pressure" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="10" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="10" Content="mmHG" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Column="0" Grid.Row="11" Content="RV-25L&#xa;Level" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="11" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="11" Content="Lts" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+            </Grid>
+            <uc_2:BoolParameter Tag="Valve_1" ParamLabel="V1" Margin="60,650,1768,380"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_2" ParamLabel="V2" Margin="75,600,1756,430"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_3" ParamLabel="V3" Margin="190,920,1645,118"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="Pump_1" ParamLabel="P1" Margin="156,982,1647,48"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="StirrerCommand_1" Margin="810,586,1027,430"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="StirrerCommand_2" Margin="1242,474,587,552"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_5" ParamLabel="V5" Margin="174,30,1660,1005"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="154,104,1680,936"/>
+            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="154,104,1680,936"/>
+
+
+            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="154,104,1680,936"/>
+
+        </Grid>
+       
+        <!--<uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="192,104,1642,936" >-->
+        
+        <!--<TabControl Grid.Column="1" Background="#1a202c" BorderThickness="0">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="BackgroundPanel" Margin="2" Cursor="Hand">
+                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="5"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="BackgroundPanel" Property="BorderBrush" Value="#4CDCDC"/>
+                                        <Setter TargetName="BackgroundPanel" Property="BorderThickness" Value="1"/>
+                                        <Setter TargetName="BackgroundPanel" Property="Background" Value="#2F515D" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="BackgroundPanel" Property="BorderBrush" Value="#1e2432"/>
+                                        <Setter TargetName="BackgroundPanel" Property="BorderThickness" Value="1"/>
+                                        <Setter TargetName="BackgroundPanel" Property="Background" Value="#1a202c" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Part-1">
+                <ContentControl prism:RegionManager.RegionName="First"/>
+            </TabItem>
+            <TabItem Header="Part-2">
+                <ContentControl prism:RegionManager.RegionName="Second"/>
+            </TabItem>
+        </TabControl>-->
+
+
+    </Grid>
+</UserControl>

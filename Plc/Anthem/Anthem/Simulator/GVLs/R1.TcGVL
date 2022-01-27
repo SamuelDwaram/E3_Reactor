@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <GVL Name="R1" Id="{0082af93-79e7-4ec9-9629-40ee8d1d2137}">
+    <Declaration><![CDATA[VAR_GLOBAL
+	//***** TAGS FOR HC ******//
+	HeatCoolStatus : BOOL;
+	HeatCoolSetPoint : DINT := 0;
+	HeatCoolTemperatureControlType : BOOL; (* 0 - Jacket , 1 - Process *)
+	HeatCoolStatusFeedback : BOOL;
+	ReactorMassTemperature : REAL;
+	JacketOutletTemperature : REAL;
+	
+// ***** TAGS FOR STIRRER *****//
+	StirrerStatus : BOOL;
+	StirrerStatusFeedback : BOOL;
+	StirrerSetPoint : DINT;
+	StirrerRPM : DINT;  (* Rotations Per Minute *)
+	
+// ***** TAGS FOR DOSING PUMP ******//
+	DosingPumpStatus : BOOL;
+	DosingPumpFlowSetPoint : REAL;
+	DosingPumpFPM : REAL; (* Flow Per Minute *)
+	DosingPumpStatusFeedback : BOOL;
+	
+
+//***** COMPULSORY UI TAGS *****//
+	UsedNow : BOOL :=FALSE;
+	EmergencyStatus :BOOL:=0;
+	BatchText_1:STRING;
+	BatchText_2:STRING;
+	BatchText_3:STRING;
+	BatchText_4:STRING;
+	BatchText_5:STRING;
+
+
+//****** TAGS FOR RECIPE ******//
+	StepCount:INT:=0;
+	TotalEnabledValue:INT:=0;
+	TotalEndedValue:INT:=0;
+	StepCompleted:BOOL:=0;
+	NumberOfRecipeSteps : DINT := 0;
+	RecipeStep: ARRAY[0..100] OF EachRecipeStep;
+	RecipeStatus:BOOL:=0;
+	ClearRecipe:BOOL:=0;
+	AbortRecipe : BOOL := 0;
+	RecipeEnded:BOOL;
+	StartWaitTimer: BOOL; 
+	DosingControlModeEmergency : BOOL;
+	WaitTick:INT:=0;
+	WaitSecondTick:INT:=0;
+	WaitMinuteTick:INT:=0;
+	ClearRecipeTrig:BOOL;
+END_VAR
+
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

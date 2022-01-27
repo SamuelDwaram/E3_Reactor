@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="Anathem.Ui.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <Style x:Key="NavigateToOtherScreenButtonStyle" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#272e3e"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Gray"/>
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonType">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="Command" Value="{Binding NavigateCommand}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <DataTemplate x:Key="fieldDeviceTemplate">
+
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Background="#1a202c">
+        <Grid.ColumnDefinitions>
+            <!--<ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="9*"/>-->
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.7*"/>
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        
+            <Button  Content="Recipes View" Grid.Row="1" Grid.Column="1" CommandParameter="Recipes" Style="{StaticResource ButtonType}" VerticalAlignment="Center"/>
+        <Button  Content="Sequence Recipes View" Grid.Row="3" Grid.Column="1" CommandParameter="SeqRecipes" VerticalAlignment="Center" Style="{StaticResource ButtonType}"/>
+
+        <Button Grid.Row="1" Grid.Column="2" Content="Parameters Host" CommandParameter="ReactorControl" Style="{StaticResource ButtonType}"/>
+        <Button Grid.Row="1" Grid.Column="3" Content="Process Diagram " CommandParameter="ProcessFlow" Style="{StaticResource ButtonType}"/>
+        <Button Grid.Row="1" Grid.Column="4" Content="Configuration Page"  CommandParameter="Configuration" Style="{StaticResource ButtonType}"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="Reports" CommandParameter="Reports" Style="{StaticResource ButtonType}"/>
+        <Button Grid.Row="2" Grid.Column="2" Content="Trends" CommandParameter="Trends" Style="{StaticResource ButtonType}"/>
+        <Button Grid.Row="2" Grid.Column="3"  Content="Alarms" CommandParameter="Alarms" Style="{StaticResource ButtonType}"/>
+        <Button Grid.Row="2" Grid.Column="4" Content="Audit Trail" CommandParameter="AuditTrail" Style="{StaticResource ButtonType}"/>
+
+        <DockPanel Grid.Column="0" Grid.RowSpan="4" Background="#272e3e" Margin="5">
+            <DockPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="DockPanel.Dock" Value="Top" />
+                    <Setter Property="Padding" Value="30,0,0,0" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="MinHeight" Value="80" />
+                    <Setter Property="FontSize" Value="25" />
+                    <Setter Property="Command" Value="{Binding NavigateCommand}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                    <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsDefaulted" Value="true">
+                                        <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DockPanel.Resources>
+            <!--<Button Content="Recipes View" CommandParameter="Recipes"/>
+            <Button Content="Parameters Host" CommandParameter="ReactorControl"/>
+            <Button Content="Process Diagram " CommandParameter="ProcessFlow"/>
+            <Button Content="Configuration Page"  CommandParameter="Configuration"/>
+            <Button Content="Reports" CommandParameter="Reports"/>
+            <Button Content="Trends" CommandParameter="Trends"/>
+            <Button Content="Alarms" CommandParameter="Alarms"/>
+            <Button Content="Audit Trail" CommandParameter="AuditTrail"/>
+            <Button Content="User Management" CommandParameter="UserManagement"/>-->
+        </DockPanel>
+
+    </Grid>
+</UserControl>

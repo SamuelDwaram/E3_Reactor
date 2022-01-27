@@ -1,0 +1,13 @@
+﻿<Window x:Class="E3.DialogServices.DialogTypes.DynamicDialogWindow"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Title}"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        x:Name="dynamicDialogWindow" Background="Transparent">
+    <Grid>
+        <ContentControl Content="{Binding DialogContentUI}"/>
+    </Grid>
+</Window>

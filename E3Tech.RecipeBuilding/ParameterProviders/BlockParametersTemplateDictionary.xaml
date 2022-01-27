@@ -1,0 +1,348 @@
+﻿    <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:local="clr-namespace:E3Tech.RecipeBuilding.Views"
+                        xmlns:converters="clr-namespace:E3Tech.RecipeBuilding.Converters"
+                        xmlns:userControls="clr-namespace:E3Tech.RecipeBuilding.UserControls">
+    <converters:RecipeStepExecutionStatusCheckerConverter x:Key="RecipeStepExecutionStatusChecker"/>
+        
+    <Grid DataContext="{Binding Parameters}" x:Key="StartBlockParametersTemplate">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>     
+        </Grid.Resources>
+        <!--<Label Content="HC Mode Of Operation" Grid.Column="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center"/>
+        <CheckBox x:Name="heatCoolModeSelectionCheckBox" Grid.Column="1" HorizontalAlignment="Left" Margin="3" IsChecked="{Binding HeatCoolModeSelection, Mode=TwoWay, FallbackValue=False, TargetNullValue=False}" VerticalAlignment="Center"/>
+        <Label Grid.Column="2" HorizontalAlignment="Left" FontWeight="Bold" Margin="3" Foreground="White" VerticalAlignment="Center">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HeatCoolModeSelection}" Value="True">
+                            <Setter Property="Content" Value="Process Mode"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding HeatCoolModeSelection}" Value="False">
+                            <Setter Property="Content" Value="Jacket Mode"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>-->
+    </Grid>
+        
+    <Grid DataContext="{Binding Parameters}" x:Key="StirrerBlockParametersTemplate">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Set Point" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <TextBox x:Name="stirrerSetPointExpressionTextBox" Width="120" VerticalAlignment="Center" Text="{Binding SetPoint, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
+            <Label Content="RPM" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <Label Content="Reactor" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Destination}" SelectedValuePath="Content">
+            <ComboBoxItem>RV_50L</ComboBoxItem>
+            <ComboBoxItem>RV_25L</ComboBoxItem>
+            <ComboBoxItem>MVA</ComboBoxItem>
+        </ComboBox>
+    </Grid>
+        
+    <Grid DataContext="{Binding Parameters}" x:Key="WaitBlockParametersTemplate">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--<Label Content="Wait:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center"/>-->
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+            
+            <!--<TextBox x:Name="waitDurationTextBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Text="{Binding Duration, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Minutes" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>-->
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Time Interval" Foreground="White" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Interval Type" Foreground="White" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+                <ComboBox Grid.Row="3" Grid.Column="1" SelectedValue="{Binding Path=IntervalType}" SelectedValuePath="Tag" Width="200">
+                    <ComboBoxItem Tag="S">Seconds</ComboBoxItem>
+                    <ComboBoxItem Tag="M">Minutes</ComboBoxItem>
+                    <ComboBoxItem Tag="H">Hours</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            
+        </StackPanel>
+    </Grid>
+
+    <Grid DataContext="{Binding Parameters}" x:Key="TransferBlockParametersTemplate">
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+            <Style x:Key="TimeBasedTransferStyle" TargetType="Control">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding TransferMode}" Value="True">
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TransferMode}" Value="False">
+                        <Setter Property="Visibility" Value="Hidden" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="Source" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content">
+            <ComboBoxItem>R1</ComboBoxItem>
+            <ComboBoxItem>R2</ComboBoxItem>
+            <ComboBoxItem>R3</ComboBoxItem>
+            <ComboBoxItem>R4</ComboBoxItem>
+            <ComboBoxItem>R5</ComboBoxItem>
+            <ComboBoxItem>AA1</ComboBoxItem>
+            <ComboBoxItem>AA2</ComboBoxItem>
+            <ComboBoxItem>MVA</ComboBoxItem>
+            <ComboBoxItem>MVB</ComboBoxItem>
+            <ComboBoxItem>DCM</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Destination" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" SelectedValue="{Binding Path=Destination}" SelectedValuePath="Content">
+            <ComboBoxItem>R2</ComboBoxItem>
+            <ComboBoxItem>R3</ComboBoxItem>
+            <ComboBoxItem>R4</ComboBoxItem>
+            <ComboBoxItem>R5</ComboBoxItem>
+            <ComboBoxItem>AA1</ComboBoxItem>
+            <ComboBoxItem>AA2</ComboBoxItem>
+            <ComboBoxItem>MVA</ComboBoxItem>
+            <ComboBoxItem>MVB</ComboBoxItem>
+            <ComboBoxItem>DCM</ComboBoxItem>
+            <ComboBoxItem>RV_50L</ComboBoxItem>
+            <ComboBoxItem>RV_25L</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Transfer Mode" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <CheckBox HorizontalAlignment="Left" Margin="3" IsChecked="{Binding TransferMode, Mode=TwoWay, FallbackValue=False, TargetNullValue=False}" VerticalAlignment="Center"/>
+            <Label HorizontalAlignment="Left" FontWeight="Bold" Margin="3" Foreground="White" VerticalAlignment="Center">
+                <Label.Style>
+                    <Style TargetType="Label">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding TransferMode}" Value="True">
+                                <Setter Property="Content" Value="Time Based"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TransferMode}" Value="False">
+                                <Setter Property="Content" Value="Level Based"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+        </StackPanel>
+        <Label Content="Time Interval" Foreground="White" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left" Style="{StaticResource TimeBasedTransferStyle}"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TimeBasedTransferStyle}" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
+        <Label Content="Interval Type" Foreground="White" Style="{StaticResource TimeBasedTransferStyle}" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" Style="{StaticResource TimeBasedTransferStyle}" SelectedValue="{Binding Path=IntervalType}" SelectedValuePath="Tag">
+            <ComboBoxItem Tag="S">Seconds</ComboBoxItem>
+            <ComboBoxItem Tag="M">Minutes</ComboBoxItem>
+            <ComboBoxItem Tag="H">Hours</ComboBoxItem>
+        </ComboBox>
+    </Grid>
+    <Grid DataContext="{Binding Parameters}" x:Key="N2PurgeBlockParametersTemplate">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+                <Style x:Key="TimeBasedTransferStyle" TargetType="Control">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TransferMode}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TransferMode}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Source" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content">
+                <ComboBoxItem>R1</ComboBoxItem>
+                <ComboBoxItem>R2</ComboBoxItem>
+                <ComboBoxItem>R3</ComboBoxItem>
+                <ComboBoxItem>R4</ComboBoxItem>
+                <ComboBoxItem>R5</ComboBoxItem>
+                <ComboBoxItem>AA1</ComboBoxItem>
+                <ComboBoxItem>AA2</ComboBoxItem>
+                <ComboBoxItem>MVA</ComboBoxItem>
+                <ComboBoxItem>MVB</ComboBoxItem>
+                <ComboBoxItem>DCM</ComboBoxItem>
+                <ComboBoxItem>RV_50L</ComboBoxItem>
+                <ComboBoxItem>RV_25L</ComboBoxItem>
+            </ComboBox>
+            <Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
+            <Label Content="Interval Type" Foreground="White" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" SelectedValue="{Binding Path=IntervalType}" SelectedValuePath="Tag">
+                <ComboBoxItem Tag="S">Seconds</ComboBoxItem>
+                <ComboBoxItem Tag="M">Minutes</ComboBoxItem>
+                <ComboBoxItem Tag="H">Hours</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+    </Grid>
+    <Grid DataContext="{Binding Parameters}" x:Key="DrainBlockParametersTemplate">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+                <Style x:Key="TimeBasedTransferStyle" TargetType="Control">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TransferMode}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TransferMode}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Source" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content">
+                <ComboBoxItem>R1</ComboBoxItem>
+                <ComboBoxItem>R2</ComboBoxItem>
+                <ComboBoxItem>R3</ComboBoxItem>
+                <ComboBoxItem>R4</ComboBoxItem>
+                <ComboBoxItem>R5</ComboBoxItem>
+                <ComboBoxItem>AA1</ComboBoxItem>
+                <ComboBoxItem>AA2</ComboBoxItem>
+                <ComboBoxItem>MVA</ComboBoxItem>
+                <ComboBoxItem>MVB</ComboBoxItem>
+                <ComboBoxItem>DCM</ComboBoxItem>
+                <ComboBoxItem>RV_50L</ComboBoxItem>
+                <ComboBoxItem>RV_25L</ComboBoxItem>
+            </ComboBox>
+            <Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
+            <Label Content="Interval Type" Foreground="White" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" SelectedValue="{Binding Path=IntervalType}" SelectedValuePath="Tag">
+                <ComboBoxItem Tag="S">Seconds</ComboBoxItem>
+                <ComboBoxItem Tag="M">Minutes</ComboBoxItem>
+                <ComboBoxItem Tag="H">Hours</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+    </Grid>
+    <Grid DataContext="{Binding Parameters}" x:Key="FlushBlockParametersTemplate">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+                <Style x:Key="TimeBasedTransferStyle" TargetType="Control">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TransferMode}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TransferMode}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Source" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content">
+                <ComboBoxItem>R1</ComboBoxItem>
+                <ComboBoxItem>R2</ComboBoxItem>
+                <ComboBoxItem>R3</ComboBoxItem>
+                <ComboBoxItem>R4</ComboBoxItem>
+                <ComboBoxItem>R5</ComboBoxItem>
+                <ComboBoxItem>AA1</ComboBoxItem>
+                <ComboBoxItem>AA2</ComboBoxItem>
+                <ComboBoxItem>MVA</ComboBoxItem>
+                <ComboBoxItem>MVB</ComboBoxItem>
+                <ComboBoxItem>DCM</ComboBoxItem>
+                <ComboBoxItem>RV_50L</ComboBoxItem>
+                <ComboBoxItem>RV_25L</ComboBoxItem>
+            </ComboBox>
+            <Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
+            <Label Content="Interval Type" Foreground="White" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" SelectedValue="{Binding Path=IntervalType}" SelectedValuePath="Tag">
+                <ComboBoxItem Tag="S">Seconds</ComboBoxItem>
+                <ComboBoxItem Tag="M">Minutes</ComboBoxItem>
+                <ComboBoxItem Tag="H">Hours</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+    </Grid>
+</ResourceDictionary>

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="EachRecipeStep" Id="{6fab2255-2a11-4c2c-86eb-74129d51ac1a}">
+    <Declaration><![CDATA[TYPE EachRecipeStep :
+STRUCT
+
+   ///Tags for start block
+     HeatCoolModeSelection:BOOL:=0; /// 0-is jacket mode/ 1-is process mode
+	 HeatCoolDeltaTemp:DINT:=0; 
+	 Started:BOOL:=0;
+	 StartedTime:STRING:='';
+	 Ended:BOOL:=0;
+	 EndedTime:STRING:='';
+
+	///Tags for HeatCoolBlock
+	HeatCoolEnabled:BOOL:=0;
+	HeatCoolStarted:BOOL:=0;
+	HeatCoolStartedTime:STRING:='';
+	HeatCoolEnded:BOOL:=0;
+	HeatCoolEndedTime:STRING:='';
+	HeatCoolSetPointExpression:DINT:=0;
+	HeatCoolDuration:DINT:=0;
+	HeatCoolOperatingMode:BOOL:=0;
+	
+	///Tags for StirrerBlock
+	StirrerEnabled:BOOL:=0;
+	StirrerStarted:BOOL:=0;
+	StirrerStartedTime:STRING:='';
+	StirrerEnded:BOOL:=0;
+	StirrerEndedTime:STRING:='';
+	StirrerSetPointExpression:DINT:=0;
+
+	///Tags for DoseBlock	
+	DosingEnabled:BOOL:=0;
+	DosingStarted:BOOL:=0;
+	DosingStartedTime:STRING:='';
+	DosingEnded:BOOL:=0;
+	DosingEndedTime:STRING:='';
+    DosingMaxAmount:REAL:=0;
+	DosingStopTemp:DINT:=0;
+	DosingResumeTemp:DINT:=0;
+	DosingRateSetpointExpression:REAL:=0;
+	DosingMinRate:DINT:=0;
+	DosingMaxRate:DINT:=0;
+	DosingSettlingTime:DINT:=0;
+	DosingMinPh:DINT:=0;
+	DosingMaxPh:DINT:=0;
+	DosingOperatingMode:BOOL:=0;
+	
+	////Tags for Wait tags
+	WaitEnabled:BOOL:=0;
+	WaitStarted:BOOL:=0;
+	WaitStartedTime:STRING:='';
+	WaitEndedTime:STRING:='';
+	WaitEnded:BOOL:=0;
+	WaitDuration:DINT:=0;
+	WaitRemainingSeconds : INT;
+	WaitRemainingMinutes : INT;
+	WaitRemainingTime : STRING;
+	
+	//Tags for Centrifuge Block
+	CentrifugeEnabled : BOOL;
+	CentrifugeStarted : BOOL;
+	CentrifugeEnded : BOOL;
+	CentrifugeSpeedSetPoint : DINT;
+	CentrifugeWaitTime : DINT;
+	
+	//Tags for Valves Block
+	ValvesEnabled : BOOL;
+	ValvesStarted : BOOL;
+	ValvesEnded : BOOL;
+	ValveAStatus : BOOL;
+	ValveBStatus : BOOL;
+	ValveCStatus : BOOL;
+	
+	//Tags for AOOD Pump Block
+	AOODPumpEnabled : BOOL;
+	AOODPumpStarted : BOOL;
+	AOODPumpEnded : BOOL;
+	Pump1Status : BOOL;
+	Pump2Status : BOOL;
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

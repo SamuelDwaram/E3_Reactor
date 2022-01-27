@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="E3.ReactorManager.Interfaces.UI.UserControls.CircularGuageAnimation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:drawing="http://schemas.microsoft.com/expression/2010/drawing"
+             xmlns:local="clr-namespace:E3.ReactorManager.Interfaces.UI.UserControls"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <Style x:Key="CommonArcProperties" TargetType="{x:Type drawing:Arc}">
+            <Setter Property="Stretch" Value="None"/>
+            <Setter Property="Height" Value="150"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="StrokeThickness" Value="10"/>
+            <Setter Property="StrokeDashArray" Value="0.25"/>
+            <Setter Property="StartAngle" Value="-135"/>
+        </Style>
+        <Style x:Key="CommonLabelStyle" TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+        </Style>
+    </UserControl.Resources>
+    <Viewbox>
+        <Grid>
+            <drawing:Arc Stroke="#FF1E2432" Style="{StaticResource CommonArcProperties}" EndAngle="135"/>
+            <drawing:Arc x:Name="ColouredArc" Stroke="Turquoise" Style="{StaticResource CommonArcProperties}" EndAngle="-135"/>
+            <Grid Height="50" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="CurrentValueLabel" Grid.Column="0" Style="{StaticResource CommonLabelStyle}" HorizontalAlignment="Right"/>
+                <Label x:Name="UnitsLabel" Grid.Column="1" HorizontalContentAlignment="Left" Style="{StaticResource CommonLabelStyle}"/>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</UserControl>

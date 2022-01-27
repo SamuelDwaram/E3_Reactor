@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="PhysicalIO" Id="{964fc00c-e848-4f8c-ae21-7b43c91ea6ee}">
+    <Declaration><![CDATA[TYPE PhysicalIO :
+STRUCT
+	R1_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	R1_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	R1_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	R2_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	R2_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	R2_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	R3_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	R3_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	R3_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	R4_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	R4_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	R4_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	R5_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	R5_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	R5_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	AA1_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	AA1_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	AA1_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	AA2_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	AA2_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	AA2_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	MVB_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	MVB_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	MVB_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	DCM_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	DCM_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	DCM_LS AT %I* : ARRAY[0..1] OF BOOL;
+
+	RV_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	RV_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	RV_AI AT %I* : ARRAY[0..4] OF INT;
+	RV_AO AT %Q* : ARRAY[0..1] OF INT;
+
+	MVA_Valves AT %Q* : ARRAY[0..7] OF BOOL;
+	MVA_Pumps AT %Q* : ARRAY[0..1] OF BOOL;
+	MVA_AI AT %I* : ARRAY[0..4] OF INT;
+	MVA_AO AT %Q* : ARRAY[0..1] OF INT;
+
+
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

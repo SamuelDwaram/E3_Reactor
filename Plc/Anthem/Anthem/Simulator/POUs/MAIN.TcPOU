@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="MAIN" Id="{e47a3fca-ffe7-43ec-9eb4-238b8ba4d32e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	recipeInitializer : InitializeRecipeModule;
+	fglocal : FB_LocalSystemTime;
+	System_Time: TIMESTRUCT;
+	currentHour : STRING;
+	currentMinute : STRING;
+	concatenatedHourMinuteString : STRING;
+	
+	ClearRecipeTrig_R1:R_Trig;
+	NullRecipeStepArray : ARRAY[0..100] OF EachRecipeStep;
+	
+	CameraStatus : BOOL;
+	LampStatus : BOOL;
+	simulator : Simulator;
+	random_value : REAL;
+	
+	timeCounter : INT;
+	updateAllParameters : BOOL;
+	skipCycleCounter : INT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF updateAllParameters THEN
+	//Update parameters for R1 using Simulator logic
+	random_value := 0;
+	simulator(CurrentValue := R1.JacketOutletTemperature, TargetValue := DINT_TO_REAL(R1.HeatCoolSetPoint), SimulatedValue => R1.JacketOutletTemperature);
+	simulator(CurrentValue := R1.ReactorMassTemperature, TargetValue := R1.JacketOutletTemperature, SimulatedValue => R1.ReactorMassTemperature);
+	
+	random_value := 0;
+	simulator(CurrentValue := DINT_TO_REAL(R1.StirrerRPM), TargetValue := DINT_TO_REAL(R1.StirrerSetPoint), SimulatedValue => random_value);
+	R1.StirrerRPM := REAL_TO_INT(random_value);
+	
+	//Reset timeCounter
+	updateAllParameters := FALSE;
+	timeCounter := 0;
+ELSE
+	timeCounter := timeCounter + 1;
+	IF timeCounter >= 5 THEN
+		updateAllParameters := TRUE;
+	END_IF
+END_IF
+
+recipeInitializer(GvlIdentifier := 1, ClearRecipe := R1.ClearRecipe);
+   
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="278" Count="0" />
+      <LineId Id="280" Count="2" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="287" Count="9" />
+      <LineId Id="337" Count="2" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="372" Count="1" />
+      <LineId Id="355" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

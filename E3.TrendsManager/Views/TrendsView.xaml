@@ -1,0 +1,345 @@
+﻿<UserControl x:Class="E3.TrendsManager.Views.TrendsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:helpers="clr-namespace:E3.TrendsManager.Helpers"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Viewbox">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="SelectedDateFormat" Value="Short"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="HeaderLabelStyle" TargetType="Label">
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="#FF8E94A1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="HeaderTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="#FF8E94A1"/>
+        </Style>
+        <Style x:Key="UnitsLabelStyle" TargetType="Label">
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style x:Key="SelectionComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="SelectedValuePath" Value="Name"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="CommandButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#32d5d4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Gray"/>
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="TooltipParameterAndValueTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Viewbox Grid.Row="0">
+                    <TextBlock Text="{Binding ParameterName}" Style="{StaticResource HeaderTextBlockStyle}"/>
+                </Viewbox>
+                <Viewbox Grid.Row="1">
+                    <Label Content="{Binding ParameterValue}" Foreground="Red" Style="{StaticResource UnitsLabelStyle}"/>
+                </Viewbox>
+            </Grid>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="TooltipContentTemplate">
+            <StackPanel Background="#1a202c" HorizontalAlignment="Center" Orientation="Horizontal"></StackPanel>
+        </ItemsPanelTemplate>
+    </UserControl.Resources>
+    <Grid Grid.Column="1" Background="#272e3e">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Row="0" HorizontalAlignment="Left">
+            <Label Content="Trends" Foreground="White"/>
+        </Viewbox>
+        <Grid Grid.Row="1" Background="#272e3e" Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="12*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Column="0">
+                        <Label Content="Device" Style="{StaticResource HeaderLabelStyle}"/>
+                    </Viewbox>
+                    <Viewbox Grid.Column="1">
+                        <ComboBox ItemsSource="{Binding AvailableDevices}" SelectedValue="{Binding SelectedDevice}" SelectedValuePath="DeviceId" DisplayMemberPath="DeviceLabel" Style="{StaticResource SelectionComboBoxStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding UpdateAvailableTrendParametersCommand}" CommandParameter="{Binding Path=SelectedValue, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}"/>
+                                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ClearTrendsCollectionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Column="0">
+                        <Label Content="Parameters" Style="{StaticResource HeaderLabelStyle}"/>
+                    </Viewbox>
+                    <Viewbox Grid.Column="1">
+                        <ComboBox Style="{StaticResource SelectionComboBoxStyle}" ItemsSource="{Binding AvailableTrendParameters}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding}" Style="{StaticResource CheckBoxStyle}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Checked">
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.AddToSelectedParametersCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}" CommandParameter="{Binding}"/>
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.ClearTrendsCollectionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Unchecked">
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.RemoveFromSelectedParametersCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}" CommandParameter="{Binding}"/>
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.ClearTrendsCollectionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ComboBox}}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Background" Value="#1a202c" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="Margin" Value="2,5,2,5" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="MaxLength" Value="2" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Viewbox Grid.Column="0">
+                        <Label Content="Start" Style="{StaticResource HeaderLabelStyle}"/>
+                    </Viewbox>
+                    <Viewbox Grid.Column="1">
+                        <DatePicker SelectedDate="{Binding Start.Date}" DisplayDateEnd="{Binding Start.Date}" Style="{StaticResource DatePickerStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
+                    </Viewbox>
+                    <TextBox Grid.Column="2" Text="{Binding Start.Hour, UpdateSourceTrigger=PropertyChanged}"
+                             helpers:UiHelpers.CheckIfTextContainsOnlyNumber="{Binding}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Grid.Column="3" Text="{Binding Start.Minute, UpdateSourceTrigger=PropertyChanged}"
+                             helpers:UiHelpers.CheckIfTextContainsOnlyNumber="{Binding}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Background" Value="#1a202c" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="Margin" Value="2,5,2,5"/>
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="MaxLength" Value="2" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Viewbox Grid.Column="0">
+                        <Label Content="End" Style="{StaticResource HeaderLabelStyle}"/>
+                    </Viewbox>
+                    <Viewbox Grid.Column="1">
+                        <DatePicker SelectedDate="{Binding End.Date}" DisplayDateEnd="{Binding End.Date}" Style="{StaticResource DatePickerStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
+                    </Viewbox>
+                    <TextBox Grid.Column="2" Text="{Binding End.Hour, UpdateSourceTrigger=PropertyChanged}"
+                             helpers:UiHelpers.CheckIfTextContainsOnlyNumber="{Binding}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox Grid.Column="3" Text="{Binding End.Minute, UpdateSourceTrigger=PropertyChanged}"
+                             helpers:UiHelpers.CheckIfTextContainsOnlyNumber="{Binding}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </Grid>
+                <Viewbox Grid.Column="4" HorizontalAlignment="Center">
+                    <Button Content="Last Week" Command="{Binding GetLastWeekTrendsCommand}" Style="{StaticResource CommandButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Viewbox>
+                <Viewbox Grid.Column="5" HorizontalAlignment="Center">
+                    <Button Content="24 Hours" Command="{Binding Get24HoursTrendsCommand}" Style="{StaticResource CommandButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Viewbox>
+                <Viewbox Grid.Column="6" HorizontalAlignment="Center">
+                    <Button Content="Generate Trends" Command="{Binding GenerateTrendsCommand}" Style="{StaticResource CommandButtonStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ClearTrendsCollectionCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Viewbox>
+                
+            </Grid>
+            <Grid Grid.Row="1">
+                <ItemsControl ItemsSource="{Binding TooltipContent.Content, Mode=TwoWay}" ItemTemplate="{StaticResource TooltipParameterAndValueTemplate}" ItemsPanel="{StaticResource TooltipContentTemplate}"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <lvc:CartesianChart x:Name="cartesianChart" Zoom="X" AxisY="{Binding AxisY}" Series="{Binding TrendsCollection}" DataTooltip="{x:Null}" Background="#272e3e" LegendLocation="Top" Foreground="White" DisableAnimations="True" Hoverable="False">
+                    <lvc:CartesianChart.Style>
+                        <Style TargetType="lvc:CartesianChart">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsTouchDevice}" Value="true">
+                                    <Setter Property="helpers:TouchMoveBehaviour.TouchMoveCommand" Value="{Binding UpdateTouchMoveToolTipCommand}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsTouchDevice}" Value="false">
+                                    <Setter Property="helpers:MouseMoveBehaviour.MouseMoveCommand" Value="{Binding UpdateMouseMoveToolTipCommand}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </lvc:CartesianChart.Style>
+                    <lvc:CartesianChart.Resources>
+                        <Style TargetType="lvc:Separator">
+                            <Setter Property="StrokeThickness" Value="0"/>
+                        </Style>
+                        <Style TargetType="geared:GLineSeries">
+                            <Setter Property="PointGeometrySize" Value="5"/>
+                            <Setter Property="LineSmoothness" Value="0"/>
+                            <Setter Property="Fill" Value="Transparent"/>
+                        </Style>
+                        <Style TargetType="lvc:Axis">
+                            <Setter Property="FontSize" Value="15"/>
+                        </Style>
+                    </lvc:CartesianChart.Resources>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="t (min)" ShowLabels="True" MinValue="0" MaxValue="{Binding MaxValueAxisX}">
+                            <lvc:Axis.Sections>
+                                <lvc:AxisSection Stroke="White" Value="0" StrokeThickness="1"/>
+                                <lvc:AxisSection Value="{Binding XPointer}" StrokeThickness="1" Stroke="#ff5722" DisableAnimations="True"/>
+                            </lvc:Axis.Sections>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

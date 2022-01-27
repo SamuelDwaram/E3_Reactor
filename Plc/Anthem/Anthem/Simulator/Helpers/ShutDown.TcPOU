@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="ShutDown" Id="{2fd1b10f-dd9e-4f28-922f-b0db218af6ba}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC ShutDown
+VAR_INPUT
+	GvlIdentifier : STRING;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF GvlIdentifier = 'R1' THEN
+	R1.RecipeStatus := FALSE;
+	R1.HeatCoolStatus := FALSE;
+	R1.StirrerStatus := FALSE;
+	R1.AbortRecipe := FALSE;
+	R1.DosingPumpStatus :=FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="ShutDown">
+      <LineId Id="18" Count="4" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="E3.DialogServices.Views.DialogServiceView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            xmlns:prism="http://prismlibrary.com/"
+            prism:ViewModelLocator.AutoWireViewModel="True"
+            xmlns:dialog="clr-namespace:E3.DialogServices.DialogProviders"
+            xmlns:local="clr-namespace:E3.DialogServices.Views"
+            mc:Ignorable="d" Background="Transparent">
+    <i:Interaction.Triggers>
+        <!-- Trigger listening for the "Raised" event on the source object (of type IInteractionRequest) -->
+        <i:EventTrigger EventName="Raised" SourceObject="{Binding ConfirmationInteractionRequest}">
+            <i:EventTrigger.Actions>
+                <dialog:ConfirmationDialogProvider />
+            </i:EventTrigger.Actions>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Raised" SourceObject="{Binding AlertInteractionRequest}">
+            <i:EventTrigger.Actions>
+                <dialog:AlertDialogProvider />
+            </i:EventTrigger.Actions>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Raised" SourceObject="{Binding DynamicDialogInteractionRequest}">
+            <i:EventTrigger.Actions>
+                <dialog:DynamicDialogProvider />
+            </i:EventTrigger.Actions>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        
+    </Grid>
+</UserControl>

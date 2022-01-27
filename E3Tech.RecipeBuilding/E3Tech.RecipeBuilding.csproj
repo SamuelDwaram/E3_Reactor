@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D38F63A2-4A12-4564-8130-A17A85693A56}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>E3Tech.RecipeBuilding</RootNamespace>
+    <AssemblyName>E3Tech.RecipeBuilding</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net45\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.7.1.0.431\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Abstractions.3.3.1\lib\net45\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Container.5.8.11\lib\net45\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WpfBaseApp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdParty\WpfBaseApp.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Model\Blocks\BaseDrainBlockParameters.cs" />
+    <Compile Include="Model\Blocks\DrainBlockParameters.cs" />
+    <Compile Include="Model\Blocks\FlushBlockParameters.cs" />
+    <Compile Include="Model\Blocks\N2PurgeBlockParameters.cs" />
+    <Compile Include="Model\PlcObjects.cs" />
+    <Compile Include="Model\PLCRecipeExecutor.cs" />
+    <Compile Include="Model\PLCRecipeReloader.cs" />
+    <Compile Include="Model\RecipesManager.cs" />
+    <Compile Include="Model\SeqRecipeModel.cs" />
+    <Compile Include="ViewModels\DesignExperimentViewModel.cs" />
+    <Compile Include="ViewModels\SequenceRecipeBuilderViewModel.cs" />
+    <Compile Include="Views\DesignExperimentView.xaml.cs">
+      <DependentUpon>DesignExperimentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecipesView.xaml.cs">
+      <DependentUpon>RecipesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SequenceRecipeBuilderView.xaml.cs">
+      <DependentUpon>SequenceRecipeBuilderView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ParameterProviders\BlockParameterProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\RecipeBlockView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ParameterProviders\BlockParametersTemplateDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ToggleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DesignExperimentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MultiRecipeBuilderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecipeBuilderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Converters\BlockParameterProviderTemplateConverter.cs" />
+    <Compile Include="Converters\BlockParameterProviderViewTitleConverter.cs" />
+    <Compile Include="Converters\BlockParameterTypeValueConverter.cs" />
+    <Compile Include="Converters\DataGridToBitmapConverter.cs" />
+    <Compile Include="Converters\FontSizeConverter.cs" />
+    <Compile Include="Converters\RecipeBlockBackgroundColorConverter.cs" />
+    <Compile Include="Converters\RecipeStepExecutionStatusCheckerConverter.cs" />
+    <Compile Include="Converters\SequentialValueConverter.cs" />
+    <Compile Include="Converters\ValueComparerCheckerConverter.cs" />
+    <Compile Include="Helpers\DataGridCellDropBehavior.cs" />
+    <Compile Include="Helpers\DataGridDropBehavior.cs" />
+    <Compile Include="Helpers\DataGridMouseMoveBehaviour.cs" />
+    <Compile Include="Helpers\DataGridScrollBehavior.cs" />
+    <Compile Include="Helpers\GridDropBehaviour.cs" />
+    <Compile Include="Helpers\ListBoxItemListExtensions.cs" />
+    <Compile Include="Helpers\MouseButtonBehavior.cs" />
+    <Compile Include="Helpers\BlockCreationConverter.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Helpers\VisualTreeHelperExtensions.cs" />
+    <Compile Include="Model\Blocks\EndBlockParameters.cs" />
+    <Compile Include="Model\Blocks\HeatCoolBlockParameters.cs" />
+    <Compile Include="Model\Blocks\TransferBlockParameters.cs" />
+    <Compile Include="Model\Blocks\WaitBlockParameters.cs" />
+    <Compile Include="Model\IMultiRecipeBuilder.cs" />
+    <Compile Include="Model\IRecipeExecutor.cs" />
+    <Compile Include="Model\IRecipeExporter.cs" />
+    <Compile Include="Model\IRecipeImporter.cs" />
+    <Compile Include="Model\IRecipeRefresher.cs" />
+    <Compile Include="Model\IRecipeReloader.cs" />
+    <Compile Include="Model\IRecipeRulesValidator.cs" />
+    <Compile Include="Model\IRecipesManager.cs" />
+    <Compile Include="Model\MultiRecipeBuilder.cs" />
+    <Compile Include="Model\PLCRecipeRefresherAdapter.cs" />
+    <Compile Include="Model\RecipeBlock.cs" />
+    <Compile Include="Helpers\RecipeDataProvider.cs" />
+    <Compile Include="Model\RecipeExecutionInfoProvider\IRecipeExecutionInfoHandler.cs" />
+    <Compile Include="Model\RecipeExecutionInfoProvider\IRecipeExecutionInfoProvider.cs" />
+    <Compile Include="Model\RecipeExecutionInfoProvider\RecipeBlockExecutionInfo.cs" />
+    <Compile Include="Model\RecipeExecutionInfoProvider\RecipeExecutionInfoHandler.cs" />
+    <Compile Include="Model\RecipeExecutionInfoProvider\RecipeExecutionInfoProvider.cs" />
+    <Compile Include="Model\RecipeRefresher.cs" />
+    <Compile Include="Model\RecipeRulesValidator.cs" />
+    <Compile Include="ParameterProviders\BlockParameterProvider.cs" />
+    <Compile Include="ParameterProviders\BlockParameterProviderView.xaml.cs">
+      <DependentUpon>BlockParameterProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Blocks\StirrerBlockParameters.cs" />
+    <Compile Include="Model\ParameterizedRecipeBlock.cs" />
+    <Compile Include="Model\Blocks\StartBlockParameters.cs" />
+    <Compile Include="Model\IParameterizedRecipeBlock.cs" />
+    <Compile Include="Model\IRecipeBlock.cs" />
+    <Compile Include="Model\IRecipeBlockParemeterProvider.cs" />
+    <Compile Include="Model\IRecipeBuilder.cs" />
+    <Compile Include="Model\RecipeStep.cs" />
+    <Compile Include="Model\RecipeBuilder.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RecipceExport\RecipeFileExporter.cs" />
+    <Compile Include="RecipeBuildingModule.cs" />
+    <Compile Include="RecipeImport\RecipeFileImporter.cs" />
+    <Compile Include="UserControls\DataGridBoundTemplateColumn.cs" />
+    <Compile Include="UserControls\RecipeBlockView.xaml.cs">
+      <DependentUpon>RecipeBlockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ToggleButton.xaml.cs">
+      <DependentUpon>ToggleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MultiRecipeBuilderViewModel.cs" />
+    <Compile Include="ViewModels\RecipesViewModel.cs" />
+    <Compile Include="ViewModels\RecipeStepViewModel.cs" />
+    <Compile Include="ViewModels\RecipeBuilderViewModel.cs" />
+    <Compile Include="ViewModels\BlockParameterProviderViewModel.cs" />
+    <Compile Include="Views\MultiRecipeBuilderView.xaml.cs">
+      <DependentUpon>MultiRecipeBuilderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecipeBuilderView.xaml.cs">
+      <DependentUpon>RecipeBuilderView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\RecipesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SequenceRecipeBuilderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.DosingBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.HeatCoolBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.ManualAddBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.ManualTakeBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.OperatorMessageBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.PhaseBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.StartBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.StirBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.WaitBlockParameters.datasource" />
+    <None Include="Properties\DataSources\E3Tech.RecipeBuilding.Model.Blocks.WaitUntilBlockParameters.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\E3.Mediator\E3.Mediator.csproj">
+      <Project>{72adf709-4940-46a3-9121-1b7a7abaa2c1}</Project>
+      <Name>E3.Mediator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.Interfaces\E3.ReactorManager.Interfaces.csproj">
+      <Project>{620C94FE-D355-4801-92B0-F86D1B08FB02}</Project>
+      <Name>E3.ReactorManager.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3Tech.IO.FileAccess\E3Tech.IO.FileAccess.csproj">
+      <Project>{038c353e-942a-4863-a0b3-6cec7dba0a56}</Project>
+      <Name>E3Tech.IO.FileAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3Tech.Navigation\E3Tech.Navigation.csproj">
+      <Project>{DC50D873-ADE1-45CA-9F70-D310709EC32B}</Project>
+      <Name>E3Tech.Navigation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sql Files\Stored Procedures.sql" />
+    <Content Include="Sql Files\Tables.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

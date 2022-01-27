@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="E3.ReactorManager.Interfaces.UI.UserControls.ProgressBarAnimation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:E3.ReactorManager.Interfaces.UI.UserControls"
+             mc:Ignorable="d">
+    <Viewbox>
+        <StackPanel Orientation="Horizontal">
+            <Grid x:Name="NegativeProgressBarArea" Height="10" Width="29.25">
+                <Grid.OpacityMask>
+                    <VisualBrush Visual="{Binding ElementName=NegativeProgressBarBorder}"/>
+                </Grid.OpacityMask>
+                <Border x:Name="NegativeProgressBarBorder" CornerRadius="5,0,0,5" Background="#FF1E2432"/>
+                <Border x:Name="ProgressBarNegativeGraphic" Background="White" HorizontalAlignment="Right"/>
+            </Grid>
+            <Grid x:Name="PositiveProgressBarArea"  Height="10" Width="87.75">
+                <Grid.OpacityMask>
+                    <VisualBrush Visual="{Binding ElementName=PositiveProgressBarBorder}"/>
+                </Grid.OpacityMask>
+                <Border x:Name="PositiveProgressBarBorder" CornerRadius="0,5,5,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#00BDEF" Offset="0.25"/>
+                            <GradientStop Color="#FBE251" Offset="0.50"/>
+                            <GradientStop Color="#FAAF1F" Offset="0.75"/>
+                            <GradientStop Color="RED" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+                <Border x:Name="ProgressBarPositiveGraphic" Background="#FF1E2432" HorizontalAlignment="Right"/>
+            </Grid>
+        </StackPanel>
+    </Viewbox>
+</UserControl>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="Pump" Id="{08f99879-e236-4ab2-8842-35ebc829f669}">
+    <Declaration><![CDATA[TYPE Pump EXTENDS Valve :
+STRUCT
+	nPulse : INT;
+	sTime : STRING;
+	sRemainingTime : STRING;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

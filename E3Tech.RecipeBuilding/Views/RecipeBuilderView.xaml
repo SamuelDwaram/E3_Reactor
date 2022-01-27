@@ -1,0 +1,480 @@
+﻿<UserControl x:Class="E3Tech.RecipeBuilding.Views.RecipeBuilderView"
+             xmlns:local="clr-namespace:E3Tech.RecipeBuilding.Views"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:converters="clr-namespace:E3Tech.RecipeBuilding.Converters"
+             xmlns:helpers="clr-namespace:E3Tech.RecipeBuilding.Helpers"             
+             xmlns:controls="clr-namespace:E3Tech.RecipeBuilding.UserControls"
+             xmlns:AnimationUserControls="clr-namespace:E3.ReactorManager.Interfaces.UI.UserControls;assembly=E3.ReactorManager.Interfaces"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d"         
+             x:Name="SBV"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:FontSizeConverter x:Key="FontSizeConverter"/>
+            <converters:RecipeBlockBackgroundColorConverter x:Key="RecipeBlockBackgroundColorConverter"/>
+            <converters:DataGridToBitmapConverter x:Key="DataGridToBitmapConverter"/>
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+
+
+            <DataTemplate x:Key="GridViewColumnCellTemplate">
+                <controls:RecipeBlockView  Height="100" Margin="3"/>
+            </DataTemplate>
+            <DataTemplate x:Key="AddButtonColumnCellTemplate">
+                <Border BorderBrush="LightGray" BorderThickness="1" Margin="3">
+                    <Grid helpers:GridDropBehaviour.DropCommand="{Binding Path=DataContext.DropCommandToAddNewStep, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
+                        <TextBlock Text="Drop Here to add new Recipe Step" TextWrapping="WrapWithOverflow"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+            <Style x:Key="StandardLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="#FF8E94A1" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="15,0,0,0" />
+            </Style>
+            <Style x:Key="CommandButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={StaticResource FontSizeConverter}}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Background" Value="#32d5d4"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="7"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Gray"/>
+                                    <Setter Property="Background" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="UnitsLabelStyle" TargetType="Label">
+                <Setter Property="Height" Value="60"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="TextBoxValueStyle" TargetType="TextBox">
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="InputScope" Value="Number"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="#FF272E3E"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="HeaderLabelStyle" TargetType="Label">
+                <Setter Property="Height" Value="60"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Foreground" Value="#FF8E94A1"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+            <ColumnDefinition Width="0.4*"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="lbOne"                   
+                    helpers:MouseButtonBehavior.MouseButtonCommand="{Binding MouseButtonCommand}"
+                    Margin="5" Width="215" ItemsSource="{Binding AvailableBlocks}" FontSize="15" Background="#1d2532" BorderThickness="0"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="None">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <Binding Path="Name" Converter="{StaticResource RecipeBlockBackgroundColorConverter}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Height" Value="50"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                    <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="White"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding UiLabel}" Background="Transparent"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Column="1" Background="#272e3e">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="dataGrid" Background="#1d2532" BorderBrush="#1d2532"
+                      EnableRowVirtualization="False"
+                      VirtualizingStackPanel.VirtualizationMode="Standard"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                    SelectionMode="Single" 
+                    CanUserSortColumns="False" 
+                    CanUserReorderColumns="False" 
+                    AutoGenerateColumns="False" 
+                    SelectedItem ="{Binding SelectedStep,Mode=TwoWay}"
+                    SelectedIndex="{Binding SelectedIndex}"
+                    Grid.Column="1" IsReadOnly="True" 
+                    Margin="5"
+                    ItemsSource="{Binding RecipeSteps}" 
+                    helpers:DataGridDropBehavior.DropCommand="{Binding DropCommand}"
+                    helpers:DataGridScrollBehavior.SelectingItemIndex="{Binding ElementName=dataGrid,Path=SelectedIndex}"
+                    AllowDrop="True" CanUserResizeColumns="False" GridLinesVisibility="None" HeadersVisibility="None">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="BorderBrush" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Column.DisplayIndex}" Value="0"></Condition>
+                                    <Condition Binding="{Binding RecipeStep.BlockOne}" Value="{x:Null}"></Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Focusable" Value="False" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Column.DisplayIndex}" Value="1"></Condition>
+                                    <Condition Binding="{Binding RecipeStep.BlockTwo}" Value="{x:Null}"></Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Focusable" Value="False" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Column.DisplayIndex}" Value="2"></Condition>
+                                    <Condition Binding="{Binding RecipeStep.BlockThree}" Value="{x:Null}"></Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Focusable" Value="False" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Column.DisplayIndex}" Value="3"></Condition>
+                                    <Condition Binding="{Binding RecipeStep.BlockFour}" Value="{x:Null}"></Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Focusable" Value="False" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+                <!--<DataGrid.RowStyle >
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>-->
+                <DataGrid.InputBindings>
+                    <KeyBinding Key="Delete" Modifiers="Shift" Command="{Binding DeleteStepCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"></KeyBinding>
+                </DataGrid.InputBindings>
+                <DataGrid.Columns>
+                    <controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
+                                    Binding="{Binding RecipeStep.BlockOne}"/>
+                    <!--<controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
+                                    Binding="{Binding RecipeStep.BlockTwo}"/>
+                    <controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
+                                    Binding="{Binding RecipeStep.BlockThree}"/>
+                    <controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
+                                    Binding="{Binding RecipeStep.BlockFour}"/>-->
+                    <!--<controls:DataGridBoundTemplateColumn Width="0.5*" CellTemplate="{StaticResource ResourceKey=AddButtonColumnCellTemplate}"
+                                    Binding="{Binding}"/>-->
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Save Recipe Execution" Command="{Binding SaveRecipeExecutionCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Column="1" Content="Export Recipe" Command="{Binding ExportRecipeCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Column="2" Content="Import Recipe" Command="{Binding ImportRecipeCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Column="3" Content="Clear Recipe" Command="{Binding ClearRecipeCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Column="3" Content="Edit" Command="{Binding EditRecipeCommand}" HorizontalAlignment="Right">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEditEnabled}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsEditEnabled}" Value="False">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Column="3" Content="Save Changes" Command="{Binding SaveChangesRecipeCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSaveChange}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSaveChange}" Value="False">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Column="4">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="Content" Value="Pause"/>
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Command" Value="{Binding PauseRecipeCommand}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding RecipePaused}" Value="True">
+                                    <Setter Property="Content" Value="Resume"/>
+                                    <Setter Property="Command" Value="{Binding PauseRecipeCommand}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Column="5">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="Content" Value="Start"/>
+                            <Setter Property="Command" Value="{Binding StartRecipeCommand}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Content" Value="Stop"/>
+                                    <Setter Property="Command" Value="{Binding AbortRecipeExecutionCommand}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
+                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Content" Value="Stop"/>
+                                    <Setter Property="Command" Value="{Binding AbortRecipeExecutionCommand}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="2"  >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label  Content="Sequence Receipe" Style="{StaticResource HeaderLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+            <ListView x:Name="ListView" Grid.Row="1" Margin="20,0,0,0" ItemsSource="{Binding SeqRecipeModels }" 
+                     FontSize="15" Background="#1d2532" BorderThickness="0" SelectedItem="{Binding SelectedSeqRecipeModel}"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="LightSlateGray"/>
+                        <Setter Property="Height" Value="50"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Tag" Value="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="White"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Add Above" 
+                                               Command="{Binding PlacementTarget.Tag.AddAboveSeqReciepeCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
+                                               CommandParameter="{Binding}"/>
+                                    <MenuItem Header="Delete" 
+                                              Command="{Binding PlacementTarget.Tag.DeleteReciepeFromSequenceCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                              CommandParameter="{Binding}"/>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsExecuting}" Value="True">
+                                <Setter Property="BorderBrush" Value="Red"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsExecuted}" Value="True">
+                                <Setter Property="Background" Value="Green"></Setter>
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsExecuting}" Value="True"/>
+                                    <Condition Binding="{Binding IsExecuted}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.EnterActions>
+                                    <BeginStoryboard x:Name="ExecutingRecipeBlockStoryboard">
+                                        <Storyboard RepeatBehavior="Forever">
+                                            <ColorAnimation To="Orange" BeginTime="0:0:0" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.5" FillBehavior="HoldEnd"/>
+                                            <ColorAnimation To="Gray" BeginTime="0:0:0.5" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Duration="0:0:0.5" FillBehavior="HoldEnd"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiDataTrigger.EnterActions>
+                                <MultiDataTrigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="ExecutingRecipeBlockStoryboard"/>
+                                </MultiDataTrigger.ExitActions>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <TextBlock Text="{Binding RecipeName}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListBox.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding MouseDoubleClickCommand}"></MouseBinding>
+                </ListBox.InputBindings>
+            </ListView>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
+                <Button Content="Save" Command="{Binding SaveSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Inverted}"></Button>
+                <Button Content="Import" Command="{Binding ImportSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Inverted}"></Button>
+                <Button Content="Clear" Command="{Binding ClearSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Inverted}" ></Button>
+                <Button Content="Start" Command="{Binding StartSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Inverted}"></Button>
+                <Button Content="Stop" Command="{Binding StopSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Normal}"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

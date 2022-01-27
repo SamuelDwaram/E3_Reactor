@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="RemainingTimeCalculator" Id="{dfca00c5-889e-49ff-92a2-6d9bf6d390bd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC RemainingTimeCalculator
+VAR_INPUT
+	elapsedSeconds : INT;
+	elapsedMinutes : INT;
+	givenDuration : INT; //Assume Duration in Minutes by default
+END_VAR
+VAR_OUTPUT
+	leftOverSeconds : INT;
+	leftOverMinutes : INT;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF givenDuration <= elapsedMinutes THEN
+	leftOverSeconds := 0;
+	leftOverMinutes := 0;
+ELSE
+	leftOverMinutes := givenDuration - elapsedMinutes - 1;
+	leftOverSeconds := 60 - elapsedSeconds;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="RemainingTimeCalculator">
+      <LineId Id="10" Count="5" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

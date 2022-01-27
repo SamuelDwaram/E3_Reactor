@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="InitializeRecipeModule" Id="{291f60ab-b92e-43af-9cd0-f03e08b73660}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK InitializeRecipeModule
+VAR_INPUT
+	GvlIdentifier : INT;
+	ClearRecipe : BOOL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	NullRecipeStepArray : ARRAY[0..100] OF EachRecipeStep;
+	ClearRecipeTrig:R_Trig;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE GvlIdentifier OF
+	1:
+		IF R1.RecipeStatus THEN
+			RecipeModule_R1();
+		END_IF
+	  
+	////End condition to wipe of the data in structure
+		ClearRecipeTrig(clk:=R1.ClearRecipe,q=>);
+		 IF ClearRecipeTrig.Q  THEN
+			R1.RecipeStatus:=FALSE;
+			R1.RecipeStep := NullRecipeStepArray;
+			R1.ClearRecipe:=FALSE;
+			R1.RecipeEnded:=FALSE;
+			R1.StepCount:=0;
+			RecipeModule_R1.DosingTotalizerVolume:=0;
+		END_IF
+	ELSE
+		RETURN;
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="InitializeRecipeModule">
+      <LineId Id="103" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="110" Count="12" />
+      <LineId Id="107" Count="2" />
+      <LineId Id="106" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
