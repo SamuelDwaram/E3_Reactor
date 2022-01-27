@@ -64,7 +64,6 @@ namespace E3Tech.RecipeBuilding.ViewModels
             {
                 recipeSeqDetail = recipeBuilder.LoadSeqRecipeList();
                 bool recipeStatus = recipeReloader.GetRecipeStatus(DeviceId);
-                bool recipeEndedStatus = recipeReloader.GetRecipeEndedStatus(DeviceId);
                 if (recipeStatus == false)
                 {
                     UpdateNextSeqRecipeExecute();
@@ -113,7 +112,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             if (seqRecipeModel != null)
             {
                 var index = SeqRecipeModels.IndexOf(seqRecipeModel);
-                if (index < SeqRecipeModels.Count - 1)
+                if (index < SeqRecipeModels.Count - 1 && index < EndSeq -1)
                 {
                     var keyvalueRecipeDetail = recipeSeqDetail.Where(x => x.Key.RecipeGuidId == SeqRecipeModels[index + 1].RecipeGuidId).FirstOrDefault();
                     MessageBoxResult result = MessageBox.Show(string.Format(string.Format("Do You want to execute : {0} ", keyvalueRecipeDetail.Key.RecipeName)), "Information", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -136,7 +135,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                         if (isExecuting)
                         {
                             keyvalueRecipeDetail.Key.IsExecuting = true;
-                            recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList());
+                            recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
                         }
                     }
                     else
@@ -395,6 +394,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
             if (seqRecipeList?.Count > 0)
             {
                 SeqRecipeModels = new ObservableCollection<SeqRecipeModel>(seqRecipeList);
+                EndSeq = (uint)SeqRecipeModels.Count();
+                UpdateSeqRecipeCount();
             }
         }
 
@@ -403,6 +404,10 @@ namespace E3Tech.RecipeBuilding.ViewModels
             ClearRecipe();
             recipeBuilder.ClearSeqRecipe();
             SeqRecipeModels.Clear();
+            startSeq = 1;
+            StartSeq = 1;
+            endSeq = 1;
+            EndSeq = 1;
             recipeBuilder.DeleteSeqRecipe();
         }
 
@@ -411,29 +416,34 @@ namespace E3Tech.RecipeBuilding.ViewModels
             if (SeqRecipeModels?.Count > 0 && recipeBuilder.ValidateSeqRecipe())
             {
                 IsSeqRecipeExecuting = true;
-                ClearRecipe();
+               
                 foreach (var item in SeqRecipeModels)
                 {
                     item.IsExecuted = false;
                     item.IsExecuting = false;
                 }
                 recipeSeqDetail = recipeBuilder.LoadSeqRecipeList();
-                recipeBuilder.UpdateRecipeList(recipeSeqDetail.First().Value);
-                selectedSeqRecipeModel = recipeSeqDetail.First().Key;
-                SelectedSeqRecipeModel = recipeSeqDetail.First().Key;
-                foreach (var step in recipeSeqDetail.First().Value.ToList())
+                var recipeSeqToExecute = recipeSeqDetail.ElementAt((int)StartSeq - 1);
+                ClearRecipe();
+                
+                selectedSeqRecipeModel = recipeSeqToExecute.Key;
+                SelectedSeqRecipeModel = recipeSeqToExecute.Key;
+                recipeBuilder.UpdateRecipeList(recipeSeqToExecute.Value);
+                RecipeSteps.Clear();
+                foreach (var step in recipeSeqToExecute.Value.ToList())
                 {
                     RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
                     stepViewModel.RecipeStep = step;
                     RecipeSteps.Add(stepViewModel);
                 }
+               
 
                 var result = ExecuteRecipe();
 
                 if (result == true)
                 {
-                    recipeSeqDetail.First().Key.IsExecuting = true;
-                    recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList());
+                    recipeSeqToExecute.Key.IsExecuting = true;
+                    recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
                 }
             }
         }
@@ -446,6 +456,17 @@ namespace E3Tech.RecipeBuilding.ViewModels
             if (seqRecipeModel != null)
             {
                 SeqRecipeModels.Add(seqRecipeModel);
+                EndSeq = (uint)SeqRecipeModels.Count();
+                UpdateSeqRecipeCount();
+            }
+        }
+
+        private void UpdateSeqRecipeCount()
+        {
+            int index = 1;
+            foreach (var seqRecipeModel in SeqRecipeModels)
+            {
+                seqRecipeModel.SeqCount = index++;
             }
         }
 
@@ -463,11 +484,17 @@ namespace E3Tech.RecipeBuilding.ViewModels
                  * If RecipeSteps count was zero check RecipeStatus and RecipeEndedStatus
                  * and Reload Recipe Steps if required
                  */
-
-                var seqRecipeList = recipeBuilder.ReloadSeqRecipes();
+                int startSeq ;
+                int endSeq ;
+                var seqRecipeList = recipeBuilder.ReloadSeqRecipes(out startSeq, out endSeq);
                 if (seqRecipeList?.Count > 0)
                 {
                     SeqRecipeModels = new ObservableCollection<SeqRecipeModel>(seqRecipeList);
+                    this.startSeq = (uint)startSeq;
+                    this.StartSeq = (uint)startSeq;
+                    this.endSeq = (uint)endSeq;
+                    this.EndSeq = (uint)endSeq;
+                    UpdateSeqRecipeCount();
                     if (SeqRecipeModels.Where(x => x.IsExecuting == true).FirstOrDefault() != null)
                     {
                         IsSeqRecipeExecuting = true;
@@ -664,6 +691,42 @@ namespace E3Tech.RecipeBuilding.ViewModels
         #endregion
 
         #region SeqBlock
+
+        private uint startSeq;
+        public uint StartSeq
+        {
+            get
+            {
+                return startSeq;
+            }
+            set
+            {
+                uint startseq;
+                if (uint.TryParse(value.ToString(), out startseq) && startseq <= SeqRecipeModels.Count && startseq <= EndSeq && startseq >= 1)
+                {
+                    startSeq = startseq;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        private uint endSeq ;
+        public uint EndSeq
+        {
+            get
+            {
+                return endSeq;
+            }
+            set
+            {
+                uint endseq;
+                if (uint.TryParse(value.ToString(), out endseq) && endseq <= SeqRecipeModels.Count && endseq >= StartSeq)
+                {
+                    endSeq = endseq;
+                }
+                RaisePropertyChanged();
+            }
+        }
 
         private ObservableCollection<SeqRecipeModel> seqRecipeModels;
 
@@ -911,6 +974,11 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 if (recipeBuilder.DeleteRecipeFromSeq(seqRecipeModel))
                 {
                     SeqRecipeModels.Remove(seqRecipeModel);
+                    UpdateSeqRecipeCount();
+                    if(SeqRecipeModels.Count < EndSeq)
+                    {
+                        EndSeq = (uint)SeqRecipeModels.Count;
+                    }
                 }
             }
         }

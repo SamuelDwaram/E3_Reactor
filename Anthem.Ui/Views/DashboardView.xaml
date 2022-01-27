@@ -67,11 +67,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         
             <Button  Content="Recipes View" Grid.Row="1" Grid.Column="1" CommandParameter="Recipes" Style="{StaticResource ButtonType}" VerticalAlignment="Center"/>
-        <Button  Content="Sequence Recipes View" Grid.Row="3" Grid.Column="1" CommandParameter="SeqRecipes" VerticalAlignment="Center" Style="{StaticResource ButtonType}"/>
+        
 
         <Button Grid.Row="1" Grid.Column="2" Content="Parameters Host" CommandParameter="ReactorControl" Style="{StaticResource ButtonType}"/>
         <Button Grid.Row="1" Grid.Column="3" Content="Process Diagram " CommandParameter="ProcessFlow" Style="{StaticResource ButtonType}"/>

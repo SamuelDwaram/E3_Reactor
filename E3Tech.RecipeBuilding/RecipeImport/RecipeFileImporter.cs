@@ -90,10 +90,12 @@ namespace E3Tech.RecipeBuilding.RecipeImport
 
         
 
-        public List<SeqRecipeModel> ReloadSeqRecipes()
+        public List<SeqRecipeModel> ReloadSeqRecipes(out int startSeq, out int endSeq)
         {
             List<SeqRecipeModel> seqRecipeModels = null;
             string filePath = fileBrowser.GetDefaultReceipeFileDirectiory() + "ExecutingRecipeList.csv";
+            startSeq = 1;
+            endSeq = 1;
             if (!string.IsNullOrWhiteSpace(filePath) && File.Exists(filePath))
             {
                 string seqRecipeData = File.ReadAllText(filePath);
@@ -103,17 +105,22 @@ namespace E3Tech.RecipeBuilding.RecipeImport
                 {
                     if (!string.IsNullOrEmpty(recipeData))
                     {
-                        SeqRecipeModel seqRecipeModel = new SeqRecipeModel();
+                        
                         string[] data = recipeData.Split(',');
                         if (data.Length == 5)
                         {
+                            SeqRecipeModel seqRecipeModel = new SeqRecipeModel();
                             seqRecipeModel.RecipeName = data[0];
                             seqRecipeModel.RecipeGuidId = Guid.Parse(data[1]);
                             seqRecipeModel.FileLocation = data[2].Replace(".json\r", ".json");
                             seqRecipeModel.IsExecuting = bool.Parse(data[3]);
                             seqRecipeModel.IsExecuted = bool.Parse(data[4]);
-
                             seqRecipeModels.Add(seqRecipeModel);
+                        }
+                        else if(data.Length == 2)
+                        {
+                            int.TryParse(data[0], out startSeq);
+                            int.TryParse(data[1], out endSeq);
                         }
                     }
                 }

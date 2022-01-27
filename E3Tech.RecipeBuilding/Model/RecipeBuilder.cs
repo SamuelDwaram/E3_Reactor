@@ -131,9 +131,9 @@ namespace E3Tech.RecipeBuilding.Model
             return recipeImporter.ImportRecipeFromSeqList(SeqRecipeList);
         }
 
-        public List<SeqRecipeModel> ReloadSeqRecipes()
+        public List<SeqRecipeModel> ReloadSeqRecipes(out int startSeq, out int endSeq)
         {
-            List<SeqRecipeModel> seqRecipeModels = recipeImporter.ReloadSeqRecipes();
+            List<SeqRecipeModel> seqRecipeModels = recipeImporter.ReloadSeqRecipes(out startSeq, out endSeq);
             if (seqRecipeModels != null)
             {
                 SeqRecipeList = seqRecipeModels;
@@ -248,9 +248,9 @@ namespace E3Tech.RecipeBuilding.Model
             return null;
         }
 
-        public void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList)
+        public void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList, uint startSeq, uint endSeq)
         {
-            recipeExporter.SaveSeqRecipeWhileExecuting(SeqRecipeList);
+            recipeExporter.SaveSeqRecipeWhileExecuting(SeqRecipeList, startSeq, endSeq);
         }
 
         public void ClearSeqRecipe()

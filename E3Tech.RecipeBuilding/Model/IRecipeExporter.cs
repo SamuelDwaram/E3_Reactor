@@ -8,7 +8,7 @@ namespace E3Tech.RecipeBuilding.Model
 
         void SaveSeqRecipe(IList<SeqRecipeModel> seqRecipeList);
 
-        void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList);
+        void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList, uint startSeq, uint endSeq);
         void DeleteSeqRecipe();
     }
 }

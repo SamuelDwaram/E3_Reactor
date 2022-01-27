@@ -44,5 +44,19 @@ namespace E3Tech.RecipeBuilding.Model
             }
         }
 
+        private int seqCount;
+        public int SeqCount
+        {
+            get
+            {
+                return seqCount;
+            }
+            set
+            {
+                seqCount = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 }

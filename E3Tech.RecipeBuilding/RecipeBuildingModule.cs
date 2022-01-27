@@ -35,7 +35,7 @@ namespace E3Tech.RecipeBuilding
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<RecipeBuilderViewModel>();
-            containerRegistry.Register<SequenceRecipeBuilderViewModel>();
+            
             containerRegistry.Register<IRecipeBuilder, RecipeBuilder>();
             containerRegistry.RegisterSingleton<IMultiRecipeBuilder, MultiRecipeBuilder>();
             containerRegistry.RegisterSingleton<IRecipeRefresher, RecipeRefresher>();
@@ -53,10 +53,9 @@ namespace E3Tech.RecipeBuilding
             regionManager.RegisterViewWithRegion("RecipeBuilder", typeof(MultiRecipeBuilderView));
             containerRegistry.RegisterForNavigation(typeof(RecipesView), "Recipes");
             viewManager.AddView("RecipeBuilderView");
-            viewManager.AddView("SequenceReceipeBuilderView");
+
             containerRegistry.RegisterForNavigation(typeof(DesignExperimentView), "DesignExperiment");
-            regionManager.RegisterViewWithRegion("SeqRecipes", typeof(SequenceRecipeBuilderView));
-            containerRegistry.RegisterForNavigation(typeof(SequenceRecipeBuilderView), "SeqRecipes");
+           
 
         }
 

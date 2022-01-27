@@ -15,6 +15,7 @@ namespace E3Tech.RecipeBuilding.Model
         string ImportWithFileName(out string fileName);
 
         Dictionary<SeqRecipeModel, IList<RecipeStep>> ImportRecipeFromSeqList(IList<SeqRecipeModel> seqRecipeModels);
-        List<SeqRecipeModel> ReloadSeqRecipes();
+
+        List<SeqRecipeModel> ReloadSeqRecipes(out int startSeq, out int endSeq);
     }
 }

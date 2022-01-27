@@ -36,7 +36,7 @@ namespace E3Tech.RecipeBuilding.Model
 
         SeqRecipeModel ImportWithFile();
 
-        void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList);
+        void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList, uint startSeq, uint endSeq);
 
         void SaveSeqRecipe();
 
@@ -56,7 +56,7 @@ namespace E3Tech.RecipeBuilding.Model
 
         Dictionary<SeqRecipeModel, IList<RecipeStep>> LoadSeqRecipeList();
 
-        List<SeqRecipeModel> ReloadSeqRecipes();
+        List<SeqRecipeModel> ReloadSeqRecipes(out int startSeq, out int endSeq);
         void DeleteSeqRecipe();
     }
 }

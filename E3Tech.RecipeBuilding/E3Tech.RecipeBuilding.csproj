@@ -116,15 +116,11 @@
     <Compile Include="Model\RecipesManager.cs" />
     <Compile Include="Model\SeqRecipeModel.cs" />
     <Compile Include="ViewModels\DesignExperimentViewModel.cs" />
-    <Compile Include="ViewModels\SequenceRecipeBuilderViewModel.cs" />
     <Compile Include="Views\DesignExperimentView.xaml.cs">
       <DependentUpon>DesignExperimentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RecipesView.xaml.cs">
       <DependentUpon>RecipesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SequenceRecipeBuilderView.xaml.cs">
-      <DependentUpon>SequenceRecipeBuilderView.xaml</DependentUpon>
     </Compile>
     <Page Include="ParameterProviders\BlockParameterProviderView.xaml">
       <SubType>Designer</SubType>
@@ -239,10 +235,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SequenceRecipeBuilderView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -294,6 +286,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\AddButton.jpeg" />
     <Content Include="Sql Files\Stored Procedures.sql" />
     <Content Include="Sql Files\Tables.sql" />
   </ItemGroup>

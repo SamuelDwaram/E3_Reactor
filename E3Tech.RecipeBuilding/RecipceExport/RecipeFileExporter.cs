@@ -50,12 +50,13 @@ namespace E3Tech.RecipeBuilding.RecipceExport
             }
         }
 
-        public void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList)
+        public void SaveSeqRecipeWhileExecuting(IList<SeqRecipeModel> SeqRecipeList, uint startSeq, uint endSeq)
         {
             string filePath = fileBrowser.GetDefaultReceipeFileDirectiory() + "ExecutingRecipeList.csv";
-            if (!string.IsNullOrWhiteSpace(filePath) && File.Exists(filePath))
+            if (string.IsNullOrWhiteSpace(filePath) == false)
             {
                 StringBuilder csv = new StringBuilder();
+                csv.AppendLine(string.Format("{0},{1}", startSeq, endSeq));
                 foreach (var recipe in SeqRecipeList)
                 {
                     string line = string.Format("{0},{1},{2},{3},{4}", recipe.RecipeName, recipe.RecipeGuidId, recipe.FileLocation, recipe.IsExecuting, recipe.IsExecuted);
