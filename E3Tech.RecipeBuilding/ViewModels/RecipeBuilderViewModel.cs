@@ -112,7 +112,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             if (seqRecipeModel != null)
             {
                 var index = SeqRecipeModels.IndexOf(seqRecipeModel);
-                if (index < SeqRecipeModels.Count - 1 && index < EndSeq -1)
+                if (index < SeqRecipeModels.Count - 1 && index < EndSeq - 1)
                 {
                     var keyvalueRecipeDetail = recipeSeqDetail.Where(x => x.Key.RecipeGuidId == SeqRecipeModels[index + 1].RecipeGuidId).FirstOrDefault();
                     MessageBoxResult result = MessageBox.Show(string.Format(string.Format("Do You want to execute : {0} ", keyvalueRecipeDetail.Key.RecipeName)), "Information", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -416,7 +416,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             if (SeqRecipeModels?.Count > 0 && recipeBuilder.ValidateSeqRecipe())
             {
                 IsSeqRecipeExecuting = true;
-               
+
                 foreach (var item in SeqRecipeModels)
                 {
                     item.IsExecuted = false;
@@ -425,7 +425,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 recipeSeqDetail = recipeBuilder.LoadSeqRecipeList();
                 var recipeSeqToExecute = recipeSeqDetail.ElementAt((int)StartSeq - 1);
                 ClearRecipe();
-                
+
                 selectedSeqRecipeModel = recipeSeqToExecute.Key;
                 SelectedSeqRecipeModel = recipeSeqToExecute.Key;
                 recipeBuilder.UpdateRecipeList(recipeSeqToExecute.Value);
@@ -436,7 +436,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     stepViewModel.RecipeStep = step;
                     RecipeSteps.Add(stepViewModel);
                 }
-               
+
 
                 var result = ExecuteRecipe();
 
@@ -484,8 +484,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
                  * If RecipeSteps count was zero check RecipeStatus and RecipeEndedStatus
                  * and Reload Recipe Steps if required
                  */
-                int startSeq ;
-                int endSeq ;
+                int startSeq;
+                int endSeq;
                 var seqRecipeList = recipeBuilder.ReloadSeqRecipes(out startSeq, out endSeq);
                 if (seqRecipeList?.Count > 0)
                 {
@@ -697,6 +697,10 @@ namespace E3Tech.RecipeBuilding.ViewModels
         {
             get
             {
+                if (startSeq == 0)
+                {
+                    startSeq = 1;
+                }
                 return startSeq;
             }
             set
@@ -710,11 +714,15 @@ namespace E3Tech.RecipeBuilding.ViewModels
             }
         }
 
-        private uint endSeq ;
+        private uint endSeq;
         public uint EndSeq
         {
             get
             {
+                if (endSeq == 0)
+                {
+                    endSeq = 1;
+                }
                 return endSeq;
             }
             set
@@ -975,7 +983,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 {
                     SeqRecipeModels.Remove(seqRecipeModel);
                     UpdateSeqRecipeCount();
-                    if(SeqRecipeModels.Count < EndSeq)
+                    if (SeqRecipeModels.Count < EndSeq)
                     {
                         EndSeq = (uint)SeqRecipeModels.Count;
                     }
