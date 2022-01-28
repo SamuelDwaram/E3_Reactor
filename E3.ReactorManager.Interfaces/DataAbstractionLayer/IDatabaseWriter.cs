@@ -50,6 +50,8 @@ namespace E3.ReactorManager.Interfaces.DataAbstractionLayer
 
         void DismissAlarm(string alarmIdentifier);
 
+        void EndBatchCompact(string batchIdentifier);
+
         void EndBatch(string batchIdentifier, string cleanedBy, string cleaningSolvent);
 
         /// <summary>

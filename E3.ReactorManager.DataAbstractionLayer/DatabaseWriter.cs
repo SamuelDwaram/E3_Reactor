@@ -155,7 +155,17 @@ namespace E3.ReactorManager.DataAbstractionLayer
             _dbManager.Insert("UploadPdf", CommandType.StoredProcedure, parameters.ToArray(), out lastId);
             Console.WriteLine("Inserted ID : " + lastId);
         }
+        public void EndBatchCompact(string batchIdentifier)
+        {
+            var parameters = new List<IDbDataParameter>
+            {
+                _dbManager.CreateParameter("@BatchIdentifier", batchIdentifier, DbType.String),
+            };
 
+            int lastId = 0;
+            _dbManager.Update("EndBatchAndUpdateStatusCompact", CommandType.StoredProcedure, parameters.ToArray());
+            Console.WriteLine("Inserted Id : " + lastId);
+        }
         public void EndBatch(string batchIdentifier, string cleanedBy, string cleaningSolvent)
         {
             var parameters = new List<IDbDataParameter>

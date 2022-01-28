@@ -15,19 +15,11 @@ namespace Anathem.Ui.ViewModels
             this.regionManager = regionManager;
         }
 
-        public ICommand navigateCommand;
         public ICommand NavigateCommand
         {
-            get
-            {
-                return new DelegateCommand<string>(page => Assign(page));
-            }
+            get => new DelegateCommand<string>(page => regionManager.RequestNavigate("SelectedViewPane", page));
         }
 
-        private void Assign(string page)
-        {
-            regionManager.RequestNavigate("SelectedViewPane", page);
-            
-        }
+       
     }
 }

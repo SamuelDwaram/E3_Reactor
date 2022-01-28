@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9079B332-6E6E-412C-9153-895A4DB989D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>E3.ReactorManager.DesignExperiment</RootNamespace>
+    <AssemblyName>E3.ReactorManager.DesignExperiment</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net45\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.7.1.0.431\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Abstractions.3.3.1\lib\net45\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Container.5.8.11\lib\net45\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\DeviceIdToShortLabelConverter.cs" />
+    <Compile Include="Converters\FontSizeConverter.cs" />
+    <Compile Include="Helpers\UiHelpers.cs" />
+    <Compile Include="Model\DesignExperiment.cs" />
+    <Compile Include="DesignExperimentModule.cs" />
+    <Compile Include="Model\Data\Batch.cs" />
+    <Compile Include="Model\Data\BatchState.cs" />
+    <Compile Include="Model\ExperimentInfoProvider.cs" />
+    <Compile Include="Model\IDesignExperiment.cs" />
+    <Compile Include="Model\IExperimentInfoProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ExperimentInfoViewModel.cs" />
+    <Compile Include="ViewModels\DesignExperimentViewModel.cs" />
+    <Compile Include="ViewModels\RunningExperimentsListViewModel.cs" />
+    <Compile Include="ViewModels\RunningExperimentTabViewModel.cs" />
+    <Compile Include="Views\ExperimentInfoView.xaml.cs">
+      <DependentUpon>ExperimentInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DesignExperimentView.xaml.cs">
+      <DependentUpon>DesignExperimentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RunningExperimentsListView.xaml.cs">
+      <DependentUpon>RunningExperimentsListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RunningExperimentTabView.xaml.cs">
+      <DependentUpon>RunningExperimentTabView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\E3.AuditTrailManager\E3.AuditTrailManager.csproj">
+      <Project>{6A75F5A4-114D-4763-BF18-C81ABC3D7FE5}</Project>
+      <Name>E3.AuditTrailManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.Mediator\E3.Mediator.csproj">
+      <Project>{72adf709-4940-46a3-9121-1b7a7abaa2c1}</Project>
+      <Name>E3.Mediator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.Framework\E3.ReactorManager.Framework.csproj">
+      <Project>{715C3551-6D5D-4140-AB98-5302729BEC11}</Project>
+      <Name>E3.ReactorManager.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.HardwareAbstractionLayer\E3.ReactorManager.HardwareAbstractionLayer.csproj">
+      <Project>{7023a6f0-ed0f-4dbc-a60f-a438d9ceb32f}</Project>
+      <Name>E3.ReactorManager.HardwareAbstractionLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.Interfaces\E3.ReactorManager.Interfaces.csproj">
+      <Project>{620C94FE-D355-4801-92B0-F86D1B08FB02}</Project>
+      <Name>E3.ReactorManager.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.UserManager\E3.UserManager.csproj">
+      <Project>{69AC2A36-9A64-4F29-ADFE-3595248EABF8}</Project>
+      <Name>E3.UserManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ExperimentInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DesignExperimentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RunningExperimentsListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RunningExperimentTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sql Files\Equipment Connections\Stored Procedures.sql" />
+    <Content Include="Sql Files\Equipment Connections\Tables.sql" />
+    <Content Include="Sql Files\StoredProcedures.sql" />
+    <Content Include="Sql Files\Tables.sql" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

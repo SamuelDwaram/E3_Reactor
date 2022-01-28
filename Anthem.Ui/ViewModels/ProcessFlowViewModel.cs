@@ -34,24 +34,24 @@ namespace Anathem.Ui.ViewModels
             this.auditTrailManager = auditTrailManager;
             Task.Factory.StartNew(new Func<Dictionary<string, string>>(() => {
                 return (from SensorsDataSet s in fieldDevicesCommunicator.GetFieldDeviceData(DeviceId).SensorsData
-                from FieldPoint fp in s.SensorsFieldPoints
-                select new KeyValuePair<string, string>(fp.Label, fp.Value)).ToDictionary(kv => kv.Key, kv => kv.Value);
-                })).ContinueWith(t => {
-                    foreach (KeyValuePair<string, string> item in t.Result)
-                    {
-                        AddToParameters(item.Key, item.Value);
-                    }
-                }).ContinueWith(t => this.fieldDevicesCommunicator.FieldPointDataReceived += FieldDevicesCommunicator_FieldPointDataReceived);
-                user = (User) Application.Current.Resources["LoggedInUser"];
+                        from FieldPoint fp in s.SensorsFieldPoints
+                        select new KeyValuePair<string, string>(fp.Label, fp.Value)).ToDictionary(kv => kv.Key, kv => kv.Value);
+            })).ContinueWith(t => {
+                foreach (KeyValuePair<string, string> item in t.Result)
+                {
+                    AddToParameters(item.Key, item.Value);
+                }
+            }).ContinueWith(t => this.fieldDevicesCommunicator.FieldPointDataReceived += FieldDevicesCommunicator_FieldPointDataReceived);
+            user = (User)Application.Current.Resources["LoggedInUser"];
         }
 
         private void FieldDevicesCommunicator_FieldPointDataReceived(object sender, FieldPointDataReceivedArgs args)
         {
             AddToParameters(args.FieldPointIdentifier, args.NewFieldPointData);
-            test();
+            Test();
 
         }
-        private void test()
+        private void Test()
         {
             if (Parameters.ContainsKey("Pressure_1"))
             {
@@ -61,6 +61,10 @@ namespace Anathem.Ui.ViewModels
             {
                 Pressure_2 = Parameters["Pressure_2"];
             }
+            if (Parameters.ContainsKey("Pressure_3"))
+            {
+                Pressure_3 = Parameters["Pressure_3"];
+            }
             if (Parameters.ContainsKey("Temperature_1"))
             {
                 Temperature_1 = Parameters["Temperature_1"];
@@ -69,67 +73,87 @@ namespace Anathem.Ui.ViewModels
             {
                 Temperature_2 = Parameters["Temperature_2"];
             }
+            if (Parameters.ContainsKey("Temperature_3"))
+            {
+                Temperature_3 = Parameters["Temperature_3"];
+            }
             if (Parameters.ContainsKey("ReactorLevel_1"))
             {
                 Level_1 = Parameters["ReactorLevel_1"];
             }
-            if (Parameters.ContainsKey("ReactorLevel_1"))
+            if (Parameters.ContainsKey("ReactorLevel_2"))
             {
-                Level_2 = Parameters["ReactorLevel_1"];
+                Level_2 = Parameters["ReactorLevel_2"];
+            }
+            if (Parameters.ContainsKey("ReactorLevel_3"))
+            {
+                Level_3 = Parameters["ReactorLevel_3"];
+            }
+            if (Parameters.ContainsKey("StirrerSetpoint_1"))
+            {
+                StirrerSetpoint_1 = Parameters["StirrerSetpoint_1"];
+            }
+            if (Parameters.ContainsKey("StirrerSetpoint_2"))
+            {
+                StirrerSetpoint_2 = Parameters["StirrerSetpoint_2"];
+            }
+            if (Parameters.ContainsKey("StirrerSetpoint_3"))
+            {
+                StirrerSetpoint_3 = Parameters["StirrerSetpoint_3"];
             }
         }
-    private void AddToParameters(string fieldPointIdentifier, string newFieldPointData)
-    {
-        if (Parameters.ContainsKey(fieldPointIdentifier))
+        private void AddToParameters(string fieldPointIdentifier, string newFieldPointData)
         {
-            if (Parameters[fieldPointIdentifier] == newFieldPointData)
+            if (Parameters.ContainsKey(fieldPointIdentifier))
             {
-                // skip. no need to do anything.
+                if (Parameters[fieldPointIdentifier] == newFieldPointData)
+                {
+                    // skip. no need to do anything.
+                }
+                else
+                {
+                    Parameters[fieldPointIdentifier] = newFieldPointData;
+                    NotifyUi(nameof(Parameters));
+
+                }
             }
             else
             {
-                Parameters[fieldPointIdentifier] = newFieldPointData;
-                NotifyUi(nameof(Parameters));
-
+                Parameters.Add(fieldPointIdentifier, newFieldPointData);
             }
         }
-        else
+
+        private void NotifyUi(string propName)
         {
-            Parameters.Add(fieldPointIdentifier, newFieldPointData);
+            Task.Factory.StartNew(() => RaisePropertyChanged(propName), CancellationToken.None, TaskCreationOptions.None, taskScheduler);
         }
-    }
 
-    private void NotifyUi(string propName)
-    {
-        Task.Factory.StartNew(() => RaisePropertyChanged(propName), CancellationToken.None, TaskCreationOptions.None, taskScheduler);
-    }
-
-    public ICommand SendCommandToDevice
-    {
-        get => new DelegateCommand<string>(param => {
-            string[] paramInfo = param.Split('|');
-            fieldDevicesCommunicator.SendCommandToDevice(DeviceId, paramInfo[0], "bool", bool.TryParse(paramInfo[1], out bool parseResult) ? (!parseResult).ToString() : bool.FalseString);
-            auditTrailManager.RecordEventAsync($"Changed {paramInfo[0]} in {DeviceId} from {parseResult} to {!parseResult}", user.Name, EventTypeEnum.ChangedSetPoint);
-        });
-    }
-
-    public string DeviceId { get; } = "Reactor_1";
-    public ICommand NavigateCommand => new DelegateCommand<string>(page => regionManager.RequestNavigate("SelectedViewPane", page));
-    public Dictionary<string, string> Parameters { get; } = new Dictionary<string, string>();
-
-
-
-    private string pressure_1;
-
-    public string Pressure_1
-    {
-        get { return pressure_1; }
-        set 
+        public ICommand SendCommandToDevice
         {
-            pressure_1 = value;
-            RaisePropertyChanged();
+            get => new DelegateCommand<string>(param => {
+                string[] paramInfo = param.Split('|');
+                fieldDevicesCommunicator.SendCommandToDevice(DeviceId, paramInfo[0], "bool", bool.TryParse(paramInfo[1], out bool parseResult) ? (!parseResult).ToString() : bool.FalseString);
+                auditTrailManager.RecordEventAsync($"Changed {paramInfo[0]} in {DeviceId} from {parseResult} to {!parseResult}", user.Name, EventTypeEnum.ChangedSetPoint);
+            });
         }
-    }
+
+        public string DeviceId { get; } = "Reactor_1";
+        public ICommand NavigateCommand => new DelegateCommand<string>(page => regionManager.RequestNavigate("SelectedViewPane", page));
+        public Dictionary<string, string> Parameters { get; } = new Dictionary<string, string>();
+
+
+
+        private string pressure_1;
+
+        public string Pressure_1
+        {
+            get { return pressure_1; }
+            set
+            {
+                pressure_1 = value;
+                RaisePropertyChanged();
+            }
+        }
         private string pressure_2;
 
         public string Pressure_2
@@ -138,6 +162,17 @@ namespace Anathem.Ui.ViewModels
             set
             {
                 pressure_2 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string pressure_3;
+
+        public string Pressure_3
+        {
+            get { return pressure_3; }
+            set
+            {
+                pressure_3 = value;
                 RaisePropertyChanged();
             }
         }
@@ -156,10 +191,21 @@ namespace Anathem.Ui.ViewModels
 
         public string Temperature_2
         {
-            get { return temperature_1; }
+            get { return temperature_2; }
             set
             {
-                temperature_1 = value;
+                temperature_2 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string temperature_3;
+
+        public string Temperature_3
+        {
+            get { return temperature_3; }
+            set
+            {
+                temperature_3 = value;
                 RaisePropertyChanged();
             }
         }
@@ -185,6 +231,50 @@ namespace Anathem.Ui.ViewModels
                 RaisePropertyChanged();
             }
         }
+        private string level_3;
 
+        public string Level_3
+        {
+            get { return level_3; }
+            set
+            {
+                level_3 = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string stirrerSetpoint_1;
+
+        public string StirrerSetpoint_1
+        {
+            get { return stirrerSetpoint_1; }
+            set
+            {
+                stirrerSetpoint_1 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string stirrerSetpoint_2;
+
+        public string StirrerSetpoint_2
+        {
+            get { return stirrerSetpoint_2; }
+            set
+            {
+                stirrerSetpoint_2 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string stirrerSetpoint_3;
+
+        public string StirrerSetpoint_3
+        {
+            get { return stirrerSetpoint_3; }
+            set
+            {
+                stirrerSetpoint_3 = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

@@ -106,6 +106,7 @@
   <ItemGroup>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Helpers\UiHelpers.cs" />
     <Compile Include="Model\Blocks\BaseDrainBlockParameters.cs" />
     <Compile Include="Model\Blocks\DrainBlockParameters.cs" />
     <Compile Include="Model\Blocks\FlushBlockParameters.cs" />
@@ -272,9 +273,17 @@
       <Project>{72adf709-4940-46a3-9121-1b7a7abaa2c1}</Project>
       <Name>E3.Mediator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.DesignExperiment\E3.ReactorManager.DesignExperiment.csproj">
+      <Project>{9079b332-6e6e-412c-9153-895a4db989d3}</Project>
+      <Name>E3.ReactorManager.DesignExperiment</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E3.ReactorManager.Interfaces\E3.ReactorManager.Interfaces.csproj">
       <Project>{620C94FE-D355-4801-92B0-F86D1B08FB02}</Project>
       <Name>E3.ReactorManager.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.UserManager\E3.UserManager.csproj">
+      <Project>{69ac2a36-9a64-4f29-adfe-3595248eabf8}</Project>
+      <Name>E3.UserManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\E3Tech.IO.FileAccess\E3Tech.IO.FileAccess.csproj">
       <Project>{038c353e-942a-4863-a0b3-6cec7dba0a56}</Project>

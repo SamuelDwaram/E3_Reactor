@@ -16,12 +16,16 @@ using System.Windows.Input;
 using Unity;
 using E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider;
 using Prism.Regions;
+using E3.ReactorManager.DesignExperiment.Model.Data;
+using E3.ReactorManager.DesignExperiment.Model;
+using E3.UserManager.Model.Data;
 
 namespace E3Tech.RecipeBuilding.ViewModels
 {
     public class RecipeBuilderViewModel : BindableBase
     {
         private readonly IRecipeBuilder recipeBuilder;
+        private readonly IDesignExperiment designExperiment;
         private readonly IRecipeReloader recipeReloader;
         private readonly IRecipeExecutor recipeExecutor;
         private readonly IUnityContainer containerProvider;
@@ -36,6 +40,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         public RecipeBuilderViewModel(IUnityContainer containerProvider, IRecipeExecutor recipeExecutor, IFieldDevicesCommunicator fieldDevicesCommunicator, IRecipeBuilder recipeBuilder, IRecipeReloader recipeReloader)
         {
             taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            this.designExperiment = designExperiment;
             this.recipeExecutor = recipeExecutor;
             this.fieldDevicesCommunicator = fieldDevicesCommunicator;
             fieldDevicesCommunicator.FieldPointDataReceived -= OnLiveDataReceived;
@@ -184,6 +189,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         public void UpdateRecipeParameters()
         {
             RecipeStatus = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "RecipeStatus").ToString();
+            IsRecipeRunning = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "RecipeStatus").ToString();
             RecipeEnded = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "RecipeEnded").ToString();
             RecipePaused = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "PauseRecipe").ToString();
         }
@@ -227,10 +233,36 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
         private bool ExecuteRecipe()
         {
-            if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
+            Task.Factory.StartNew(() => designExperiment.StartBatchCompact(NewBatchDetails))
+                 .ContinueWith(new Action<Task<bool>>((t) =>
+                 {
+                     if (t.IsCompleted)
+                     {
+                         if (t.Result)
+                         {
+                           //Navigate("Dashboard");
+                           IsBatchNameRequestPopUpOpen = false;
+                         }
+                         else
+                         {
+                             MessageBox.Show("Batch Already Exists, Please Re-enter the Batch Details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                         }
+                     }
+                 }), taskScheduler);
+            if (CanStartBatch())
             {
                 recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
-                return true;
+
+            }
+            return false;
+        }
+
+        public void ValidateAndOpenPopup()
+        {
+
+            if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
+            {
+                IsBatchNameRequestPopUpOpen = true;
             }
             else
             {
@@ -238,8 +270,63 @@ namespace E3Tech.RecipeBuilding.ViewModels
                                 "Recipe Execution Error",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Error);
+                IsBatchNameRequestPopUpOpen = false;
             }
-            return false;
+
+        }
+        private bool CanStartBatch()
+        {
+            return !string.IsNullOrWhiteSpace(NewBatchDetails.Name)
+                && !string.IsNullOrWhiteSpace(NewBatchDetails.ScientistName)
+                && !string.IsNullOrWhiteSpace(NewBatchDetails.Comments)
+                && recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps);
+        }
+
+        private void CloseBatchNamePopup()
+        {
+            IsBatchNameRequestPopUpOpen = false;
+        }
+        private void OpenEndBatchPopup()
+        {
+            IsEndBatchPopUpOpen = true;
+        }
+
+        public void EndBatch()
+        {
+            UpdateBatchDetailsInUI();
+            Task.Factory.StartNew(new Action(TerminateBatch))
+                .ContinueWith(new Action<Task>(ClosePopup), taskScheduler);
+        }
+        public void ClosePopup(Task task)
+        {
+            if (task.IsCompleted)
+            {
+                IsEndBatchPopUpOpen = false;
+
+            }
+        }
+        public bool CanEndBatch()
+        {
+            return !string.IsNullOrWhiteSpace(AdminCredential.Username)
+                && !string.IsNullOrWhiteSpace(AdminCredential.PasswordHash)
+                && !string.IsNullOrWhiteSpace(CurrentBatchDetails.FieldDeviceIdentifier);
+        }
+
+        private void TerminateBatch()
+        {
+            if (designExperiment.EndBatchCompact(AdminCredential, CurrentBatchDetails.FieldDeviceIdentifier, CurrentBatchDetails.Name, CurrentBatchDetails.FieldDeviceIdentifier))
+            {
+
+                AbortRecipeExecution();
+
+            }
+            else
+            {
+                MessageBox.Show($"Unable to end the batch. Admin Credentials are not valid", "Authorization Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            //Clear Admin Credentials, CleaningSolvent
+            AdminCredential = new Credential();
         }
 
         private void PauseRecipe()
@@ -255,6 +342,18 @@ namespace E3Tech.RecipeBuilding.ViewModels
         {
             return recipeExecutor != null;
         }
+        #endregion
+
+        #region CurrentBatchDetails
+
+        private void UpdateBatchDetailsInUI()
+        {
+            CurrentBatchDetails.FieldDeviceIdentifier = designExperiment.FetchRunningBatch();
+
+
+
+        }
+
         #endregion
 
         #region Clear Recipe
@@ -812,12 +911,62 @@ namespace E3Tech.RecipeBuilding.ViewModels
             set => SetProperty(ref exportRecipeCommand, value);
         }
 
-        private ICommand startRecipeCommand;
+        //private ICommand startRecipeCommand;
+        //public ICommand StartRecipeCommand
+        //{
+        //    get => startRecipeCommand ?? (startRecipeCommand = new DelegateCommand(new Action(StartRecipe), new Func<bool>(CanStartRecipe)));
+        //    set => SetProperty(ref startRecipeCommand, value);
+        //}
+
+        private ICommand _openEndBatchPopupCommand;
+        public ICommand OpenEndBatchPopupCommand
+        {
+            get => _openEndBatchPopupCommand ?? (_openEndBatchPopupCommand = new DelegateCommand(new Action(OpenEndBatchPopup)));
+            set => SetProperty(ref _openEndBatchPopupCommand, value);
+        }
+
+        private ICommand _endBatchCommand;
+        public ICommand EndBatchCommand
+        {
+            get => _endBatchCommand ?? (_endBatchCommand = new DelegateCommand(EndBatch)
+                .ObservesProperty(() => AdminCredential.Username)
+                .ObservesProperty(() => AdminCredential.PasswordHash)
+                .ObservesProperty(() => CurrentBatchDetails.Identifier));
+            set => _endBatchCommand = value;
+        }
+        private Batch _currentBatchDetails;
+        public Batch CurrentBatchDetails
+        {
+            get => _currentBatchDetails ?? (_currentBatchDetails = new Batch());
+            set
+            {
+                _currentBatchDetails = value;
+                RaisePropertyChanged();
+            }
+        }
+        private ICommand _validateAndOpenPopupCommand;
+        public ICommand ValidateAndOpenPopupCommand
+        {
+            get => _validateAndOpenPopupCommand ?? (_validateAndOpenPopupCommand = new DelegateCommand(new Action(ValidateAndOpenPopup)));
+            set => _startRecipeCommand = value;
+        }
+
+        private ICommand _closeBatchNamePopupCommand;
+        public ICommand CloseBatchNamePopupCommand
+        {
+            get => _closeBatchNamePopupCommand ?? (_closeBatchNamePopupCommand = new DelegateCommand(new Action(CloseBatchNamePopup)));
+            set => _startRecipeCommand = value;
+        }
+        private ICommand _startRecipeCommand;
         public ICommand StartRecipeCommand
         {
-            get => startRecipeCommand ?? (startRecipeCommand = new DelegateCommand(new Action(StartRecipe), new Func<bool>(CanStartRecipe)));
-            set => SetProperty(ref startRecipeCommand, value);
+            get => _startRecipeCommand ?? (_startRecipeCommand = new DelegateCommand(new Action(StartRecipe))
+                .ObservesProperty(() => NewBatchDetails.Name)
+                .ObservesProperty(() => NewBatchDetails.ScientistName)
+                .ObservesProperty(() => NewBatchDetails.Comments));
+            set => _startRecipeCommand = value;
         }
+
         private ICommand pauseRecipeCommand;
         public ICommand PauseRecipeCommand
         {
@@ -1118,6 +1267,57 @@ namespace E3Tech.RecipeBuilding.ViewModels
         }
 
         #endregion
+
+        private string _isRecipeRunning;
+        public string IsRecipeRunning
+        {
+            get => _isRecipeRunning;
+            set
+            {
+                _isRecipeRunning = value;
+                RaisePropertyChanged();
+                UpdateIsEditEnable();
+            }
+        }
+
+        private Batch _newBatchDetails;
+        public Batch NewBatchDetails
+        {
+            get => _newBatchDetails ?? (_newBatchDetails = new Batch());
+            set => SetProperty(ref _newBatchDetails, value);
+        }
+        private bool _isBatchNameRequestPopUpOpen;
+        public bool IsBatchNameRequestPopUpOpen
+        {
+            get => _isBatchNameRequestPopUpOpen;
+            set
+            {
+                _isBatchNameRequestPopUpOpen = value;
+                RaisePropertyChanged();
+            }
+        }
+        private bool _isEndBatchPopUpOpen;
+
+        public bool IsEndBatchPopUpOpen
+
+        {
+            get => _isEndBatchPopUpOpen;
+            set
+            {
+                _isEndBatchPopUpOpen = value;
+                RaisePropertyChanged();
+            }
+        }
+        private Credential _adminCredential;
+        public Credential AdminCredential
+        {
+            get => _adminCredential ?? (_adminCredential = new Credential());
+            set
+            {
+                _adminCredential = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 
     public enum RecipeBlockStatus

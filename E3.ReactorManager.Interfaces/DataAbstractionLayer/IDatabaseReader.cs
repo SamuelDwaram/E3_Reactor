@@ -106,5 +106,6 @@ namespace E3.ReactorManager.Interfaces.DataAbstractionLayer
         /// </summary>
         /// <returns></returns>
         DataTable GetAvailablePdfList();
+        string FetchRunningBatch();
     }
 }

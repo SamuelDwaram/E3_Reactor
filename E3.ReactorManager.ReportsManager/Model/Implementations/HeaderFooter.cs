@@ -18,9 +18,10 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
 
         public override void OnStartPage(PdfWriter writer, Document document)
         {
-            PdfPTable headerTable = new PdfPTable(1);
-            headerTable.SetTotalWidth(new float[] { 600f });
+            PdfPTable headerTable = new PdfPTable(3);
+            headerTable.SetTotalWidth(new float[] { 200f,200f,200f });
             headerTable.HorizontalAlignment = Element.ALIGN_CENTER;
+            
 
             PdfPTable footerTable = new PdfPTable(2);
             footerTable.SetTotalWidth(new float[] { 400f, 200f });
@@ -28,7 +29,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
 
             BaseColor baseColor = new BaseColor(39, 43, 52);
             BaseFont bfntHead = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-            Font fntHead = new Font(bfntHead, 16, 1, baseColor);
+            Font fntHead = new Font(bfntHead, 18, Font.BOLD, baseColor);
 
             PdfPCell leftCell = new PdfPCell
             {
@@ -46,6 +47,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
             {
                 Border = 0,
                 Padding = 5,
+                
             };
 
             Paragraph headingContent = new Paragraph
@@ -86,13 +88,60 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
                 rightCell.AddElement(rightCellImage);
             }
 
-            headerTable.AddCell(headerCell);
+            #region ValidationFooter
+            PdfPTable table = new PdfPTable(3);
+            table.SetTotalWidth(new float[] { 170f, 170f, 170f });
+            table.HorizontalAlignment = Element.ALIGN_CENTER;
+            table.SpacingBefore = 50f;
 
-            footerTable.AddCell(leftCell);
-            footerTable.AddCell(rightCell);
+            PdfPTable columnTable = new PdfPTable(1);
+
+            string[] data = { "Printed By", "Date : ", "Signature: ", "Verified By", "Date : ", "Signature: ", "Approved By", "Date : ", "Signature: " };
+            int noOfRows = 3;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (i != 0 && i % noOfRows == 0)
+                {
+                    // add columnTable into main table
+                    table.AddCell(columnTable);
+
+                    //re initialize columnTable for next column
+                    columnTable = new PdfPTable(1);
+                }
+
+                PdfPCell cell = new PdfPCell(new Paragraph(data[i]));
+                cell.FixedHeight = 30;
+                cell.VerticalAlignment = Element.ALIGN_CENTER;
+
+                columnTable.AddCell(cell);
+            }
+
+            // add columnTable for last column into main table
+            table.AddCell(columnTable);
+            #endregion
+
+
+            headerTable.AddCell(leftCell);
+            headerTable.AddCell(headerCell);
+            headerTable.AddCell(rightCell);
+
+            //footerTable.AddCell(leftCell);
+            //footerTable.AddCell(rightCell);
+
+            PdfPTable fulltable = new PdfPTable(table);
+            fulltable.WidthPercentage = 100;
+            fulltable.SpacingBefore = 50f;
+            //fulltable.AddCell(table);
+            fulltable.AddCell(footerTable);
+            fulltable.HorizontalAlignment = Element.ALIGN_CENTER;
 
             headerTable.WriteSelectedRows(0, -1, 0, document.Top + ((document.TopMargin + headerTable.TotalHeight) / 2), writer.DirectContent);
-            footerTable.WriteSelectedRows(0, -1, 0, document.Bottom, writer.DirectContent);
+
+            //footerTable.WriteSelectedRows(0, -1, 0, document.Bottom, writer.DirectContent);
+            //fulltable.WriteSelectedRows(0, -1, 50, document.Bottom + (1.2f * columnTable.TotalHeight), writer.DirectContent);
+            fulltable.WriteSelectedRows(0, -1, 45, document.Bottom, writer.DirectContent);
+
         }
     }
 }

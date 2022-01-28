@@ -1,0 +1,264 @@
+﻿<UserControl x:Class="E3.ReactorManager.DesignExperiment.Views.ExperimentInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:E3.ReactorManager.DesignExperiment.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:converters="clr-namespace:E3.ReactorManager.DesignExperiment.Converters"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeDeviceParametersCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <converters:FontSizeConverter x:Key="FontSizeConverter"/>
+        <Style x:Key="CommandButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#32d5d4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Gray"/>
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox" x:Key="TextBoxValueStyle">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#1a202c"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={StaticResource FontSizeConverter}}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="HeaderLabelStyle">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Foreground" Value="#8e94a1"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={StaticResource FontSizeConverter}}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="ContentLabelStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Converter={StaticResource FontSizeConverter}}"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="#1d2532">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.6*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Name" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentBatchDetails.Name}" Style="{StaticResource ContentLabelStyle}"/>
+            
+            <Label Grid.Row="0" Grid.Column="2" Content="Number" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="0" Grid.Column="3" Content="{Binding CurrentBatchDetails.Number}" Style="{StaticResource ContentLabelStyle}"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Content="Stage" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentBatchDetails.Stage}" Style="{StaticResource ContentLabelStyle}"/>
+
+            <Label Grid.Row="2" Grid.Column="0" Content="HC" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentBatchDetails.HCIdentifier}">
+                <Label.Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource ContentLabelStyle}">
+                        <Setter Property="Content" Value="{Binding CurrentBatchDetails.HCIdentifier}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentBatchDetails.HCIdentifier}" Value="">
+                                <Setter Property="Content" Value="Not Connected"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+
+            <Label Grid.Row="3" Grid.Column="0" Content="Stirrer" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding CurrentBatchDetails.StirrerIdentifier}" Style="{StaticResource ContentLabelStyle}"/>
+
+            <Label Grid.Row="1" Grid.Column="2" Content="Device" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="1" Grid.Column="3" Content="{Binding CurrentBatchDetails.FieldDeviceLabel}" Style="{StaticResource ContentLabelStyle}"/>
+
+            <Label Grid.Row="2" Grid.Column="2" Content="State" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="2" Grid.Column="3">
+                <Label.Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource ContentLabelStyle}">
+                        <Setter Property="Content" Value="{Binding CurrentBatchDetails.State}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentBatchDetails.Identifier}" Value="{x:Null}">
+                                <Setter Property="Content" Value=""/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+
+            <Label Grid.Row="0" Grid.Column="4" Content="Comments" Style="{StaticResource HeaderLabelStyle}"/>
+            <TextBlock Grid.Row="0" Grid.RowSpan="3" Grid.Column="5" Text="{Binding CurrentBatchDetails.Comments}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="Padding" Value="10"/>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <Label Grid.Row="3" Grid.Column="2" Content="Time Started" Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Grid.Row="3" Grid.Column="3" Content="{Binding CurrentBatchDetails.TimeStarted}" Style="{StaticResource ContentLabelStyle}"/>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Viewbox HorizontalAlignment="Right">
+                <Grid>
+                    <Button Content="End Batch">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CurrentBatchDetails.Identifier}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="EndBatchPopup" Storyboard.TargetProperty="IsOpen">
+                                            <DiscreteBooleanKeyFrame Value="True" KeyTime="0:0:0" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                    <Button Content="Start Batch" Command="{Binding NavigateCommand}" CommandParameter="DesignExperiment">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CurrentBatchDetails.Identifier}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </Viewbox>
+        </Grid>
+
+        <!--#region EndBatch Popup-->
+        <Popup Name="EndBatchPopup" Placement="Center" IsOpen="False" Width="500" Height="300">
+            <Grid Background="#1a202c">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="End Batch Confirmation" FontWeight="Bold" Style="{StaticResource HeaderLabelStyle}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Cleaning Solvent" Style="{StaticResource HeaderLabelStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CleaningSolvent,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValueStyle}"/>
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Content="***** Please provide valid Admin Credentials *****" Style="{StaticResource HeaderLabelStyle}"/>
+                <Grid Grid.Row="3" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="User name" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBox Grid.Column="1" Text="{Binding AdminCredential.Username,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValueStyle}"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Password" Style="{StaticResource HeaderLabelStyle}"/>
+                    <TextBox Grid.Column="1" Text="{Binding AdminCredential.PasswordHash,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValueStyle}"/>
+                </Grid>
+                <Label Grid.Row="4" Grid.ColumnSpan="2" Content="Do You Want To End The Batch ?" HorizontalContentAlignment="Center" Style="{StaticResource HeaderLabelStyle}"/>
+                <Viewbox Grid.Row="5" Grid.Column="0">
+                    <Button Content="Yes" MinWidth="50" Command="{Binding EndBatchCommand}" Style="{StaticResource CommandButtonStyle}">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="EndBatchPopup" Storyboard.TargetProperty="IsOpen">
+                                            <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:0" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Viewbox>
+                <Viewbox Grid.Row="5" Grid.Column="1">
+                    <Button Content="No" MinWidth="50" Style="{StaticResource CommandButtonStyle}">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="EndBatchPopup"
+                                                                        Storyboard.TargetProperty="IsOpen">
+                                            <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:0" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Viewbox>
+            </Grid>
+        </Popup>
+        <!--#endregion-->
+
+    </Grid>
+</UserControl>

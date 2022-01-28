@@ -68,6 +68,12 @@
     <Compile Include="UserControls\BoolParameter.xaml.cs">
       <DependentUpon>BoolParameter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\BoolParameterProcessFlow.xaml.cs">
+      <DependentUpon>BoolParameterProcessFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CircleProcessFlow.xaml.cs">
+      <DependentUpon>CircleProcessFlow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\GraphicalParameter.xaml.cs">
       <DependentUpon>GraphicalParameter.xaml</DependentUpon>
     </Compile>
@@ -125,6 +131,14 @@
     <Page Include="UserControls\BoolParameter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BoolParameterProcessFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CircleProcessFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\GraphicalParameter.xaml">
       <SubType>Designer</SubType>
@@ -192,6 +206,10 @@
       <Project>{6A75F5A4-114D-4763-BF18-C81ABC3D7FE5}</Project>
       <Name>E3.AuditTrailManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.DesignExperiment\E3.ReactorManager.DesignExperiment.csproj">
+      <Project>{9079b332-6e6e-412c-9153-895a4db989d3}</Project>
+      <Name>E3.ReactorManager.DesignExperiment</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E3.ReactorManager.Interfaces\E3.ReactorManager.Interfaces.csproj">
       <Project>{620c94fe-d355-4801-92b0-f86d1b08fb02}</Project>
       <Name>E3.ReactorManager.Interfaces</Name>
@@ -218,21 +236,19 @@
     <Resource Include="Images\ConfigurationPage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\PID_1.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\PID_2.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\PID_3.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\PID_Final.bmp" />
-    <Resource Include="Images\PID_0.bmp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\PID_4.bmp" />
     <Resource Include="Images\PID_New.bmp" />
+    <Resource Include="Images\Alarmicon.png" />
+    <Resource Include="Images\audit.png" />
+    <Resource Include="Images\Parameter_Host.png" />
+    <Resource Include="Images\PID_7.png" />
+    <Resource Include="Images\Process flow diagram.png" />
+    <Resource Include="Images\Recipe Control.png" />
+    <Resource Include="Images\reports icon.png" />
+    <Resource Include="Images\trends-icon.png" />
+    <Resource Include="Images\user.png" />
+    <Resource Include="Images\usermanagement.png" />
     <Content Include="SqlFiles\FieldDevices-Plc-SensorsDataSet-1.sql" />
     <Content Include="SqlFiles\FieldPoints-2.sql" />
     <Content Include="SqlFiles\RecipeFieldPoints-3.sql" />

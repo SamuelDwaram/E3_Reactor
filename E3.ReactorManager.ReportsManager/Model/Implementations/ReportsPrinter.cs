@@ -60,9 +60,9 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
                         case SectionalDataType.Tablular:
                             AddTableToPDF(reportSection, pdf);
                             break;
-                        case SectionalDataType.Image:
-                            AddImageToPdf(reportSection, pdf);
-                            break;
+                        //case SectionalDataType.Image:
+                        //    AddImageToPdf(reportSection, pdf);
+                        //    break;
                         default:
                             break;
                     }
@@ -105,7 +105,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
 
         public iTextSharp.text.Document CreatePDF(string fileName, string reportHeader = null, string reportLogoPath = null)
         {
-            iTextSharp.text.Document document = new iTextSharp.text.Document(PageSize.A4, 50, 50, 70, 50);
+            iTextSharp.text.Document document = new iTextSharp.text.Document(PageSize.A4, 50, 50, 70, 150);
             PdfWriter writer = PdfWriter.GetInstance(document, File.Open(fileName, FileMode.Create));
 
             //using header class (for adding header in each page)
@@ -189,7 +189,44 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
                     }
                 }
 
+                //#region ValidationFooter
+                //PdfPTable tablePDF = new PdfPTable(3);
+                //tablePDF.SetTotalWidth(new float[] { 170f, 170f, 170f });
+                //tablePDF.HorizontalAlignment = Element.ALIGN_CENTER;
+                //tablePDF.SpacingBefore = 50f;
+
+                //PdfPTable columnTable = new PdfPTable(1);
+
+                //string[] data = { "Printed By", "Date : ", "Signature: ", "Verified By", "Date : ", "Signature: ", "Approved By", "Date : ", "Signature: " };
+                //int noOfRows = 3;
+
+                //for (int i = 0; i < data.Length; i++)
+                //{
+                //    if (i != 0 && i % noOfRows == 0)
+                //    {
+                //        // add columnTable into main table
+                //        tablePDF.AddCell(columnTable);
+
+                //        //re initialize columnTable for next column
+                //        columnTable = new PdfPTable(1);
+                //    }
+
+                //    PdfPCell cell = new PdfPCell(new Paragraph(data[i]));
+                //    cell.FixedHeight = 30;
+                //    cell.VerticalAlignment = Element.ALIGN_CENTER;
+
+                //    columnTable.AddCell(cell);
+                //}
+
+                //// add columnTable for last column into main table
+                //tablePDF.AddCell(columnTable);
+
+                //#endregion
+
+
                 pdf.Add(pdfTable);
+                //pdf.Add(tablePDF);
+
                 if (reportSection.EndPageHere)
                 {
                     pdf.NewPage();

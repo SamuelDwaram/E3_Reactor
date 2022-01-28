@@ -10,156 +10,639 @@
              d:DesignHeight="1080" d:DesignWidth="1920"
              xmlns:prism="http://prismlibrary.com/" 
              xmlns:viewmodels="clr-namespace:Anathem.Ui.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewmodels:ProcessFlowViewModel}"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <Style TargetType="uc_2:BoolParameter">
             <Setter Property="BorderBrush" Value="#1d2532" />
             <Setter Property="BorderThickness" Value="1" />
         </Style>
+        <Style TargetType="TextBox" x:Key="TextBoxResoure">
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#1d2532"/>
+        </Style>
+        <Style TargetType="Label" x:Key="InfoProviderLabel">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </UserControl.Resources>
+
     <Grid Background="#1d2532">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="7*"/>
+            <!--<ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="7*"/>-->
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="1680"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="#555c6e"/>
+
         <uc_1:NavigateButtonType_1 VerticalAlignment="Top" Grid.Column="0" ButtonCommand="{Binding NavigateCommand}" ButtonCommandParameter="Dashboard"/>
+
+        <!--#region PFD-->
+        <!--<uc_1:BoolParameter Grid.Column="0" Tag="Valve_1" ParamLabel="V1"/>-->
+        <Image Grid.Column="1" HorizontalAlignment="Left"  Name="MyImg" Source="/Anathem.Ui;component/Images/PID_7.png" Width="1699" Margin="0,0,0,0" />
+
         <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="34*"/>
+                <RowDefinition Height="41*"/>
+                <RowDefinition Height="41*"/>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="38"/>
+                <RowDefinition Height="62"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="41"/>
+                <RowDefinition Height="45*"/>
+                <RowDefinition Height="55*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="57*"/>
+                <RowDefinition Height="47*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="134*"/>
+                <RowDefinition Height="34*"/>
+                <RowDefinition Height="94*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="34"/>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="24*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="46*"/>
+                <ColumnDefinition Width="60*"/>
+                <ColumnDefinition Width="68*"/>
+                <ColumnDefinition Width="46*"/>
+                <ColumnDefinition Width="44*"/>
+                <ColumnDefinition Width="38*"/>
+                <ColumnDefinition Width="32*"/>
+                <ColumnDefinition Width="86*"/>
+                <ColumnDefinition Width="66*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="90*"/>
+                <ColumnDefinition Width="98*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="90*"/>
+                <ColumnDefinition Width="38*"/>
+                <ColumnDefinition Width="88*"/>
+                <ColumnDefinition Width="76*"/>
+                <ColumnDefinition Width="74*"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="29*"/>
+                <ColumnDefinition Width="29*"/>
+                <ColumnDefinition Width="29*"/>
+                <ColumnDefinition Width="29*"/>
+                <ColumnDefinition Width="29*"/>
+                <!--<ColumnDefinition Width="200*"/>-->
+
             </Grid.ColumnDefinitions>
-            <Image Grid.ColumnSpan="7" HorizontalAlignment="Center"  Name="MyImg" Source="/Anathem.Ui;component/Images/PID_New.bmp" Margin="-35,-3,264.333,3" Width="1606" />
-            <uc_2:BoolParameter ParamLabel="V6" Margin="1000,2000,500,1000"/>
 
-            <Grid Grid.Column="7">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.8*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.6*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.Resources>
-                    <Style x:Key="LabelStyle" TargetType="Label">
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Background" Value="#272e3e"/>
-                        <Setter Property="FontSize" Value="14"/>
-                        <Setter Property="Padding" Value="20"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="HorizontalAlignment" Value="Left"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                    </Style>
-                </Grid.Resources>
-                <Label Grid.Column="0" Grid.Row="0" Content="MVA Mass&#xa;Temperature" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Temperature_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="0" Content="°C" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="1" Content="MVA Stirrer&#xa;Feedback" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                    <!--<TextBox Name="PresBox" Text="{Binding Pressure_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
-                <Label Grid.Column="2" Grid.Row="1" Content="RPM" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="2" Content="MVA Pressure" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                 <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Pressure_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="2" Content="mmHG" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="3" Content="MVA Level" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Level_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="3" Content="Lts" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="4" Content="RV-50L Mass&#xa;Temperature" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Temperature_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="4" Content="°C" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="5" Content="RV-50L Stirrer&#xa;Feedback" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Pressure_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="5" Content="RPM" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="6" Content="RV-50L&#xa;Pressure" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding Pressure_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="6" Content="mmHG" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="7" Content="RV-50L Level" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="7" Content="Lts" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="8" Content="RV-25L Mass&#xa;Temperature" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="8" Content="°C" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="9" Content="RV-25L Stirrer&#xa;Feedback" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="9" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="9" Content="RPM" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="10" Content="RV-25L&#xa;Pressure" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="10" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="10" Content="mmHG" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <Label Grid.Column="0" Grid.Row="11" Content="RV-25L&#xa;Level" Foreground="White" FontSize="20" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="11" Text="{Binding Level_2}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="11" Content="Lts" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-
-            </Grid>
-            <uc_2:BoolParameter Tag="Valve_1" ParamLabel="V1" Margin="60,650,1768,380"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_2" ParamLabel="V2" Margin="75,600,1756,430"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_3" ParamLabel="V3" Margin="190,920,1645,118"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="Pump_1" ParamLabel="P1" Margin="156,982,1647,48"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="StirrerCommand_1" Margin="810,586,1027,430"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="StirrerCommand_2" Margin="1242,474,587,552"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_5" ParamLabel="V5" Margin="174,30,1660,1005"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="154,104,1680,936"/>
-            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="154,104,1680,936"/>
+            <!--<uc_1:BoolParameter Grid.Column="0" Tag="Valve_1" ParamLabel="V1" Margin="60,650,149.4,380"/>-->
 
 
-            <uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="154,104,1680,936"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="2" Grid.Row="1" Tag="Valve_5" ParamLabel="V5" Height="30" Width="38" Margin="27,-8,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="4" Grid.Row="0" Tag="Valve_4" ParamLabel="V4" Height="30" Width="38" Margin="-40,25,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="6" Grid.Row="1" Tag="Valve_9" ParamLabel="V9" Height="30" Width="38" Margin="70,-8,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="6" Grid.Row="3" Tag="Valve_8" ParamLabel="V8" Height="30" Width="38" Margin="61,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="7" Grid.Row="2" Tag="Valve_10" ParamLabel="V10" Height="30" Width="38" Margin="89,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="4" Grid.Row="4" Tag="Valve_4" ParamLabel="V4" Grid.ColumnSpan="2" Height="24" Width="38" Margin="70,-30,40,0" Grid.RowSpan="2" />
+            <uc_2:BoolParameterProcessFlow Grid.Column="14" Grid.Row="1" Tag="Valve_23" ParamLabel="V23" Height="30" Width="38" Margin="25,-8,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="15" Grid.Row="1" Tag="Valve_24" ParamLabel="V24" Height="30" Width="38" Margin="94,-8,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="14" Grid.Row="2" Tag="Valve_22" ParamLabel="V22" Height="30" Width="38" Margin="75,0,0,-10" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="12" Grid.Row="2" Tag="Valve_18" ParamLabel="V18" Height="30" Width="38" Margin="40,-40,0,-10" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="11" Grid.Row="2" Tag="Valve_17" ParamLabel="V17" Height="30" Width="38" Margin="0,30,0,-10" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="13" Grid.Row="2" Tag="Valve_19" ParamLabel="V19" Height="30" Width="38" Margin="-25,30,0,-10" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="11" Grid.Row="3" Tag="Valve_16" ParamLabel="V16" Height="30" Width="38" Margin="70,65,0,-10" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="14" Grid.Row="3" Tag="Valve_21" ParamLabel="V21" Height="30" Width="38" Margin="-35,65,0,-10" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="17" Grid.Row="1" Tag="Valve_34" ParamLabel="V34" Height="30" Width="38" Margin="19,-8,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="18" Grid.Row="1" Tag="Valve_45" ParamLabel="V45" Height="30" Width="38" Margin="88,-8,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
 
+            <uc_2:BoolParameterProcessFlow Grid.Column="17" Grid.Row="2" Tag="Valve_32" ParamLabel="V32" Height="30" Width="38" Margin="10,10,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="16" Grid.Row="2" Tag="Valve_33" ParamLabel="V33" Height="30" Width="38" Margin="70,40,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <!--<uc_2:BoolParameterProcessFlow Grid.Column="18" Grid.Row="1" Tag="Valve_46" ParamLabel="V46" Height="40" Width="40" Margin="70,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>-->
+            <uc_2:BoolParameterProcessFlow Grid.Column="19" Grid.Row="2" Tag="Valve_44" ParamLabel="V44" Height="30" Width="38" Margin="-30,10,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="19" Grid.Row="2" Tag="Valve_46" ParamLabel="V46" Height="30" Width="38" Margin="60,40,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="21" Grid.Row="1" Tag="Valve_49" ParamLabel="V49" Height="30" Width="38" Margin="125,-8,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="21" Grid.Row="2" Tag="Valve_48" ParamLabel="V48" Height="30" Width="38" Margin="10,10,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="22" Grid.Row="3" Tag="Valve_50" ParamLabel="V50" Height="30" Width="38" Margin="-60,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="3" Grid.Row="6" Tag="Valve_6" ParamLabel="V6" Grid.ColumnSpan="2" Height="30" Width="35" Margin="82,16,13,16" Grid.RowSpan="2"  >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="2" Grid.Row="7" Tag="Valve_54" ParamLabel="V54" Grid.ColumnSpan="3" Height="32" Width="35" Margin="20,-76,40,0" Grid.RowSpan="3"  >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="22" Grid.Row="4" Tag="Valve_58" ParamLabel="V58" Height="30" Width="38" Margin="-40,20,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="12" Grid.Row="6" Tag="Valve_56" ParamLabel="V56" Height="30" Width="38" Margin="5,20,39,27" Grid.RowSpan="2" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="10" Grid.Row="6" Tag="Valve_57" ParamLabel="V57" Height="30" Width="38" Margin="-2,20,93,22" Grid.ColumnSpan="3" Grid.RowSpan="2" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:CircleProcessFlow Grid.Column="2" Grid.Row="8"   Tag="Pump_11" ParamLabel="P11" Margin="6,17,63,1" Grid.ColumnSpan="2"  Height="40" Width="40"/>
+            <!--<TextBox Text="Pump_11" Grid.Column="1" Grid.Row="10" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="0,9,62,6" Height="20" Grid.ColumnSpan="3" />-->
+
+            <uc_2:CircleProcessFlow Grid.Column="3" Grid.Row="8"   Tag="Pump_16" ParamLabel="P16" Margin="47,10,-2,5"  Height="40" Width="40" Grid.RowSpan="2"/>
+            <!--<TextBox Text="Pump_16" Grid.Column="3" Grid.Row="10" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="46,7,25,8" Height="20" Grid.ColumnSpan="2" />-->
+
+            <uc_2:CircleProcessFlow Grid.Column="9" Grid.Row="8"   Tag="Pump_14" ParamLabel="P14"  Margin="10,-30,-35,0" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <!--<TextBox Text="Pump_14" Grid.Column="9" Grid.Row="10" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="42,1,21,14" Height="20" Grid.ColumnSpan="3" />-->
+
+            <uc_2:CircleProcessFlow Grid.Column="10" Grid.Row="8"   Tag="Pump_13" ParamLabel="P13"  Margin="60,-30,-40,0" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <!--<TextBox Text="Pump_13" Grid.Column="11" Grid.Row="9" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="18,6,49,21" Height="20" Grid.ColumnSpan="2" Grid.RowSpan="2" />-->
+
+            <uc_2:CircleProcessFlow Grid.Column="15" Grid.Row="8"   Tag="Pump_15" ParamLabel="P15"  Margin="60,-30,-35,0" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <!--<TextBox Text="Pump_15" Grid.Column="16" Grid.Row="10" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="29,0,16,15" Height="20" />-->
+
+            <uc_2:CircleProcessFlow Grid.Column="22" Grid.Row="8"   Tag="Pump_17" ParamLabel="P17"  Margin="55,-30,-35,0" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <!--<TextBox Text="Pump_17" Grid.Column="23" Grid.Row="10" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="24,21,31,35" Height="20" Grid.ColumnSpan="2" Grid.RowSpan="2" />-->
+
+            <uc_2:BoolParameterProcessFlow Grid.Column="6" Grid.Row="10" Tag="Valve_7" ParamLabel="V7" Height="30" Width="38" Margin="43,18,47,32" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="8" Grid.Row="9" Tag="Valve_11" ParamLabel="V11" Height="30" Width="38" Margin="68,1,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="11" Grid.Row="9" Tag="Valve_59" ParamLabel="V59" Height="30" Width="38" Margin="50,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="12" Grid.Row="10" Tag="Valve_20" ParamLabel="V20" Height="30" Width="38" Margin="89,12,0,24" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Left" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="13" Grid.Row="9" Tag="Valve_60" ParamLabel="V60" Height="30" Width="38" Margin="15,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="14" Grid.Row="9" Tag="Valve_61" ParamLabel="V61" Height="30" Width="38" Margin="-5,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="14" Grid.Row="9" Tag="Valve_25" ParamLabel="V25" Height="30" Width="38" Margin="90,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="15" Grid.Row="9" Tag="Valve_62" ParamLabel="V62" Height="30" Width="38" Margin="35,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="17" Grid.Row="9" Tag="Valve_35" ParamLabel="V35" Height="30" Width="38" Margin="-60,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="20" Grid.Row="9" Tag="Valve_47" ParamLabel="V47" Height="30" Width="38" Margin="-0,0,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="2" Grid.Row="15" Tag="Valve_2" ParamLabel="V2" Height="30" Width="38" Margin="40,57,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="6" Grid.Row="15" Tag="Valve_13" ParamLabel="V13" Height="30" Width="38" Margin="8,57,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="7" Grid.Row="15" Tag="Valve_14" ParamLabel="V14" Height="30" Width="38" Margin="30,58,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="4" Grid.Row="15" Tag="Valve_1" ParamLabel="V1" Height="30" Width="38" Margin="-11,35,4,-20" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="6" Grid.Row="15" Tag="Valve_12" ParamLabel="V12" Height="30" Width="38" Margin="-32,104,0,-20" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="13" Grid.Row="15" Tag="Valve_51" ParamLabel="V51" Height="30" Width="38" Margin="70,108,0,-20" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="15" Grid.Row="15" Tag="Valve_27" ParamLabel="V27" Height="30" Width="38" Margin="10,45,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="14" Grid.Row="15" Tag="Valve_26" ParamLabel="V26" Height="30" Width="38" Margin="70,45,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="15" Grid.Row="15" Tag="Valve_28" ParamLabel="V28" Height="30" Width="38" Margin="90,108,0,-20" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="18" Grid.Row="13" Tag="Valve_37" ParamLabel="V37" Height="30" Width="38" Margin="90,50,-40,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="19" Grid.Row="13" Tag="Valve_38" ParamLabel="V38" Height="30" Width="38" Margin="10,50,-40,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="21" Grid.Row="15" Tag="Valve_42" ParamLabel="V42" Height="30" Width="38" Margin="-30,45,0,0" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="19" Grid.Row="15" Tag="Valve_52" ParamLabel="V52" Height="30" Width="38" Margin="90,108,-40,-20" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="2" Grid.Row="19" Tag="Valve_53" ParamLabel="V53" Height="30" Width="38" Margin="37,116,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="5" Grid.Row="19" Tag="Valve_3" ParamLabel="V3" Height="30" Width="38" Margin="8,116,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="6" Grid.Row="19" Tag="Valve_55" ParamLabel="V55" Height="30" Width="38" Margin="-27,117,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="9" Grid.Row="19" Tag="Valve_16" ParamLabel="V16" Height="30" Width="38" Margin="-26,117,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="13" Grid.Row="19" Tag="Valve_30" ParamLabel="V30" Height="30" Width="38" Margin="-30,108,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="14" Grid.Row="19" Tag="Valve_29" ParamLabel="V29" Height="30" Width="38" Margin="25,108,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="15" Grid.Row="19" Tag="Valve_31" ParamLabel="V31" Height="30" Width="38" Margin="100,108,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="19" Grid.Row="19" Tag="Valve_40" ParamLabel="V40" Height="30" Width="38" Margin="20,108,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:BoolParameterProcessFlow Grid.Column="19" Grid.Row="19" Tag="Valve_41" ParamLabel="V41" Height="30" Width="38" Margin="80,108,-40,-50" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="21" Grid.Row="19" Tag="Valve_43" ParamLabel="V43" Height="30" Width="38" Margin="40,108,0,-50" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="19" Grid.Row="17" Tag="Valve_39" ParamLabel="V39" Height="30" Width="38" Margin="20,108,0,-60" Grid.ColumnSpan="2" Grid.RowSpan="3" >
+                <uc_2:BoolParameterProcessFlow.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc_2:BoolParameterProcessFlow.RenderTransform>
+            </uc_2:BoolParameterProcessFlow>
+            <uc_2:BoolParameterProcessFlow Grid.Column="16" Grid.Row="17" Tag="Valve_36" ParamLabel="V36" Height="30" Width="38" Margin="30,108,0,-60" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <uc_2:CircleProcessFlow Grid.Column="7" Grid.Row="12"   Tag="Pump_3" ParamLabel="P3"  Margin="80,-95,-15,-30" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <TextBox Text="Pump_3" Grid.Column="8" Grid.Row="13" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="13,23,32,11.75" Height="20" Grid.ColumnSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="4" Grid.Row="12"   Tag="Pump_2" ParamLabel="P2"  Margin="90,-63,-40,0" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <TextBox Text="Pump_2" Grid.Column="5" Grid.Row="13" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="45,16,15,19" Height="20" Grid.ColumnSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="16" Grid.Row="12"   Tag="Pump_6" ParamLabel="P6"  Margin="60,-65,0,0" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <TextBox Text="Pump_6" Grid.Column="16" Grid.Row="13" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="101,22,23,12.75" Height="20" Grid.ColumnSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="20" Grid.Row="12"   Tag="Pump_9" ParamLabel="P9"  Margin="30,-60,-5,0" Height="40" Width="40" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+            <TextBox Text="Pump_9" Grid.Column="20" Grid.Row="13" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="88,22,37,12.75" Height="20" Grid.ColumnSpan="2" />
+
+            <uc_2:BoolParameterProcessFlow Grid.Column="1" Grid.Row="3" Tag="Valve_4" ParamLabel="V4" Margin="69,24,35,10" Grid.ColumnSpan="2" Grid.RowSpan="2"  />
+            <uc_2:BoolParameterProcessFlow Grid.Column="0" Grid.Row="6" Tag="Valve_54" ParamLabel="V54" Margin="26,0,2,0" />
+            <uc_2:BoolParameterProcessFlow Grid.Column="1" Grid.Row="6" Tag="Valve_6" ParamLabel="V6" Margin="26,0,16,0" />
+            <uc_2:BoolParameterProcessFlow Grid.Row="16"   Tag="Valve_1" ParamLabel="V1" Margin="50,36,41,4" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+            <uc_2:BoolParameterProcessFlow Grid.Row="18"   Tag="Valve_1" ParamLabel="V1" Margin="21,0,32,40" Grid.Column="1" Height="18" VerticalAlignment="Bottom" />
+            <uc_2:BoolParameterProcessFlow Grid.Row="20"   Tag="Valve_1" ParamLabel="V1" Margin="15,0,38,66" Grid.Column="1" Height="18" VerticalAlignment="Bottom" />
+            <uc_2:BoolParameterProcessFlow Grid.Row="8"   Tag="Valve_1" ParamLabel="V1" Margin="35,0,27,32" Grid.Column="2" Height="22" VerticalAlignment="Bottom" />
+            <uc_2:BoolParameterProcessFlow Grid.Row="6"   Tag="Valve_1" ParamLabel="V1" Margin="34,0,28,3" Grid.Column="2" Height="22" VerticalAlignment="Bottom" />
+            <uc_2:BoolParameterProcessFlow Grid.Column="2" Grid.Row="20"   Tag="Valve_3" ParamLabel="V3" Margin="27,86,7,0" Grid.RowSpan="2" />
+            <uc_2:BoolParameterProcessFlow Grid.Column="0" Grid.Row="20"   Tag="Valve_53" ParamLabel="V53" Margin="20,82,67,0" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+            <uc_2:CircleProcessFlow Grid.Column="3" Grid.Row="22"   Tag="Pump_10" ParamLabel="P10" Margin="1,4,48,0" Grid.RowSpan="3" Height="40" Width="40" />
+            <TextBox Text="Pump_10" Grid.Column="1" Grid.Row="23" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="30,41.937,22,11.063" Height="20" Grid.ColumnSpan="3" Grid.RowSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="5" Grid.Row="22" Tag="Pump_12" ParamLabel="P12" Grid.ColumnSpan="2" Margin="35,2.4,0,0" Grid.RowSpan="3" Height="40" Width="40" />
+            <TextBox Text="Pump_12" Grid.Column="6" Grid.Row="23" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="10,40.937,23,12.063" Height="20" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="14" Grid.Row="23"   Tag="Pump_5" ParamLabel="P5" Margin="28,-2,0,0" Grid.RowSpan="3" Grid.ColumnSpan="4" Height="40" Width="40" VerticalAlignment="Top" />
+            <TextBox Text="Pump_5" Grid.Column="15" Grid.Row="23" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="56,22.51,105,6.267" Width="48" Height="20" Grid.ColumnSpan="2" />
+            <uc_2:CircleProcessFlow Grid.Column="18" Grid.Row="22"   Tag="Pump_7" ParamLabel="P7" Margin="95,0,-1,0" Grid.RowSpan="5" Grid.ColumnSpan="4" Height="40" Width="40"/>
+            <TextBox Text="Pump_7" Grid.Column="19" Grid.Row="23" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="26,0.937,54,28.063" Height="20" Grid.ColumnSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="21" Grid.Row="22"   Tag="Pump_8" ParamLabel="P8" Margin="-9,0,0,0" Grid.ColumnSpan="3" Grid.RowSpan="5" Height="40" Width="40"/>
+            <TextBox Text="Pump_8" Grid.Column="22" Grid.Row="22" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="67,28.937,24,34.063" Height="20" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="5" Grid.Row="23"   Tag="Pump_1" ParamLabel="P1" Margin="-30,-8,0,0" Height="40" Width="40" />
+            <TextBox Text="Pump_1" Grid.Column="4" Grid.Row="23" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="30,41.937,22,11.063" Height="20" Grid.ColumnSpan="3" Grid.RowSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="8" Grid.Row="22" Tag="Pump_4" ParamLabel="P4" Grid.ColumnSpan="2" Margin="-38,0,0,-5" Grid.RowSpan="3" Height="40" Width="40" />
+            <TextBox Text="Pump_4" Grid.Column="9" Grid.Row="23" BorderBrush="Transparent" Background="Transparent" Foreground="WHITE" Margin="17,19.937,16,9.063" Height="20" Grid.ColumnSpan="2" />
+
+            <uc_2:CircleProcessFlow Grid.Column="5" Grid.Row="8"  Tag="ULS_R2" ParamLabel="V1" Margin="-30,0,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="5" Grid.Row="6"   Tag="LLS_R2" ParamLabel="V1" Margin="-30,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="7" Grid.Row="6"   Tag="ULS_R3" ParamLabel="V1" Margin="20,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="7" Grid.Row="8"   Tag="LLS_R3" ParamLabel="V1" Margin="20,0,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="12" Grid.Row="6"  Tag="ULS_AA1" ParamLabel="V1" Margin="65,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="12" Grid.Row="8"  Tag="LLS_AA1" ParamLabel="V1" Margin="65,0,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="15" Grid.Row="6"  Tag="ULS_AA2" ParamLabel="V1" Margin="-10,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="15" Grid.Row="8"  Tag="LLS_AA2" ParamLabel="V1" Margin="-10,0,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="17" Grid.Row="6"   Tag="ULS_DCM" ParamLabel="V1" Margin="50,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="17" Grid.Row="8"   Tag="LLS_DCM" ParamLabel="V1" Margin="50,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="19" Grid.Row="6"   Tag="ULS_MVB" ParamLabel="V1" Margin="10,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="19" Grid.Row="8"   Tag="LLS_MVB" ParamLabel="V1" Margin="10,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="21" Grid.Row="6"   Tag="ULS_R5" ParamLabel="V1" Margin="30,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="21" Grid.Row="9"   Tag="LLS_R5" ParamLabel="V1" Margin="30,20,-2,5"  Height="15" Width="15" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="3" Grid.Row="17"   Tag="ULS_R1" ParamLabel="V1" Margin="-15,70,-40,0" Grid.RowSpan="3" Height="15" Width="15" />
+            <uc_2:CircleProcessFlow Grid.Column="3" Grid.Row="19"   Tag="LLS_R1" ParamLabel="V1" Margin="-20,20,-40,0" Grid.RowSpan="3" Height="15" Width="15" />
+            <uc_2:CircleProcessFlow Grid.Column="7" Grid.Row="17"   Tag="ULS_R4" ParamLabel="V1" Margin="10,110,48,0" Grid.RowSpan="3" Height="15" Width="15" />
+            <uc_2:CircleProcessFlow Grid.Column="7" Grid.Row="19"   Tag="LLS_R4" ParamLabel="V1" Margin="10,-40,48,0" Grid.RowSpan="3" Height="15" Width="15" />
         </Grid>
-       
-        <!--<uc_2:BoolParameter Grid.Column="1" Tag="Valve_4" ParamLabel="V4" Margin="192,104,1642,936" >-->
-        
-        <!--<TabControl Grid.Column="1" Background="#1a202c" BorderThickness="0">
-            <TabControl.Resources>
-                <Style TargetType="TabItem">
+        <!--#endregion-->
+
+
+        <!--#region InfoProvider-->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="105*"/>
+                <ColumnDefinition Width="53*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style x:Key="LabelStyle" TargetType="Label">
                     <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="FontSize" Value="15"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TabItem">
-                                <Border Name="BackgroundPanel" Margin="2" Cursor="Hand">
-                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="5"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="BackgroundPanel" Property="BorderBrush" Value="#4CDCDC"/>
-                                        <Setter TargetName="BackgroundPanel" Property="BorderThickness" Value="1"/>
-                                        <Setter TargetName="BackgroundPanel" Property="Background" Value="#2F515D" />
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="False">
-                                        <Setter TargetName="BackgroundPanel" Property="BorderBrush" Value="#1e2432"/>
-                                        <Setter TargetName="BackgroundPanel" Property="BorderThickness" Value="1"/>
-                                        <Setter TargetName="BackgroundPanel" Property="Background" Value="#1a202c" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Background" Value="#272e3e"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Padding" Value="20"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 </Style>
-            </TabControl.Resources>
-            <TabItem Header="Part-1">
-                <ContentControl prism:RegionManager.RegionName="First"/>
-            </TabItem>
-            <TabItem Header="Part-2">
-                <ContentControl prism:RegionManager.RegionName="Second"/>
-            </TabItem>
-        </TabControl>-->
+            </Grid.Resources>
+            <Label Grid.Column="0" Grid.Row="0" Content="MVA Mass&#xa;Temperature" Style="{StaticResource InfoProviderLabel}" Height="58" Margin="0,16,0,16.4" Width="110"/>
+            <TextBox Grid.Row="0" Text="{Binding Temperature_1}" Background="#1d2532" Style="{StaticResource TextBoxResoure}"  Margin="9.6,24,11.2,24.4" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="0" Content="°C" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28,0,28.4" Width="27"/>
+            <TextBox Grid.Row="1" Text="{Binding StirrerSetpoint_1}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.6,11.2,24.8" Grid.Column="1"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="MVA Stirrer&#xa;Speed" Style="{StaticResource InfoProviderLabel}" Height="57" Margin="0,16.6,12.4,16.8"/>
+            <Label Grid.Column="2" Grid.Row="1" Content="RPM" Style="{StaticResource InfoProviderLabel}" Height="33" Margin="0.6,28.6,0,28.8" Width="46"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="MVA Pressure" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="34" Margin="0,28.2,70.4,28.2"/>
+            <TextBox Grid.Row="2" Text="{Binding Pressure_1}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.2,11.2,24.2" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="2" Content="Bar" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28.2,0,28.2" Width="35"/>
+            <Label Grid.Column="0" Grid.Row="3" Content="MVA Level" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="33" Margin="0,28.8,70.4,28.6"/>
+            <TextBox Grid.Row="3" Text="{Binding Level_1}" HorizontalContentAlignment="Center"  Background="#1d2532" Width="100" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" Height="41" Margin="9.6,24.8,11.2,24.6" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="3" Content="%" Style="{StaticResource InfoProviderLabel}" Height="33" Margin="0.6,28.8,0,28.6" Width="32"/>
+            <Label Grid.Column="0" Grid.Row="4" Content="RV-50L Mass&#xa;Temperature" Foreground="White" FontSize="18" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="58" Margin="0,16.4,70.4,16"/>
+            <TextBox Grid.Row="4" Text="{Binding Temperature_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.4,11.2,24" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="4" Content="°C" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28.4,0,28" Width="27"/>
+            <Label Grid.Column="0" Grid.Row="5" Content="RV-50L Stirrer&#xa;Speed" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="58" Margin="0,16,70.4,16.4"/>
+            <TextBox Grid.Row="5" Text="{Binding StirrerSetpoint_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24,11.2,24.4" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="5" Content="RPM" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28,0,28.4" Width="46"/>
+            <Label Grid.Column="0" Grid.Row="6" Content="RV-50L&#xa;Pressure" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="58" Margin="0,15.6,70.4,16"/>
+            <TextBox Grid.Row="6" Text="{Binding Pressure_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,23.6,11.2,24" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="6" Content="Bar" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,27.6,0,28" Width="35"/>
+            <Label Grid.Column="0" Grid.Row="7" Content="RV-50L Level" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="34" Margin="0,28,70.4,27.6"/>
+            <TextBox Grid.Row="7" Text="{Binding Level_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24,11.2,23.6" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="7" Content="%" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28,0,27.6" Width="32"/>
+            <Label Grid.Column="0" Grid.Row="8" Content="RV-25L Mass&#xa;Temperature" Foreground="White" FontSize="18" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="57" Margin="0,16.4,70.4,16.2"/>
+            <TextBox Grid.Row="8" Text="{Binding Temperature_3}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.4,11.2,24.2" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="8" Content="°C" Style="{StaticResource InfoProviderLabel}" Height="33" Margin="0.6,28.4,0,28.2" Width="27"/>
+            <Label Grid.Column="0" Grid.Row="9" Content="RV-25L Stirrer&#xa;Speed" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="58" Margin="0,15.8,70.4,15.8"/>
+            <TextBox Grid.Row="9" Text="{Binding StirrerSetpoint_3}" Style="{StaticResource TextBoxResoure}" Margin="8.6,23.8,11.2,23.8" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="9" Content="RPM" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,27.8,0,27.8" Width="46"/>
+            <Label Grid.Column="0" Grid.Row="10" Content="RV-25L&#xa;Pressure" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="57" Margin="0,16.2,70.4,16.4"/>
+            <TextBox Grid.Row="10" Text="{Binding Pressure_3}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.2,11.2,24.4" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="10" Content="Bar" Style="{StaticResource InfoProviderLabel}" Height="33" Margin="0.6,28.2,0,28.4" Width="35"/>
+            <Label Grid.Column="0" Grid.Row="11" Content="RV-25L&#xa;Level" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="58" Margin="0,15.6,70.4,16"/>
+            <TextBox Grid.Row="11" Text="{Binding Level_3}" Style="{StaticResource TextBoxResoure}" Margin="9.6,23.6,11.2,24" Grid.Column="1"/>
+            <Label Grid.Column="2" Grid.Row="11" Content="%" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,27.6,0,28" Width="32"/>
+        </Grid>
 
-
+        <!--#endregion-->
     </Grid>
+
 </UserControl>

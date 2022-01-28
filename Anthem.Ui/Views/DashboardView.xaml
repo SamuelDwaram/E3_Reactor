@@ -8,15 +8,39 @@
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
     <UserControl.Resources>
-        <Style x:Key="NavigateToOtherScreenButtonStyle" TargetType="Button">
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#272e3e"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+
+
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Command" Value="{Binding NavigateCommand}"/>
+
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -24,76 +48,150 @@
                             <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red"/>
+                                <Setter Property="Background" TargetName="border" Value="black"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="black"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="black"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="black"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Gray"/>
-                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="Button" x:Key="ButtonType">
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="25" />
-            <Setter Property="Command" Value="{Binding NavigateCommand}" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
         <DataTemplate x:Key="fieldDeviceTemplate">
-
         </DataTemplate>
+
     </UserControl.Resources>
+    
     <Grid Background="#1a202c">
         <Grid.ColumnDefinitions>
-            <!--<ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="9*"/>-->
             <ColumnDefinition Width="0.7*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0.7*"/>
-            
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
-        
-            <Button  Content="Recipes View" Grid.Row="1" Grid.Column="1" CommandParameter="Recipes" Style="{StaticResource ButtonType}" VerticalAlignment="Center"/>
-        
+        <StackPanel Grid.Row="1" Grid.Column="1" Cursor="Hand" >
+            <Button Grid.Row="1" Grid.Column="1"  CommandParameter="Recipes" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
+                <Image Source="/Anathem.Ui;component/Images/Recipe Control.png"/>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="1"  CommandParameter="Recipes" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="1" Grid.Column="1" FontSize="25" TextAlignment="Center"  FontWeight="Bold" >
+            <Run Foreground="DarkOrange">Recipes</Run>
+                </TextBlock>
+            </Button>
 
-        <Button Grid.Row="1" Grid.Column="2" Content="Parameters Host" CommandParameter="ReactorControl" Style="{StaticResource ButtonType}"/>
-        <Button Grid.Row="1" Grid.Column="3" Content="Process Diagram " CommandParameter="ProcessFlow" Style="{StaticResource ButtonType}"/>
-        <Button Grid.Row="1" Grid.Column="4" Content="Configuration Page"  CommandParameter="Configuration" Style="{StaticResource ButtonType}"/>
-        <Button Grid.Row="2" Grid.Column="1" Content="Reports" CommandParameter="Reports" Style="{StaticResource ButtonType}"/>
-        <Button Grid.Row="2" Grid.Column="2" Content="Trends" CommandParameter="Trends" Style="{StaticResource ButtonType}"/>
-        <Button Grid.Row="2" Grid.Column="3"  Content="Alarms" CommandParameter="Alarms" Style="{StaticResource ButtonType}"/>
-        <Button Grid.Row="2" Grid.Column="4" Content="Audit Trail" CommandParameter="AuditTrail" Style="{StaticResource ButtonType}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Cursor="Hand" >
+            <Button Grid.Row="1" Grid.Column="2" CommandParameter="ReactorControl" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
 
-        <DockPanel Grid.Column="0" Grid.RowSpan="4" Background="#272e3e" Margin="5">
+                <Image Source="/Anathem.Ui;component/Images/Parameter_Host.png" />
+
+            </Button>
+            <Button Grid.Row="1" Grid.Column="2" CommandParameter="ReactorControl" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="1" Grid.Column="2" FontSize="25" TextAlignment="Center"  FontWeight="Bold">
+            <Run Foreground="DarkOrange">Parameters Host</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="3" Cursor="Hand" >
+            <Button Grid.Row="1" Grid.Column="3" CommandParameter="ProcessFlow" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
+                <Image Source="/Anathem.Ui;component/Images/Process flow diagram.png"/>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="3" CommandParameter="ProcessFlow" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="1" Grid.Column="3" FontSize="25" TextAlignment="Center"  FontWeight="Bold">
+                    <Run Foreground="DarkOrange">Process Diagram</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="4" Cursor="Hand" >
+            <Button Grid.Row="1" Grid.Column="4" CommandParameter="UserManagement" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
+                <Image Source="/Anathem.Ui;component/Images/user.png"/>
+
+            </Button>
+            <Button Grid.Row="1" Grid.Column="4" CommandParameter="UserManagement" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="1" Grid.Column="4" FontSize="25" TextAlignment="Center"  FontWeight="Bold">
+            <Run Foreground="DarkOrange">UserManagement</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1" Cursor="Hand">
+            <Button Grid.Row="2" Grid.Column="1" CommandParameter="Reports" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
+
+                <Image Source="/Anathem.Ui;component/Images/reports icon.png"/>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="1" CommandParameter="Reports" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="2" Grid.Column="1" FontSize="25" TextAlignment="Center"  FontWeight="Bold">
+            <Run Foreground="DarkOrange">Reports</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2" Cursor="Hand">
+            <Button Grid.Row="2" Grid.Column="2" CommandParameter="Trends" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
+
+                <Image Source="/Anathem.Ui;component/Images/trends-icon.png"/>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="2" CommandParameter="Trends" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="2" Grid.Column="2" FontSize="25" TextAlignment="Center"  FontWeight="Bold">
+            <Run Foreground="DarkOrange">Trends</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="3" Cursor="Hand">
+            <Button Grid.Row="2" Grid.Column="3" CommandParameter="Alarms" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
+            
+                <Image Source="/Anathem.Ui;component/Images/Alarmicon.png"/>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="3" CommandParameter="Alarms" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="2" Grid.Column="3" FontSize="25" TextAlignment="Center"  FontWeight="Bold">
+            <Run Foreground="DarkOrange">Alarms</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="4" Cursor="Hand">
+            <Button Grid.Row="2" Grid.Column="4" CommandParameter="AuditTrail" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
+              
+                <Image Source="/Anathem.Ui;component/Images/audit.png"/>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="4" CommandParameter="AuditTrail" Style="{DynamicResource ButtonStyle}" Background="Transparent" BorderThickness="0" Width="300" Height="55">
+                <TextBlock Width="300" Height="55" Grid.Row="2" Grid.Column="4" FontSize="25" TextAlignment="Center"  FontWeight="Bold">
+            <Run Foreground="DarkOrange">AuditTrail</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+       
+        <DockPanel>
             <DockPanel.Resources>
                 <Style TargetType="Button">
-                    <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="DockPanel.Dock" Value="Top" />
-                    <Setter Property="Padding" Value="30,0,0,0" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="MinHeight" Value="80" />
-                    <Setter Property="FontSize" Value="25" />
-                    <Setter Property="Command" Value="{Binding NavigateCommand}" />
-                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="DockPanel.Dock" Value="Top"/>
+                    <Setter Property="Padding" Value="30,0,0,0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="MinHeight" Value="80"/>
+                    <Setter Property="FontSize" Value="25"/>
+                    <Setter Property="Command" Value="{Binding NavigateCommand}"/>
+                    <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Button}">
@@ -102,10 +200,10 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsDefaulted" Value="true">
-                                        <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                        <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red" />
+                                        <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="Red"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -113,15 +211,7 @@
                     </Setter>
                 </Style>
             </DockPanel.Resources>
-            <!--<Button Content="Recipes View" CommandParameter="Recipes"/>
-            <Button Content="Parameters Host" CommandParameter="ReactorControl"/>
-            <Button Content="Process Diagram " CommandParameter="ProcessFlow"/>
-            <Button Content="Configuration Page"  CommandParameter="Configuration"/>
-            <Button Content="Reports" CommandParameter="Reports"/>
-            <Button Content="Trends" CommandParameter="Trends"/>
-            <Button Content="Alarms" CommandParameter="Alarms"/>
-            <Button Content="Audit Trail" CommandParameter="AuditTrail"/>
-            <Button Content="User Management" CommandParameter="UserManagement"/>-->
+           
         </DockPanel>
 
     </Grid>

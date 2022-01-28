@@ -168,7 +168,24 @@ namespace E3.ReactorManager.DataAbstractionLayer
 
             return sensorsDataSets;
         }
+        public string FetchRunningBatch()
+        {
+            string RunningBatch;
+            var dataReader = _dbManager.GetScalarValue($"select top(1) Identifier from [dbo].BatchTableCompact  where State='Running' order by TimeStarted desc", CommandType.Text, null);
+            try
+            {
+                RunningBatch = dataReader?.ToString();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+            }
 
+            return RunningBatch;
+        }
         public IList<FieldPoint> FetchFieldPoints(string sensorDataSetIdentifier)
         {
             List<FieldPoint> fieldPoints = new List<FieldPoint>();
