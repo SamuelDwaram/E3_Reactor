@@ -3,7 +3,7 @@
 namespace E3.ReactorManager.Recipe.PLCIntegrator.Models
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct Recipe
+    public struct SlaveRecipe
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 200)]
         public Block[] Blocks;

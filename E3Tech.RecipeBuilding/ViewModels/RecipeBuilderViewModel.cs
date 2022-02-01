@@ -37,7 +37,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private Dictionary<SeqRecipeModel, IList<RecipeStep>> recipeSeqDetail;
 
 
-        public RecipeBuilderViewModel(IUnityContainer containerProvider, IRecipeExecutor recipeExecutor, IFieldDevicesCommunicator fieldDevicesCommunicator, IRecipeBuilder recipeBuilder, IRecipeReloader recipeReloader)
+        public RecipeBuilderViewModel(IUnityContainer containerProvider, IRecipeExecutor recipeExecutor, IFieldDevicesCommunicator fieldDevicesCommunicator, IRecipeBuilder recipeBuilder, IRecipeReloader recipeReloader, IDesignExperiment designExperiment)
         {
             taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             this.designExperiment = designExperiment;
@@ -304,6 +304,10 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 IsEndBatchPopUpOpen = false;
 
             }
+        }
+        public void CloseBatchEndPopup()
+        {
+            IsEndBatchPopUpOpen = false;
         }
         public bool CanEndBatch()
         {
@@ -955,7 +959,13 @@ namespace E3Tech.RecipeBuilding.ViewModels
         public ICommand CloseBatchNamePopupCommand
         {
             get => _closeBatchNamePopupCommand ?? (_closeBatchNamePopupCommand = new DelegateCommand(new Action(CloseBatchNamePopup)));
-            set => _startRecipeCommand = value;
+            set => _closeBatchNamePopupCommand = value;
+        }
+        private ICommand _closeBatchEndPopupCommand;
+        public ICommand CloseBatchEndPopupCommand
+        {
+            get => _closeBatchEndPopupCommand ?? (_closeBatchEndPopupCommand = new DelegateCommand(new Action(CloseBatchEndPopup)));
+            set => _closeBatchEndPopupCommand = value;
         }
         private ICommand _startRecipeCommand;
         public ICommand StartRecipeCommand

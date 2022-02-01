@@ -51,10 +51,10 @@ namespace E3Tech.RecipeBuilding
             return false;
         }
 
-        private Recipe GetRecipeSteps(string deviceId)
+        private SlaveRecipe GetRecipeSteps(string deviceId)
         {
             var plcHandle = fieldDevicesCommunicator.CreateVariableHandles(deviceId, new List<string> { "RecipeTags.Recipe" }).First();
-            return fieldDevicesCommunicator.ReadAny<Recipe>(deviceId, plcHandle);
+            return fieldDevicesCommunicator.ReadAny<SlaveRecipe>(deviceId, plcHandle);
 
         }
 
@@ -194,7 +194,7 @@ namespace E3Tech.RecipeBuilding
             string deviceId = (string)arg;
 
             var recipeSteps = new List<RecipeStep>();
-            Recipe recipe = GetRecipeSteps(deviceId);
+            SlaveRecipe recipe = GetRecipeSteps(deviceId);
             foreach (var block in recipe.Blocks)
             {
                 if (string.IsNullOrEmpty(block.Name) == false)

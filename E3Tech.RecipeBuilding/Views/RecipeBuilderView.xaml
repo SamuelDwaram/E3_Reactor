@@ -383,7 +383,7 @@
                             </EventTrigger>
                         </Button.Triggers>-->
                     </Button>
-                    <Button Grid.Row="5" Grid.Column="1" Margin="136,12,116,12" Content="No" Style="{StaticResource CommandButtonStyle}">
+                    <Button Grid.Row="5" Grid.Column="1" Margin="136,12,116,12" Content="No" Style="{StaticResource CommandButtonStyle}" Command="{Binding CloseBatchEndPopupCommand}">
                         <!--<Button.Triggers>
                             <EventTrigger RoutedEvent="Button.Click">
                                 <BeginStoryboard>
@@ -435,7 +435,7 @@
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="Focusable" Value="False" />
                             </MultiDataTrigger>
-                            <MultiDataTrigger>
+                            <!--<MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Column.DisplayIndex}" Value="1"></Condition>
                                     <Condition Binding="{Binding RecipeStep.BlockTwo}" Value="{x:Null}"></Condition>
@@ -455,7 +455,7 @@
                                     <Condition Binding="{Binding RecipeStep.BlockFour}" Value="{x:Null}"></Condition>
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="Focusable" Value="False" />
-                            </MultiDataTrigger>
+                            </MultiDataTrigger>-->
                         </Style.Triggers>
                     </Style>
                 </DataGrid.CellStyle>

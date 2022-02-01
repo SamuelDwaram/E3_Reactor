@@ -62,13 +62,13 @@ namespace E3Tech.RecipeBuilding
                 {
                     lock (monitor)
                     {
-                        plcHandle = fieldDevicesCommunicator.CreateVariableHandles(deviceId, new List<string> { "RecipeTags.Recipe" }).First();
+                        plcHandle = fieldDevicesCommunicator.CreateVariableHandles(deviceId, new List<string> { "RecipeTags.SlaveRecipe" }).First();
                         plcVarHandles.TryAdd(deviceId, plcHandle);
                     }
                 }
                 else
                 {
-                    Recipe recipe = fieldDevicesCommunicator.ReadAny<Recipe>(deviceId, plcHandle);
+                    SlaveRecipe recipe = fieldDevicesCommunicator.ReadAny<SlaveRecipe>(deviceId, plcHandle);
                     foreach (Block block in recipe.Blocks)
                     {
                         if (block.Name == string.Empty)
@@ -93,13 +93,13 @@ namespace E3Tech.RecipeBuilding
                 {
                     lock (monitor)
                     {
-                        plcHandle = fieldDevicesCommunicator.CreateVariableHandles(deviceId, new List<string> { "RecipeTags.Recipe" }).First();
+                        plcHandle = fieldDevicesCommunicator.CreateVariableHandles(deviceId, new List<string> { "RecipeTags.SlaveRecipe" }).First();
                         plcVarHandles.TryAdd(deviceId, plcHandle);
                     }
                 }
                 else
                 {
-                    Recipe recipe = fieldDevicesCommunicator.ReadAny<Recipe>(deviceId, plcHandle);
+                    SlaveRecipe recipe = fieldDevicesCommunicator.ReadAny<SlaveRecipe>(deviceId, plcHandle);
                     foreach (Block block in recipe.Blocks)
                     {
                         if (block.Name == string.Empty)
@@ -264,7 +264,7 @@ namespace E3Tech.RecipeBuilding
             pollingInProgress = false;
             cancellationTokenSource.Cancel();
 
-            Recipe recipe = new Recipe();
+            SlaveRecipe recipe = new SlaveRecipe();
             IList<Block> blocks = new List<Block>();
             foreach ((RecipeStep recipeStep, int stepIndex) in recipeSteps.Select((recipeStep, stepIndex) => (recipeStep, stepIndex)))
             {
@@ -278,7 +278,7 @@ namespace E3Tech.RecipeBuilding
 
             recipe.Blocks = blocks.ToArray();
             
-            fieldDevicesCommunicator.WriteAny<Recipe>(deviceId, plcVarHandles[deviceId], recipe);
+            fieldDevicesCommunicator.WriteAny<SlaveRecipe>(deviceId, plcVarHandles[deviceId], recipe);
             
             SendRecipeTriggers(recipeSteps.Count - 1, deviceId);
 
