@@ -17,12 +17,13 @@ namespace E3Tech.RecipeBuilding
     {
         private readonly IFieldDevicesCommunicator fieldDevicesCommunicator;
         private readonly IRecipesManager recipesManager;
-        private readonly Timer pollRecipeTimer = new Timer(500);
+        private readonly Timer pollRecipeTimer = new Timer(TimeSpan.FromMilliseconds(500).TotalMilliseconds);
         private bool pollingInProgress;
         private readonly ConcurrentDictionary<string, int> plcVarHandles = new ConcurrentDictionary<string, int>();
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         public event UpdateRecipe UpdateRecipe;
         public object monitor = new object();
+        private bool cyclicPollInProgress = false;
 
         public PLCRecipeExecutor(IFieldDevicesCommunicator fieldDevicesCommunicator, IRecipesManager recipesManager)
         {
@@ -30,8 +31,27 @@ namespace E3Tech.RecipeBuilding
             this.recipesManager = recipesManager;
             Initialize();
             this.fieldDevicesCommunicator.FieldPointDataReceived += FieldDevicesCommunicator_FieldPointDataReceived;
-
-
+            pollRecipeTimer = new Timer(500);
+            pollRecipeTimer.Elapsed += CyclicPollDevicesTimer_Tick;
+        }
+        private void CyclicPollDevicesTimer_Tick(object sender, EventArgs e)
+        {
+            if (cyclicPollInProgress)
+            {
+                return;
+            }
+            else
+            {
+                cyclicPollInProgress = true;
+                //Turn off cyclicPollInProgress after the task is completed
+                Task.Factory.StartNew(Sample);
+                cyclicPollInProgress = false;
+            }
+        }
+        public TimeSpan GetLoggingIntervalDetails()
+        {
+            
+            return TimeSpan.FromMinutes(1);
         }
         private void FieldDevicesCommunicator_FieldPointDataReceived(object sender, FieldPointDataReceivedArgs args)
         {

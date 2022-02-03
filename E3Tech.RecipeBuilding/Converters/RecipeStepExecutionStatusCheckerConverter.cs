@@ -61,14 +61,23 @@ namespace E3Tech.RecipeBuilding.Converters
                 case "Start":
                     blockEndedStatus = (block as ParameterizedRecipeBlock<StartBlockParameters>).Parameters.Ended;
                     break;
-                case "HeatCool":
-                    blockEndedStatus = (block as ParameterizedRecipeBlock<HeatCoolBlockParameters>).Parameters.Ended;
-                    break;
+                //case "HeatCool":
+                //    blockEndedStatus = (block as ParameterizedRecipeBlock<HeatCoolBlockParameters>).Parameters.Ended;
+                //    break;
                 case "Stirrer":
                     blockEndedStatus = (block as ParameterizedRecipeBlock<StirrerBlockParameters>).Parameters.Ended;
                     break;
                 case "Wait":
                     blockEndedStatus = (block as ParameterizedRecipeBlock<WaitBlockParameters>).Parameters.Ended;
+                    break;
+                case "Transfer":
+                    blockEndedStatus = (block as ParameterizedRecipeBlock<TransferBlockParameters>).Parameters.Ended;
+                    break;
+                case "N2Purge":
+                    blockEndedStatus = (block as ParameterizedRecipeBlock<N2PurgeBlockParameters>).Parameters.Ended;
+                    break;
+                case "Drain":
+                    blockEndedStatus = (block as ParameterizedRecipeBlock<DrainBlockParameters>).Parameters.Ended;
                     break;
                 default:
                     blockEndedStatus = string.Empty;

@@ -240,8 +240,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
                      {
                          if (t.Result)
                          {
-                           //Navigate("Dashboard");
-                           IsBatchNameRequestPopUpOpen = false;
+                             //Navigate("Dashboard");
+                             IsBatchNameRequestPopUpOpen = false;
                          }
                          else
                          {
@@ -254,6 +254,9 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
 
             }
+            else
+            {
+            }
             return false;
         }
 
@@ -261,7 +264,11 @@ namespace E3Tech.RecipeBuilding.ViewModels
         {
 
             if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
+
             {
+                NewBatchDetails.Name = "";
+                NewBatchDetails.ScientistName = "";
+                NewBatchDetails.Comments = "";
                 IsBatchNameRequestPopUpOpen = true;
             }
             else
@@ -289,6 +296,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private void OpenEndBatchPopup()
         {
             IsEndBatchPopUpOpen = true;
+            AdminCredential.PasswordHash = "";
         }
 
         public void EndBatch()

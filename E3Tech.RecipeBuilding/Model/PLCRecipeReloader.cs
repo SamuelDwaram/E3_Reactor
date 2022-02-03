@@ -53,7 +53,7 @@ namespace E3Tech.RecipeBuilding
 
         private SlaveRecipe GetRecipeSteps(string deviceId)
         {
-            var plcHandle = fieldDevicesCommunicator.CreateVariableHandles(deviceId, new List<string> { "RecipeTags.Recipe" }).First();
+            var plcHandle = fieldDevicesCommunicator.CreateVariableHandles(deviceId, new List<string> { "RecipeTags.SlaveRecipe" }).First();
             return fieldDevicesCommunicator.ReadAny<SlaveRecipe>(deviceId, plcHandle);
 
         }

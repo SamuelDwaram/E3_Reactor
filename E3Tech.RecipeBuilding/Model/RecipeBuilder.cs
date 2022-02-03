@@ -360,6 +360,9 @@ namespace E3Tech.RecipeBuilding.Model
                 case "Transfer":
                     blockEndedStatus = (block as ParameterizedRecipeBlock<TransferBlockParameters>).Parameters.Ended;
                     break;
+                case "End":
+                    blockEndedStatus = (block as ParameterizedRecipeBlock<EndBlockParameters>).Parameters.Ended;
+                    break;
                 default:
                     blockEndedStatus = string.Empty;
                     break;

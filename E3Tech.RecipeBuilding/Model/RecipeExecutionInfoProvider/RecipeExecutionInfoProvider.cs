@@ -45,6 +45,12 @@ namespace E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider
                 case "Transfer":
                     AddTransferBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<TransferBlockParameters>, deviceId);
                     break;
+                case "Drain":
+                    AddDrainBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<DrainBlockParameters>, deviceId);
+                    break;
+                case "N2Purge":
+                    AddN2PurgeBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<N2PurgeBlockParameters>, deviceId);
+                    break;
                 case "End":
                     AddEndBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<EndBlockParameters>, deviceId);
                     break;
@@ -59,9 +65,23 @@ namespace E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider
             recipeExecutionInfoHandler.AddRecipeExecutionInfo(deviceId, string.Empty, string.Empty, string.Empty, message);
         }
 
+        private void AddN2PurgeBlockExecutionInfo(ParameterizedRecipeBlock<N2PurgeBlockParameters> n2purgeRecipeBlock, string deviceId)
+        {
+            string message = n2purgeRecipeBlock.UiLabel + " started";
+            string duration = DateTime.Parse(n2purgeRecipeBlock.Parameters.EndedTime).Subtract(DateTime.Parse(n2purgeRecipeBlock.Parameters.StartedTime)).TotalMinutes.ToString();
+            recipeExecutionInfoHandler
+                .AddRecipeExecutionInfo(deviceId, n2purgeRecipeBlock.Parameters.StartedTime, n2purgeRecipeBlock.Parameters.EndedTime, duration, message);
+        }
+        private void AddDrainBlockExecutionInfo(ParameterizedRecipeBlock<DrainBlockParameters> drainRecipeBlock, string deviceId)
+        {
+            string message = drainRecipeBlock.UiLabel + " started";
+            string duration = DateTime.Parse(drainRecipeBlock.Parameters.EndedTime).Subtract(DateTime.Parse(drainRecipeBlock.Parameters.StartedTime)).TotalMinutes.ToString();
+            recipeExecutionInfoHandler
+                .AddRecipeExecutionInfo(deviceId, drainRecipeBlock.Parameters.StartedTime, drainRecipeBlock.Parameters.EndedTime, duration, message);
+        }
         private void AddTransferBlockExecutionInfo(ParameterizedRecipeBlock<TransferBlockParameters> transferRecipeBlock, string deviceId)
         {
-            string message = transferRecipeBlock.UiLabel + " started with set point " + transferRecipeBlock.Parameters.Volume + "mL";
+            string message = transferRecipeBlock.UiLabel + " started from Source: " + transferRecipeBlock.Parameters.Source + " to Destination :" + transferRecipeBlock.Parameters.Destination;
             string duration = DateTime.Parse(transferRecipeBlock.Parameters.EndedTime).Subtract(DateTime.Parse(transferRecipeBlock.Parameters.StartedTime)).TotalMinutes.ToString();
             recipeExecutionInfoHandler
                 .AddRecipeExecutionInfo(deviceId, transferRecipeBlock.Parameters.StartedTime, transferRecipeBlock.Parameters.EndedTime, duration, message);
@@ -83,13 +103,13 @@ namespace E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider
                 .AddRecipeExecutionInfo(deviceId, stirrerRecipeBlock.Parameters.StartedTime, stirrerRecipeBlock.Parameters.EndedTime, duration, message);
         }
 
-        private void AddHeatCoolBlockExecutionInfo(ParameterizedRecipeBlock<HeatCoolBlockParameters> heatCoolRecipeBlock, string deviceId)
-        {
-            string message = "HC started with SetPoint " + heatCoolRecipeBlock.Parameters.SetPoint;
-            string duration = DateTime.Parse(heatCoolRecipeBlock.Parameters.EndedTime).Subtract(DateTime.Parse(heatCoolRecipeBlock.Parameters.StartedTime)).TotalMinutes.ToString();
-            recipeExecutionInfoHandler
-                .AddRecipeExecutionInfo(deviceId, heatCoolRecipeBlock.Parameters.StartedTime, heatCoolRecipeBlock.Parameters.EndedTime, duration, message);
-        }
+        //private void AddHeatCoolBlockExecutionInfo(ParameterizedRecipeBlock<HeatCoolBlockParameters> heatCoolRecipeBlock, string deviceId)
+        //{
+        //    string message = "HC started with SetPoint " + heatCoolRecipeBlock.Parameters.SetPoint;
+        //    string duration = DateTime.Parse(heatCoolRecipeBlock.Parameters.EndedTime).Subtract(DateTime.Parse(heatCoolRecipeBlock.Parameters.StartedTime)).TotalMinutes.ToString();
+        //    recipeExecutionInfoHandler
+        //        .AddRecipeExecutionInfo(deviceId, heatCoolRecipeBlock.Parameters.StartedTime, heatCoolRecipeBlock.Parameters.EndedTime, duration, message);
+        //}
 
         private void AddStartBlockExecutionInfo(ParameterizedRecipeBlock<StartBlockParameters> startRecipeBlock, string deviceId)
         {

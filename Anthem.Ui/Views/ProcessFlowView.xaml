@@ -20,8 +20,8 @@
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="FontSize" Value="24"/>
             <Setter Property="Height" Value="42"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="Foreground" Value="White"/>
@@ -589,6 +589,28 @@
             <uc_2:CircleProcessFlow Grid.Column="3" Grid.Row="19"   Tag="LLS_R1" ParamLabel="V1" Margin="-20,20,-40,0" Grid.RowSpan="3" Height="15" Width="15" />
             <uc_2:CircleProcessFlow Grid.Column="7" Grid.Row="17"   Tag="ULS_R4" ParamLabel="V1" Margin="10,110,48,0" Grid.RowSpan="3" Height="15" Width="15" />
             <uc_2:CircleProcessFlow Grid.Column="7" Grid.Row="19"   Tag="LLS_R4" ParamLabel="V1" Margin="10,-40,48,0" Grid.RowSpan="3" Height="15" Width="15" />
+
+
+
+
+            <uc_2:CircleProcessFlow Grid.Column="4" Grid.Row="6"   Tag="R2ULS" ParamLabel="R2ULS"  Margin="-35,6,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="4" Grid.Row="7"   Tag="R2LLS" ParamLabel="R2LLS"  Margin="-35,40,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="8" Grid.Row="7"   Tag="R3LLS" ParamLabel="R3LLS"  Margin="-30,40,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="8" Grid.Row="6"   Tag="R3ULS" ParamLabel="R3ULS"  Margin="-30,4,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="13" Grid.Row="6"   Tag="AA1ULS" ParamLabel="AA1ULS"  Margin="-88,7,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="13" Grid.Row="7"   Tag="AA1LLS" ParamLabel="AA1LLS"  Margin="-88,35,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="16" Grid.Row="7"   Tag="AA2LLS" ParamLabel="AA2LLS"  Margin="-140,35,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="16" Grid.Row="6"   Tag="AA2ULS" ParamLabel="AA2ULS"  Margin="-140,5,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="19" Grid.Row="6"   Tag="DCMULS" ParamLabel="DCMULS"  Margin="-219,5,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="19" Grid.Row="8"   Tag="DCMLLS" ParamLabel="DCMLLS"  Margin="-219,5,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="24" Grid.Row="6"   Tag="MVBULS" ParamLabel="MVBULS"  Margin="-305,5,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="24" Grid.Row="8"   Tag="MVBLLS" ParamLabel="MVBLLS"  Margin="-305,5,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="26" Grid.Row="8"   Tag="R5LLS" ParamLabel="R5LLS"  Margin="19,49,28,9" Height="15" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="26" Grid.Row="7"   Tag="R5ULS" ParamLabel="R5ULS"  Margin="21,6,24,15" Grid.ColumnSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="5" Grid.Row="19"   Tag="R1LLS" ParamLabel="R1LLS"  Margin="-52,40,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="5" Grid.Row="18"   Tag="R1ULS" ParamLabel="R1ULS"  Margin="-58,105,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="8" Grid.Row="18"   Tag="R4ULS" ParamLabel="R4ULS"  Margin="1,98,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <uc_2:CircleProcessFlow Grid.Column="8" Grid.Row="19"   Tag="R4LLS" ParamLabel="R4LLS"  Margin="-5,9,25,35" Height="15" Width="15" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         </Grid>
         <!--#endregion-->
 
