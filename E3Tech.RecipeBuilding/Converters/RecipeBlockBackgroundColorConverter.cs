@@ -14,18 +14,22 @@ namespace E3Tech.RecipeBuilding.Converters
                 {
                     case "Start":
                         return "LightSlateGray";
-                    case "HeatCool":
-                        return "LightBlue";
+                    //case "HeatCool":
+                    //    return "LightBlue";
                     case "Stirrer":
-                        return "LightSalmon";
-                    case "Dosing":
-                        return "LightCoral";
+                        return "LightBlue";
+                    //case "Dosing":
+                    //    return "LightCoral";
                     case "Wait":
                         return "LightPink";
-                    case "Fill":
-                        return "LightSteelBlue";
+                    //case "Fill":
+                    //    return "LightSteelBlue";
                     case "Transfer":
-                        return "LightGoldenrodYellow";
+                        return "LightBlue";
+                    case "Drain":
+                        return "LightPink";
+                    case "N2Purge":
+                        return "LightBlue";
                     case "End":
                         return "DarkCyan";
                     default:

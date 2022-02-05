@@ -36,10 +36,19 @@ namespace E3.ReactorManager.Interfaces.UI.UserControls
             set { SetValue(PositiveMaximumValueProperty, value); }
         }
 
+        //public static readonly DependencyProperty NegativeMaximumValueProperty =
+        //   DependencyProperty.Register("NegativeMaximumValue", typeof(string), typeof(ProgressBarAnimation), new
+        //      PropertyMetadata("90", new PropertyChangedCallback(OnMaximumValueChanged)));
+
         public static readonly DependencyProperty NegativeMaximumValueProperty =
            DependencyProperty.Register("NegativeMaximumValue", typeof(string), typeof(ProgressBarAnimation), new
               PropertyMetadata("90", new PropertyChangedCallback(OnMaximumValueChanged)));
 
+
+        public string NegativeMaximumValueValidator()
+        {
+            return NegativeMaximumValue.ToString();
+        }
         public string NegativeMaximumValue
         {
             get { return (string)GetValue(NegativeMaximumValueProperty); }
@@ -57,7 +66,7 @@ namespace E3.ReactorManager.Interfaces.UI.UserControls
             //Do something when this property changed
             float neg = Convert.ToSingle(NegativeMaximumValue);
             float pos = Convert.ToSingle(PositiveMaximumValue);
-            NegativeProgressBarArea.Width = (float)neg / (neg + pos) * 117;
+            NegativeProgressBarArea.Width = (float)neg / (neg + pos) * 117 ;
             PositiveProgressBarArea.Width = (float)pos / (neg + pos) * 117;
         }
         #endregion
@@ -82,7 +91,7 @@ namespace E3.ReactorManager.Interfaces.UI.UserControls
         private void OnCurrentValueChanged()
         {
             float cur = Convert.ToSingle(string.IsNullOrWhiteSpace(CurrentValue) ? "0" : CurrentValue);
-            float neg = Convert.ToSingle(NegativeMaximumValue);
+            float neg = Convert.ToSingle(string.IsNullOrWhiteSpace(NegativeMaximumValue) ? "0" : NegativeMaximumValue);
             float pos = Convert.ToSingle(PositiveMaximumValue);
             
             if(cur >= -1 * neg && cur <= pos)

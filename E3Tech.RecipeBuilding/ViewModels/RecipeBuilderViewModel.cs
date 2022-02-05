@@ -19,6 +19,7 @@ using Prism.Regions;
 using E3.ReactorManager.DesignExperiment.Model.Data;
 using E3.ReactorManager.DesignExperiment.Model;
 using E3.UserManager.Model.Data;
+using E3.ReactorManager.Recipe.PLCIntegrator.Models;
 
 namespace E3Tech.RecipeBuilding.ViewModels
 {
@@ -74,8 +75,18 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     UpdateNextSeqRecipeExecute();
                 }
             }
+            //SlaveRecipe recipe = fieldDevicesCommunicator.ReadAny<SlaveRecipe>(deviceId, plcHandle);
+            //foreach (Block block in recipe.Blocks)
+            //{
+            //    if (block.Name == string.Empty)
+            //    {
+            //        // This is an empty block => Recipe ended with previous block.
+            //        // No need to read further steps. It will be time consuming operation.
+            //        break;
+            //    }
+            //    IRecipeBlock recipeBlock = GetRecipeBlock(block);
+            //}
         }
-
         private void LoadRegisteredBlocks(IUnityContainer containerProvider)
         {
             AvailableBlocks = new List<IRecipeBlock>();
@@ -192,6 +203,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             IsRecipeRunning = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "RecipeStatus").ToString();
             RecipeEnded = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "RecipeEnded").ToString();
             RecipePaused = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "PauseRecipe").ToString();
+            DrainStatus = fieldDevicesCommunicator.ReadFieldPointValue<bool>(DeviceId, "DrainStatus").ToString();
         }
 
         public void UpdateNavigationParameters(NavigationParameters NavigationParameters)
@@ -349,7 +361,14 @@ namespace E3Tech.RecipeBuilding.ViewModels
                                           "bool",
                                           Boolean.TrueString);
         }
-
+        private void SkipDrainExecution()
+        {
+            fieldDevicesCommunicator
+               .SendCommandToDevice(DeviceId,
+                                          "DrainSkipExecution",
+                                          "bool",
+                                          Boolean.TrueString);
+        }
         private bool CanStartRecipe()
         {
             return recipeExecutor != null;
@@ -550,12 +569,12 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
 
                 var result = ExecuteRecipe();
-
-                if (result == true)
-                {
-                    recipeSeqToExecute.Key.IsExecuting = true;
-                    recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
-                }
+                recipeSeqToExecute.Key.IsExecuting = true;
+                recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
+                //if (result == true)
+                //{
+                    
+                //}
             }
         }
 
@@ -991,7 +1010,12 @@ namespace E3Tech.RecipeBuilding.ViewModels
             get => pauseRecipeCommand ?? (pauseRecipeCommand = new DelegateCommand(new Action(PauseRecipe)));
             set => SetProperty(ref pauseRecipeCommand, value);
         }
-
+        private ICommand _skipDrainExecutionCommand;
+        public ICommand SkipDrainExecutionCommand
+        {
+            get => _skipDrainExecutionCommand ?? (pauseRecipeCommand = new DelegateCommand(new Action(SkipDrainExecution)));
+            set => SetProperty(ref _skipDrainExecutionCommand, value);
+        }
         private ICommand clearRecipeCommand;
         public ICommand ClearRecipeCommand
         {
@@ -1219,7 +1243,6 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 RaisePropertyChanged();
             }
         }
-
         private string _recipeStatus;
         public string RecipeStatus
         {
@@ -1229,6 +1252,17 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 _recipeStatus = value;
                 RaisePropertyChanged();
                 UpdateIsEditEnable();
+            }
+        }
+        private string _drainStatus;
+        public string DrainStatus
+        {
+            get => _drainStatus;
+            set
+            {
+                _drainStatus = value;
+                RaisePropertyChanged();
+                //UpdateIsEditEnable();
             }
         }
 

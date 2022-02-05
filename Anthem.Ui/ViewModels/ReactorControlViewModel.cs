@@ -50,7 +50,7 @@ namespace Anathem.Ui.ViewModels
 
         private void FieldDevicesCommunicator_FieldPointDataReceived(object sender, FieldPointDataReceivedArgs liveData)
         {
-            StirrerCurrentSpeed = Convert.ToString(Convert.ToSingle(ParameterDictionary["StirrerFeedback_1"]));
+            
             if (ParameterDictionary.ContainsKey(liveData.FieldPointIdentifier))
             {
                 ParameterDictionary[liveData.FieldPointIdentifier] = liveData.NewFieldPointData;
@@ -62,6 +62,9 @@ namespace Anathem.Ui.ViewModels
 
         private void UpdateUi()
         {
+            StirrerFeedback_1 = Convert.ToString(Convert.ToSingle(ParameterDictionary["StirrerFeedback_1"]));
+            StirrerFeedback_2 = Convert.ToString(Convert.ToSingle(ParameterDictionary["StirrerFeedback_2"]));
+            StirrerFeedback_3 = Convert.ToString(Convert.ToSingle(ParameterDictionary["StirrerFeedback_3"]));
             Task.Factory.StartNew(new Action(() => RaisePropertyChanged(nameof(ParameterDictionary))), CancellationToken.None, TaskCreationOptions.None, taskScheduler);
         }
 
@@ -82,13 +85,33 @@ namespace Anathem.Ui.ViewModels
         public string DeviceId => "Reactor_1";
         public Dictionary<string, string> ParameterDictionary { get; set; } = new Dictionary<string, string>();
 
-        private string _stirrerCurrentSpeed;
-        public string StirrerCurrentSpeed
+        private string _stirrerFeedback_1;
+        public string StirrerFeedback_1
         {
-            get { return _stirrerCurrentSpeed ; }
+            get { return _stirrerFeedback_1; }
             set
             {
-                _stirrerCurrentSpeed = value;
+                _stirrerFeedback_1 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string _stirrerFeedback_2;
+        public string StirrerFeedback_2
+        {
+            get { return _stirrerFeedback_2; }
+            set
+            {
+                _stirrerFeedback_2 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string _stirrerFeedback_3;
+        public string StirrerFeedback_3
+        {
+            get { return _stirrerFeedback_3; }
+            set
+            {
+                _stirrerFeedback_3 = value;
                 RaisePropertyChanged();
             }
         }

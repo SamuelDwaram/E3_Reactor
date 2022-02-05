@@ -650,7 +650,7 @@
             <Label Grid.Column="0" Grid.Row="0" Content="MVA Mass&#xa;Temperature" Style="{StaticResource InfoProviderLabel}" Height="58" Margin="0,16,0,16.4" Width="110"/>
             <TextBox Grid.Row="0" Text="{Binding Temperature_1}" Background="#1d2532" Style="{StaticResource TextBoxResoure}"  Margin="9.6,24,11.2,24.4" Grid.Column="1"/>
             <Label Grid.Column="2" Grid.Row="0" Content="°C" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28,0,28.4" Width="27"/>
-            <TextBox Grid.Row="1" Text="{Binding StirrerSetpoint_1}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.6,11.2,24.8" Grid.Column="1"/>
+            <TextBox Grid.Row="1" Text="{Binding StirrerFeedback_1}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.6,11.2,24.8" Grid.Column="1"/>
             <Label Grid.Column="0" Grid.Row="1" Content="MVA Stirrer&#xa;Speed" Style="{StaticResource InfoProviderLabel}" Height="57" Margin="0,16.6,12.4,16.8"/>
             <Label Grid.Column="2" Grid.Row="1" Content="RPM" Style="{StaticResource InfoProviderLabel}" Height="33" Margin="0.6,28.6,0,28.8" Width="46"/>
             <Label Grid.Column="0" Grid.Row="2" Content="MVA Pressure" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="34" Margin="0,28.2,70.4,28.2"/>
@@ -663,7 +663,7 @@
             <TextBox Grid.Row="4" Text="{Binding Temperature_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.4,11.2,24" Grid.Column="1"/>
             <Label Grid.Column="2" Grid.Row="4" Content="°C" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28.4,0,28" Width="27"/>
             <Label Grid.Column="0" Grid.Row="5" Content="RV-50L Stirrer&#xa;Speed" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="58" Margin="0,16,70.4,16.4"/>
-            <TextBox Grid.Row="5" Text="{Binding StirrerSetpoint_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24,11.2,24.4" Grid.Column="1"/>
+            <TextBox Grid.Row="5" Text="{Binding StirrerFeedback_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24,11.2,24.4" Grid.Column="1"/>
             <Label Grid.Column="2" Grid.Row="5" Content="RPM" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,28,0,28.4" Width="46"/>
             <Label Grid.Column="0" Grid.Row="6" Content="RV-50L&#xa;Pressure" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="58" Margin="0,15.6,70.4,16"/>
             <TextBox Grid.Row="6" Text="{Binding Pressure_2}" Style="{StaticResource TextBoxResoure}" Margin="9.6,23.6,11.2,24" Grid.Column="1"/>
@@ -675,7 +675,7 @@
             <TextBox Grid.Row="8" Text="{Binding Temperature_3}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.4,11.2,24.2" Grid.Column="1"/>
             <Label Grid.Column="2" Grid.Row="8" Content="°C" Style="{StaticResource InfoProviderLabel}" Height="33" Margin="0.6,28.4,0,28.2" Width="27"/>
             <Label Grid.Column="0" Grid.Row="9" Content="RV-25L Stirrer&#xa;Speed" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="58" Margin="0,15.8,70.4,15.8"/>
-            <TextBox Grid.Row="9" Text="{Binding StirrerSetpoint_3}" Style="{StaticResource TextBoxResoure}" Margin="8.6,23.8,11.2,23.8" Grid.Column="1"/>
+            <TextBox Grid.Row="9" Text="{Binding StirrerFeedback_3}" Style="{StaticResource TextBoxResoure}" Margin="8.6,23.8,11.2,23.8" Grid.Column="1"/>
             <Label Grid.Column="2" Grid.Row="9" Content="RPM" Style="{StaticResource InfoProviderLabel}" Height="34" Margin="0.6,27.8,0,27.8" Width="46"/>
             <Label Grid.Column="0" Grid.Row="10" Content="RV-25L&#xa;Pressure" Style="{StaticResource InfoProviderLabel}" Grid.ColumnSpan="2" Height="57" Margin="0,16.2,70.4,16.4"/>
             <TextBox Grid.Row="10" Text="{Binding Pressure_3}" Style="{StaticResource TextBoxResoure}" Margin="9.6,24.2,11.2,24.4" Grid.Column="1"/>

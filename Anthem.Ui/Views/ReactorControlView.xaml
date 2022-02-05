@@ -162,9 +162,9 @@
             <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="0" Tag="Temperature_1" ParamLabel="MVA Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
             <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="1" Tag="Temperature_2" ParamLabel="Reactor Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
             <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="2" Tag="Temperature_3" ParamLabel="Spare RV Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
-            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="0" Tag="Pressure_1" ParamLabel="MVA&#xa;Pressure" Units="mmHg" Limits="0|760"/>
-            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="1" Tag="Pressure_2" ParamLabel="Reactor Mass&#xa;Pressure" Units="mmHg" Limits="0|760"/>
-            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="2" Tag="Pressure_3" ParamLabel="Spare RV Mass&#xa;Pressure" Units="mmHg" Limits="0|760"/>
+            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="0" Tag="Pressure_1" ParamLabel="MVA&#xa;Pressure" Units="bar" Limits="0|9"/>
+            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="1" Tag="Pressure_2" ParamLabel="Reactor Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
+            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="2" Tag="Pressure_3" ParamLabel="Spare RV Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
             <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="0" Tag="ReactorLevel_1" ParamLabel="MVA&#xa;Level" Units="Lts" Limits="0|25"/>
             <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="1" Tag="ReactorLevel_2" ParamLabel="Reactor Vessel&#xa;Level" Units="Lts" Limits="0|50"/>
             <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="2" Tag="ReactorLevel_3" ParamLabel="Spare RV Vessel&#xa;Level" Units="Lts" Limits="0|50"/>
@@ -179,7 +179,7 @@
                 <Border BorderBrush="#FF1E2432" BorderThickness="2">
                     <DockPanel>
                         <Label Content="MVA Stirrer&#xa;Feedback" DockPanel.Dock="Top" Style="{StaticResource HeaderLabelStyle}"/>
-                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerCurrentSpeed_1}" MaximumValue="200"/>
+                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_1}" MaximumValue="200"/>
                     </DockPanel>
                 </Border>
             </Viewbox>
@@ -187,7 +187,7 @@
                 <Border BorderBrush="#FF1E2432" BorderThickness="2">
                     <DockPanel>
                         <Label Content="RV Stirrer&#xa;Feedback" DockPanel.Dock="Top" Style="{StaticResource HeaderLabelStyle}"/>
-                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerCurrentSpeed}" MaximumValue="200"/>
+                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_2}" MaximumValue="200"/>
                     </DockPanel>
                 </Border>
             </Viewbox>
@@ -195,7 +195,7 @@
                 <Border BorderBrush="#FF1E2432" BorderThickness="2">
                     <DockPanel>
                         <Label Content="Spare RV Stirrer&#xa;Feedback" DockPanel.Dock="Top" Style="{StaticResource HeaderLabelStyle}"/>
-                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerCurrentSpeed_2}" MaximumValue="200"/>
+                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_3}" MaximumValue="200"/>
                     </DockPanel>
                 </Border>
             </Viewbox>

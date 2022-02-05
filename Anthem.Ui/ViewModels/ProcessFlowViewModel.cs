@@ -89,17 +89,17 @@ namespace Anathem.Ui.ViewModels
             {
                 Level_3 = Parameters["ReactorLevel_3"];
             }
-            if (Parameters.ContainsKey("StirrerSetpoint_1"))
+            if (Parameters.ContainsKey("StirrerFeedback_1"))
             {
-                StirrerSetpoint_1 = Parameters["StirrerSetpoint_1"];
+                StirrerFeedback_1 = Parameters["StirrerFeedback_1"];
             }
-            if (Parameters.ContainsKey("StirrerSetpoint_2"))
+            if (Parameters.ContainsKey("StirrerFeedback_2"))
             {
-                StirrerSetpoint_2 = Parameters["StirrerSetpoint_2"];
+                StirrerFeedback_2 = Parameters["StirrerFeedback_2"];
             }
-            if (Parameters.ContainsKey("StirrerSetpoint_3"))
+            if (Parameters.ContainsKey("StirrerFeedback_3"))
             {
-                StirrerSetpoint_3 = Parameters["StirrerSetpoint_3"];
+                StirrerFeedback_3 = Parameters["StirrerFeedback_3"];
             }
         }
         private void AddToParameters(string fieldPointIdentifier, string newFieldPointData)
@@ -243,36 +243,36 @@ namespace Anathem.Ui.ViewModels
             }
         }
 
-        private string stirrerSetpoint_1;
+        private string stirrerFeedback_1;
 
-        public string StirrerSetpoint_1
+        public string StirrerFeedback_1
         {
-            get { return stirrerSetpoint_1; }
+            get { return stirrerFeedback_1; }
             set
             {
-                stirrerSetpoint_1 = value;
+                stirrerFeedback_1 = value;
                 RaisePropertyChanged();
             }
         }
-        private string stirrerSetpoint_2;
+        private string stirrerFeedback_2;
 
-        public string StirrerSetpoint_2
+        public string StirrerFeedback_2
         {
-            get { return stirrerSetpoint_2; }
+            get { return stirrerFeedback_2; }
             set
             {
-                stirrerSetpoint_2 = value;
+                stirrerFeedback_2 = value;
                 RaisePropertyChanged();
             }
         }
-        private string stirrerSetpoint_3;
+        private string stirrerFeedback_3;
 
-        public string StirrerSetpoint_3
+        public string StirrerFeedback_3
         {
-            get { return stirrerSetpoint_3; }
+            get { return stirrerFeedback_3; }
             set
             {
-                stirrerSetpoint_3 = value;
+                stirrerFeedback_3 = value;
                 RaisePropertyChanged();
             }
         }

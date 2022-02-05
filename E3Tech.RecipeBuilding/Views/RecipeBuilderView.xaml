@@ -684,6 +684,23 @@
                         </Style>
                     </Button.Style>
                 </Button>
+
+                <Button Grid.Column="5">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DrainStatus}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Setter Property="Content" Value="Drain Skip"/>
+                                    <Setter Property="Command" Value="{Binding SkipDrainExecutionCommand}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
         </Grid>
         <Grid Grid.Column="2">
