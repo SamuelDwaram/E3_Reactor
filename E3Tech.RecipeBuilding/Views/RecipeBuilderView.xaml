@@ -738,13 +738,16 @@
                         </Setter>
                         <Setter Property="ContextMenu">
                             <Setter.Value>
-                                <ContextMenu>
+                                <ContextMenu >
                                     <MenuItem Header="Add Above" 
                                                Command="{Binding PlacementTarget.Tag.AddAboveSeqReciepeCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
-                                               CommandParameter="{Binding}"/>
+                                               CommandParameter="{Binding}"
+                                              IsEnabled="{Binding PlacementTarget.Tag.IsSeqRecipeExecuting, RelativeSource={RelativeSource AncestorType=ContextMenu} , Converter={StaticResource InverseBooleanConverter}}"/>
                                     <MenuItem Header="Delete" 
                                               Command="{Binding PlacementTarget.Tag.DeleteReciepeFromSequenceCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                              CommandParameter="{Binding}"/>
+                                              CommandParameter="{Binding}"
+                                              IsEnabled="{Binding PlacementTarget.Tag.IsSeqRecipeExecuting, RelativeSource={RelativeSource AncestorType=ContextMenu} , Converter={StaticResource InverseBooleanConverter}}"
+                                            />
                                 </ContextMenu>
                             </Setter.Value>
                         </Setter>
@@ -756,6 +759,7 @@
                             <DataTrigger Binding="{Binding IsExecuted}" Value="True">
                                 <Setter Property="Background" Value="Green"></Setter>
                             </DataTrigger>
+                            
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding IsExecuting}" Value="True"/>
