@@ -57,6 +57,7 @@ namespace E3Tech.RecipeBuilding.Model
         Dictionary<SeqRecipeModel, IList<RecipeStep>> LoadSeqRecipeList();
 
         List<SeqRecipeModel> ReloadSeqRecipes(out int startSeq, out int endSeq);
+
         void DeleteSeqRecipe();
     }
 }

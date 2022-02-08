@@ -274,19 +274,8 @@
                     <Viewbox Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Label Content="Do You Want To Start The Batch ?" Height="60" Style="{StaticResource UnitsLabelStyle}"/>
                     </Viewbox>
-                    <Button Grid.Row="6" Grid.Column="0" Margin="132,14,32,10" Content="Yes" Style="{StaticResource CommandButtonStyle}" Command="{Binding StartRecipeCommand}">
-                        <!--<Button.Triggers>
-                            <EventTrigger RoutedEvent="Button.Click">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="BatchNameRequestPopup" Storyboard.TargetProperty="IsOpen">
-                                            <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:0" />
-                                        </BooleanAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Button.Triggers>-->
-                    </Button>
+                    <Button Grid.Row="6" Grid.Column="0" Margin="132,14,32,10" Content="Yes" Style="{StaticResource CommandButtonStyle}" Command="{Binding StartRecipeCommand}"/>
+
                     <Button Grid.Row="6" Grid.Column="1" Margin="136,12,116,12" Content="No" Style="{StaticResource CommandButtonStyle}" Command="{Binding CloseBatchNamePopupCommand}" >
 
                         <!--<Button.Triggers>-->
@@ -555,7 +544,7 @@
                                 <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
                                     <Setter Property="Background" Value="Red"/>
                                     <Setter Property="IsEnabled" Value="True"/>
-                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -628,10 +617,11 @@
                                     <Setter Property="IsEnabled" Value="False"/>
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
+                                
+                                <!--<DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
+                                </DataTrigger>-->
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
