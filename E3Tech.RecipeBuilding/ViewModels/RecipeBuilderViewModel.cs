@@ -500,7 +500,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private void SaveChangesExecution()
         {
             IsSaveChange = false;
-            recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);    `
+            recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps); 
             UpdateIsEditEnable();
             recipeExecutor.SaveUpdatedBlockExecution(DeviceId);
         }
