@@ -128,6 +128,8 @@
         </Grid.RowDefinitions>
         <Label Content="Source" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
         <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content">
+            <ComboBoxItem>Fill In</ComboBoxItem>
+            <ComboBoxItem>Flush</ComboBoxItem>
             <ComboBoxItem>R1</ComboBoxItem>
             <ComboBoxItem>R2</ComboBoxItem>
             <ComboBoxItem>R3</ComboBoxItem>
@@ -141,6 +143,7 @@
         </ComboBox>
         <Label Content="Destination" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
         <ComboBox Grid.Row="2" Grid.Column="1" SelectedValue="{Binding Path=Destination}" SelectedValuePath="Content">
+            <ComboBoxItem>R1</ComboBoxItem>
             <ComboBoxItem>R2</ComboBoxItem>
             <ComboBoxItem>R3</ComboBoxItem>
             <ComboBoxItem>R4</ComboBoxItem>

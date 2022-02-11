@@ -187,8 +187,8 @@
         <uc_1:BoolParameter Grid.Row="3" Grid.Column="6" ParamLabel="P3" Tag="Pump_3"/>
         <uc_1:BoolParameter Grid.Row="4" Grid.Column="6" ParamLabel="P4" Tag="Pump_4"/>
         <uc_1:BoolParameter Grid.Row="5" Grid.Column="6" ParamLabel="P9" Tag="Pump_9"/>
-        <uc_1:BoolParameter Grid.Row="6" Grid.RowSpan="3" Grid.Column="6" ParamLabel="" Tag=""/>
-        <uc_1:BoolParameter Grid.Row="9" Grid.RowSpan="3" Grid.Column="6" ParamLabel="" Tag=""/>
+        <uc_1:BoolParameter Grid.Row="6" Grid.Column="6" ParamLabel="" Tag=""/>
+        <uc_1:BoolParameter Grid.Row="9" Grid.Column="6" ParamLabel="" Tag=""/>
         <uc_1:BoolParameter Grid.Row="9"  Grid.Column="6" ParamLabel="P6" Tag="Pump_6"/>
         <uc_1:BoolParameter Grid.Row="11" Grid.Column="6" ParamLabel="P7" Tag="Pump_7"/>
         <!--#endregion-->
