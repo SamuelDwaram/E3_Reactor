@@ -32,6 +32,7 @@ namespace E3Tech.RecipeBuilding.Model
             toBeUpdatedParameters.Add("Ended", recipeBlock.GetParameterValue("Ended"));
             toBeUpdatedParameters.Add("StartedTime", recipeBlock.GetParameterValue("StartedTime"));
             toBeUpdatedParameters.Add("EndedTime", recipeBlock.GetParameterValue("EndedTime"));
+            toBeUpdatedParameters.Add("RemainingTime", recipeBlock.GetParameterValue("RemainingTime"));
             toBeUpdatedParameters.Add("Enabled", bool.TrueString);
 
             foreach (KeyValuePair<string, string> kv in toBeUpdatedParameters)

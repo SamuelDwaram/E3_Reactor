@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_TagAssignment" Id="{29733996-f006-4b0b-ac93-b629dae5b01a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TagAssignment IMPLEMENTS I_TagAssignment
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AA1" Id="{693f7280-b91c-4f37-942a-5bfba3ad2a6c}">
+      <Declaration><![CDATA[METHOD AA1 : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.AA1_Valves[0] := IO.Vessels[5].Valves[0].Output;
+IO.PhysicalIO.AA1_Valves[1] := IO.Vessels[5].Valves[1].Output;
+IO.PhysicalIO.AA1_Valves[2] := IO.Vessels[5].Valves[2].Output;
+IO.PhysicalIO.AA1_Valves[3] := IO.Vessels[5].Valves[3].Output;
+IO.PhysicalIO.AA1_Valves[4] := IO.Vessels[5].Valves[4].Output;
+IO.PhysicalIO.AA1_Valves[5] := IO.Vessels[5].Valves[5].Output;
+IO.PhysicalIO.AA1_Valves[6] := IO.Vessels[5].Valves[6].Output;
+
+IO.PhysicalIO.AA1_Pumps[0] := IO.Vessels[5].Pumps[0].Output;
+IO.PhysicalIO.AA1_Pumps[1] := IO.Vessels[5].Pumps[1].Output;
+
+IO.Vessels[5].ULS := NOT(IO.PhysicalIO.AA1_LS[1]);
+IO.Vessels[5].LLS := IO.PhysicalIO.AA1_LS[0];
+
+AA1 := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AA2" Id="{bc5b7aca-8f6b-4abf-8488-f6fd08bbeadc}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD AA2 : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.AA2_Valves[0] := IO.Vessels[6].Valves[0].Output;
+IO.PhysicalIO.AA2_Valves[1] := IO.Vessels[6].Valves[1].Output;
+IO.PhysicalIO.AA2_Valves[2] := IO.Vessels[6].Valves[2].Output;
+IO.PhysicalIO.AA2_Valves[3] := IO.Vessels[6].Valves[3].Output;
+IO.PhysicalIO.AA2_Valves[4] := IO.Vessels[6].Valves[4].Output;
+IO.PhysicalIO.AA2_Valves[5] := IO.Vessels[6].Valves[5].Output;
+IO.PhysicalIO.AA2_Valves[6] := IO.Vessels[6].Valves[6].Output;
+
+IO.PhysicalIO.AA2_Pumps[0] := IO.Vessels[6].Pumps[0].Output;
+IO.PhysicalIO.AA2_Pumps[1] := IO.Vessels[6].Pumps[1].Output;
+
+IO.Vessels[6].ULS := NOT(IO.PhysicalIO.AA2_LS[1]);
+IO.Vessels[6].LLS := IO.PhysicalIO.AA2_LS[0];
+
+
+AA2 := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DCM" Id="{64c4ab6e-04d8-4e78-8500-9f1e1b7699e5}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD DCM : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.DCM_Valves[0] := IO.Vessels[7].Valves[0].Output;
+IO.PhysicalIO.DCM_Valves[1] := IO.Vessels[7].Valves[1].Output;
+IO.PhysicalIO.DCM_Valves[2] := IO.Vessels[7].Valves[2].Output;
+IO.PhysicalIO.DCM_Valves[3] := IO.Vessels[7].Valves[3].Output;
+IO.PhysicalIO.DCM_Valves[4] := IO.Vessels[7].Valves[4].Output;
+IO.PhysicalIO.DCM_Valves[5] := IO.Vessels[7].Valves[5].Output;
+IO.PhysicalIO.DCM_Valves[6] := IO.Vessels[7].Valves[6].Output;
+
+IO.PhysicalIO.DCM_Pumps[0] := IO.Vessels[7].Pumps[0].Output;
+IO.PhysicalIO.DCM_Pumps[1] := IO.Vessels[7].Pumps[1].Output;
+
+IO.Vessels[7].ULS := NOT(IO.PhysicalIO.DCM_LS[1]);
+IO.Vessels[7].LLS := IO.PhysicalIO.DCM_LS[0];
+
+
+DCM := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MVA" Id="{a9b92b5a-2936-4f8f-8257-c5e793fbd0b8}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD MVA : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.MVA_Valves[0] := IO.Reactors[0].Valves[0].Output;
+IO.PhysicalIO.MVA_Valves[1] := IO.Reactors[0].Valves[1].Output;
+IO.PhysicalIO.MVA_Valves[2] := IO.Reactors[0].Valves[2].Output;
+IO.PhysicalIO.MVA_Valves[3] := IO.Reactors[0].Valves[3].Output;
+IO.PhysicalIO.MVA_Valves[4] := IO.Reactors[0].Valves[4].Output;
+IO.PhysicalIO.MVA_Valves[5] := IO.Reactors[0].Valves[5].Output;
+IO.PhysicalIO.MVA_Valves[6] := IO.Reactors[0].Valves[6].Output;
+IO.PhysicalIO.MVA_Valves[7] := IO.Reactors[0].Valves[7].Output;
+
+
+
+IO.PhysicalIO.MVA_Pumps[0] := IO.Reactors[0].Pumps[0].Output;
+IO.PhysicalIO.MVA_Pumps[1] := IO.Reactors[0].Pumps[1].Output;
+
+IO.Reactors[0].Temperature.RawValue := IO.PhysicalIO.MVA_AI[0];
+IO.Reactors[0].Pressure.RawValue := IO.PhysicalIO.MVA_AI[1];
+IO.Reactors[0].Level.RawValue := IO.PhysicalIO.MVA_AI[2];
+IO.Reactors[0].VFD.nRPMFeedBackRaw := IO.PhysicalIO.MVA_AI[3];
+IO.PhysicalIO.MVA_AO[0] := IO.Reactors[0].VFD.nRPMSetPointRaw;
+
+IO.Reactors[0].Temperature.ScaledLowLimit := -90;
+IO.Reactors[0].Temperature.ScaledHighLimit := 200;
+IO.Reactors[0].Pressure.ScaledLowLimit := -1;
+IO.Reactors[0].Pressure.ScaledHighLimit := 9;
+IO.Reactors[0].Level.ScaledLowLimit := 100;
+IO.Reactors[0].Level.ScaledHighLimit := 7;
+
+MVA := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MVB" Id="{bcf3f410-104f-43c0-b8bf-b7f073db0470}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD MVB : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.MVB_Valves[0] := IO.Vessels[8].Valves[0].Output;
+IO.PhysicalIO.MVB_Valves[1] := IO.Vessels[8].Valves[1].Output;
+IO.PhysicalIO.MVB_Valves[2] := IO.Vessels[8].Valves[2].Output;
+IO.PhysicalIO.MVB_Valves[3] := IO.Vessels[8].Valves[3].Output;
+IO.PhysicalIO.MVB_Valves[4] := IO.Vessels[8].Valves[4].Output;
+IO.PhysicalIO.MVB_Valves[5] := IO.Vessels[8].Valves[5].Output;
+IO.PhysicalIO.MVB_Valves[6] := IO.Vessels[8].Valves[6].Output;
+
+IO.PhysicalIO.MVB_Pumps[0] := IO.Vessels[8].Pumps[0].Output;
+IO.PhysicalIO.MVB_Pumps[1] := IO.Vessels[8].Pumps[1].Output;
+
+IO.Vessels[8].ULS := NOT(IO.PhysicalIO.MVB_LS[1]);
+IO.Vessels[8].LLS := IO.PhysicalIO.MVB_LS[0];
+
+
+MVB := TRUE;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="R1" Id="{793df660-ac01-4d41-ba1f-a4f2ea3da145}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD R1 : BOOL
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.R1_Valves[0] := IO.Vessels[0].Valves[0].Output;
+IO.PhysicalIO.R1_Valves[1] := IO.Vessels[0].Valves[1].Output;
+IO.PhysicalIO.R1_Valves[2] := IO.Vessels[0].Valves[2].Output;
+IO.PhysicalIO.R1_Valves[3] := IO.Vessels[0].Valves[3].Output;
+IO.PhysicalIO.R1_Valves[4] := IO.Vessels[0].Valves[4].Output;
+IO.PhysicalIO.R1_Valves[5] := IO.Vessels[0].Valves[5].Output;
+IO.PhysicalIO.R1_Valves[6] := IO.Vessels[0].Valves[6].Output;
+
+IO.PhysicalIO.R1_Pumps[0] := IO.Vessels[0].Pumps[0].Output;
+IO.PhysicalIO.R1_Pumps[1] := IO.Vessels[0].Pumps[1].Output;
+
+IO.Vessels[0].ULS := NOT(IO.PhysicalIO.R1_LS[1]);
+IO.Vessels[0].LLS := IO.PhysicalIO.R1_LS[0];
+
+//R1 := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="R2" Id="{a8413f64-4919-4287-9b4a-3baf8950b293}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD R2 : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.R2_Valves[0] := IO.Vessels[1].Valves[0].Output;
+IO.PhysicalIO.R2_Valves[1] := IO.Vessels[1].Valves[1].Output;
+IO.PhysicalIO.R2_Valves[2] := IO.Vessels[1].Valves[2].Output;
+IO.PhysicalIO.R2_Valves[3] := IO.Vessels[1].Valves[3].Output;
+IO.PhysicalIO.R2_Valves[4] := IO.Vessels[1].Valves[4].Output;
+IO.PhysicalIO.R2_Valves[5] := IO.Vessels[1].Valves[5].Output;
+IO.PhysicalIO.R2_Valves[6] := IO.Vessels[1].Valves[6].Output;
+
+IO.PhysicalIO.R2_Pumps[0] := IO.Vessels[1].Pumps[0].Output;
+IO.PhysicalIO.R2_Pumps[1] := IO.Vessels[1].Pumps[1].Output;
+
+IO.Vessels[1].ULS := NOT(IO.PhysicalIO.R2_LS[1]);
+IO.Vessels[1].LLS := IO.PhysicalIO.R2_LS[0];
+
+
+R2 := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="R3" Id="{23377cd5-d99b-4fa0-889c-dbf7fad51499}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD R3 : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.R3_Valves[0] := IO.Vessels[2].Valves[0].Output;
+IO.PhysicalIO.R3_Valves[1] := IO.Vessels[2].Valves[1].Output;
+IO.PhysicalIO.R3_Valves[2] := IO.Vessels[2].Valves[2].Output;
+IO.PhysicalIO.R3_Valves[3] := IO.Vessels[2].Valves[3].Output;
+IO.PhysicalIO.R3_Valves[4] := IO.Vessels[2].Valves[4].Output;
+IO.PhysicalIO.R3_Valves[5] := IO.Vessels[2].Valves[5].Output;
+IO.PhysicalIO.R3_Valves[6] := IO.Vessels[2].Valves[6].Output;
+
+IO.PhysicalIO.R3_Pumps[0] := IO.Vessels[2].Pumps[0].Output;
+IO.PhysicalIO.R3_Pumps[1] := IO.Vessels[2].Pumps[1].Output;
+
+IO.Vessels[2].ULS := NOT(IO.PhysicalIO.R3_LS[1]);
+IO.Vessels[2].LLS := IO.PhysicalIO.R3_LS[0];
+
+
+R3 := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="R4" Id="{0cc5b276-972d-4526-94a0-f8e947a54700}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD R4 : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.R4_Valves[0] := IO.Vessels[3].Valves[0].Output;
+IO.PhysicalIO.R4_Valves[1] := IO.Vessels[3].Valves[1].Output;
+IO.PhysicalIO.R4_Valves[2] := IO.Vessels[3].Valves[2].Output;
+IO.PhysicalIO.R4_Valves[3] := IO.Vessels[3].Valves[3].Output;
+IO.PhysicalIO.R4_Valves[4] := IO.Vessels[3].Valves[4].Output;
+IO.PhysicalIO.R4_Valves[5] := IO.Vessels[3].Valves[5].Output;
+IO.PhysicalIO.R4_Valves[6] := IO.Vessels[3].Valves[6].Output;
+
+IO.PhysicalIO.R4_Pumps[0] := IO.Vessels[3].Pumps[0].Output;
+IO.PhysicalIO.R4_Pumps[1] := IO.Vessels[3].Pumps[1].Output;
+
+IO.Vessels[3].ULS := NOT(IO.PhysicalIO.R4_LS[1]);
+IO.Vessels[3].LLS := IO.PhysicalIO.R4_LS[0];
+
+
+R4 := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="R5" Id="{b24ba28b-23d0-4be3-817a-60e9fa9962f9}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD R5 : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.R5_Valves[0] := IO.Vessels[4].Valves[0].Output;
+IO.PhysicalIO.R5_Valves[1] := IO.Vessels[4].Valves[1].Output;
+IO.PhysicalIO.R5_Valves[2] := IO.Vessels[4].Valves[2].Output;
+IO.PhysicalIO.R5_Valves[3] := IO.Vessels[4].Valves[3].Output;
+IO.PhysicalIO.R5_Valves[4] := IO.Vessels[4].Valves[4].Output;
+IO.PhysicalIO.R5_Valves[5] := IO.Vessels[4].Valves[5].Output;
+IO.PhysicalIO.R5_Valves[6] := IO.Vessels[4].Valves[6].Output;
+
+IO.PhysicalIO.R5_Pumps[0] := IO.Vessels[4].Pumps[0].Output;
+IO.PhysicalIO.R5_Pumps[1] := IO.Vessels[4].Pumps[1].Output;
+
+IO.Vessels[4].ULS := NOT(IO.PhysicalIO.R4_LS[1]);
+IO.Vessels[4].LLS := IO.PhysicalIO.R4_LS[0];
+
+
+R5 := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RV" Id="{35c5e838-4621-46e6-94d2-922722068540}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD RV : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IO.PhysicalIO.RV50L_Valves[0] := IO.Reactors[1].Valves[0].Output;
+IO.PhysicalIO.RV50L_Valves[1] := IO.Reactors[1].Valves[1].Output;
+IO.PhysicalIO.RV50L_Valves[2] := IO.Reactors[1].Valves[2].Output;
+IO.PhysicalIO.RV50L_Valves[3] := IO.Reactors[1].Valves[3].Output;
+IO.PhysicalIO.RV50L_Valves[4] := IO.Reactors[1].Valves[4].Output;
+IO.PhysicalIO.RV50L_Valves[5] := IO.Reactors[1].Valves[5].Output;
+IO.PhysicalIO.RV50L_Valves[6] := IO.Reactors[1].Valves[6].Output;
+IO.PhysicalIO.RV50L_Valves[7] := IO.Reactors[1].Valves[7].Output;
+
+
+IO.PhysicalIO.RV50L_Pumps[0] := IO.Reactors[1].Pumps[0].Output;
+IO.PhysicalIO.RV50L_Pumps[1] := IO.Reactors[1].Pumps[1].Output;
+
+IO.Reactors[1].Temperature.RawValue := IO.PhysicalIO.RV50L_AI[0];
+IO.Reactors[1].Pressure.RawValue := IO.PhysicalIO.RV50L_AI[1];
+IO.Reactors[1].Level.RawValue := IO.PhysicalIO.RV50L_AI[2];
+IO.Reactors[1].VFD.nRPMFeedBackRaw := IO.PhysicalIO.RV50L_AI[3];
+IO.PhysicalIO.RV50L_AO[0] := IO.Reactors[1].VFD.nRPMSetPointRaw;
+
+
+
+
+IO.Reactors[1].Temperature.ScaledLowLimit := -90;
+IO.Reactors[1].Temperature.ScaledHighLimit := 200;
+IO.Reactors[1].Pressure.ScaledLowLimit := -1;
+IO.Reactors[1].Pressure.ScaledHighLimit := 9;
+IO.Reactors[1].Level.ScaledLowLimit := 100;
+IO.Reactors[1].Level.ScaledHighLimit := 0;
+
+
+IO.PhysicalIO.RV25L_Valves[0] := IO.Reactors[2].Valves[0].Output;
+IO.PhysicalIO.RV25L_Valves[1] := IO.Reactors[2].Valves[1].Output;
+IO.PhysicalIO.RV25L_Valves[2] := IO.Reactors[2].Valves[2].Output;
+IO.PhysicalIO.RV25L_Valves[3] := IO.Reactors[2].Valves[3].Output;
+IO.PhysicalIO.RV25L_Valves[4] := IO.Reactors[2].Valves[4].Output;
+IO.PhysicalIO.RV25L_Valves[5] := IO.Reactors[2].Valves[5].Output;
+IO.PhysicalIO.RV25L_Valves[6] := IO.Reactors[2].Valves[6].Output;
+IO.PhysicalIO.RV25L_Valves[7] := IO.Reactors[2].Valves[7].Output;
+
+
+IO.PhysicalIO.RV25L_Pumps[0] := IO.Reactors[2].Pumps[0].Output;
+IO.PhysicalIO.RV25L_Pumps[1] := IO.Reactors[2].Pumps[1].Output;
+
+IO.Reactors[2].Temperature.RawValue := IO.PhysicalIO.RV25L_AI[0];
+IO.Reactors[2].Pressure.RawValue := IO.PhysicalIO.RV25L_AI[1];
+IO.Reactors[2].Level.RawValue := IO.PhysicalIO.RV25L_AI[2];
+IO.Reactors[2].VFD.nRPMFeedBackRaw := IO.PhysicalIO.RV25L_AI[3];
+IO.PhysicalIO.RV25L_AO[0] := IO.Reactors[2].VFD.nRPMSetPointRaw;
+
+
+IO.Reactors[2].Temperature.ScaledLowLimit := -90;
+IO.Reactors[2].Temperature.ScaledHighLimit := 200;
+IO.Reactors[2].Pressure.ScaledLowLimit := -1;
+IO.Reactors[2].Pressure.ScaledHighLimit := 9;
+IO.Reactors[2].Level.ScaledLowLimit := 100;
+IO.Reactors[2].Level.ScaledHighLimit := 0;
+
+
+
+
+RV := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_TagAssignment">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.AA1">
+      <LineId Id="5" Count="10" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.AA2">
+      <LineId Id="5" Count="10" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.DCM">
+      <LineId Id="5" Count="10" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.MVA">
+      <LineId Id="5" Count="6" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="12" Count="3" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="30" Count="5" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.MVB">
+      <LineId Id="5" Count="10" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.R1">
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="2" />
+      <LineId Id="20" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.R2">
+      <LineId Id="5" Count="10" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.R3">
+      <LineId Id="5" Count="10" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.R4">
+      <LineId Id="5" Count="10" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.R5">
+      <LineId Id="5" Count="10" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TagAssignment.RV">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="5" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="13" Count="3" />
+      <LineId Id="36" Count="3" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="57" Count="6" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="24" Count="6" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="31" Count="3" />
+      <LineId Id="41" Count="3" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="49" Count="6" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

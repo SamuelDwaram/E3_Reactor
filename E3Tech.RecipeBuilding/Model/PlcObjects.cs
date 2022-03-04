@@ -34,6 +34,8 @@ namespace E3.ReactorManager.Recipe.PLCIntegrator.Models
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 11)]
         public string sStartedTime;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 11)]
+        public string sRemainingTime;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 11)]
         public string sEndedTime;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 21)]
         public string sSource;

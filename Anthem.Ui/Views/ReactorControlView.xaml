@@ -165,9 +165,9 @@
             <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="0" Tag="Pressure_1" ParamLabel="MVA&#xa;Pressure" Units="bar" Limits="0|9"/>
             <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="1" Tag="Pressure_2" ParamLabel="Reactor Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
             <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="2" Tag="Pressure_3" ParamLabel="Spare RV Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
-            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="0" Tag="ReactorLevel_1" ParamLabel="MVA&#xa;Level" Units="Lts" Limits="0|25"/>
-            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="1" Tag="ReactorLevel_2" ParamLabel="Reactor Vessel&#xa;Level" Units="Lts" Limits="0|50"/>
-            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="2" Tag="ReactorLevel_3" ParamLabel="Spare RV Vessel&#xa;Level" Units="Lts" Limits="0|50"/>
+            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="0" Tag="ReactorLevel_1" ParamLabel="MVA&#xa;Level" Units="%" Limits="0|100"/>
+            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="1" Tag="ReactorLevel_2" ParamLabel="Reactor Vessel&#xa;Level" Units="%" Limits="0|100"/>
+            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="2" Tag="ReactorLevel_3" ParamLabel="Spare RV Vessel&#xa;Level" Units="%" Limits="0|100"/>
             <uc_2:GraphicalParameter Grid.Row="7" Grid.Column="0" Tag="StirrerSetpoint_1" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="MVA Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>
             <uc_2:GraphicalParameter Grid.Row="7" Grid.Column="1" Tag="StirrerSetpoint_2" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>
             <uc_2:GraphicalParameter Grid.Row="7" Grid.Column="2" Tag="StirrerSetpoint_3" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="Spare RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>

@@ -129,7 +129,7 @@
         <Label Content="Source" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
         <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content">
             <ComboBoxItem>Fill In</ComboBoxItem>
-            <ComboBoxItem>Flush</ComboBoxItem>
+            <ComboBoxItem>Flash</ComboBoxItem>
             <ComboBoxItem>R1</ComboBoxItem>
             <ComboBoxItem>R2</ComboBoxItem>
             <ComboBoxItem>R3</ComboBoxItem>

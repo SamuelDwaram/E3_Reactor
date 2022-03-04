@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <DUT Name="Block" Id="{3125bf29-e483-4030-992d-221e6cd69f29}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE Block :
+STRUCT
+	Recipe 	: STRING(20);
+	StepNo 	: DINT;
+	Name 	: STRING(20);
+	Properties : Properties;	
+
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

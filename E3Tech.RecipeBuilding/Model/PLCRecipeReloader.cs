@@ -160,8 +160,11 @@ namespace E3Tech.RecipeBuilding
             waitRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
             waitRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
             waitRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
-            waitRecipeBlock.UpdateParameterValue("Duration", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitDuration_" + block.StepNo));
-            waitRecipeBlock.UpdateParameterValue("RemainingTime", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitRemainingTime_" + block.StepNo));
+            waitRecipeBlock.UpdateParameterValue("RemainingTime", block.Properties.sRemainingTime);
+            waitRecipeBlock.UpdateParameterValue("TimeInterval", block.Properties.nInterval.ToString());
+
+            //waitRecipeBlock.UpdateParameterValue("Duration", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitDuration_" + block.StepNo));
+            //waitRecipeBlock.UpdateParameterValue("RemainingTime", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitRemainingTime_" + block.StepNo));
 
             return waitRecipeBlock;
         }

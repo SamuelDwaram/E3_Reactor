@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <Itf Name="IStirControl" Id="{1e704fb4-6e47-4c22-9b93-334a91c88fa2}">
+    <Declaration><![CDATA[INTERFACE IStirControl
+]]></Declaration>
+    <Property Name="pSetpoint" Id="{12ecc515-0b9d-48e5-b673-fddecff709c8}">
+      <Declaration><![CDATA[PROPERTY pSetpoint : LREAL]]></Declaration>
+      <Get Name="Get" Id="{b6554fe7-be67-4ec9-9e0d-011930fc55ee}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="StirControl" Id="{645c9bcd-be6f-404b-b326-840963d81083}">
+      <Declaration><![CDATA[METHOD StirControl : LREAL
+VAR_INPUT
+	i : INT;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

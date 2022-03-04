@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <Itf Name="IN2PurgeBlock" Id="{49d1b0c2-3067-479a-a521-bdd3c054b50f}">
+    <Declaration><![CDATA[INTERFACE IN2PurgeBlock
+]]></Declaration>
+    <Property Name="pEndFeedback" Id="{2f750d42-8df2-4412-a0cd-03c6c0567e08}">
+      <Declaration><![CDATA[PROPERTY pEndFeedback : BOOL]]></Declaration>
+      <Get Name="Get" Id="{58d855c7-e58d-4c96-a9e6-ad9c0140fdd0}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Purge" Id="{a215b1dd-2df2-4e07-81f8-175737f3eddc}">
+      <Declaration><![CDATA[METHOD Purge : BOOL
+VAR_INPUT
+	bStartCommand : BOOL;
+	sSourceName : STRING;
+	nCurrentBlock : INT;	
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

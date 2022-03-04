@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="VFD" Id="{f1541367-c265-476e-8313-219f1747d733}">
+    <Declaration><![CDATA[TYPE VFD :
+STRUCT
+	bStart : BOOL;
+	bStop : BOOL;
+	nRPMSetPointScaled : LREAL;
+	nRPMFeedBackScaled : LREAL;
+	nRPMFeedBackRaw : INT;
+	nRPMSetPointRaw : INT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

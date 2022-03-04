@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="MAIN" Id="{a9cf0fc9-e0d3-4cea-8a6c-5b68ddd1f29d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	
+	fb_ManualControl : ARRAY[0..12, 0..12] OF FB_ManualControl;
+	i_manualControl : ARRAY[0..12, 0..12] OF I_ManualControl;
+	fb_ManualImplementation : FB_ManualImplementation;
+	
+	fb_ShutDown : FB_ShutDown;
+	i_ShutDown : I_ShutDown;
+	
+	fb_TagAssignment : FB_TagAssignment;
+	i_TagAssignment : I_TagAssignment;
+	fb_Assigner : FB_Assigner;
+	
+	fbStirBlock : FbStirBlock;
+	iStirBlock : IStirBlock;
+	
+	
+	fbN2PurgeBlock : FbN2PurgeBlock;
+	iN2PurgeBlock : IN2PurgeBlock;
+	
+	fbStirControl : FBStirControl;
+	iStirControl : IStirControl;
+	
+	k: INT;
+	k_1: INT;
+	
+	//fbJson 			: FB_JsonDomParser;
+	jsonDoc 		: SJsonValue;
+	jsonProp		: SJsonValue;
+	jsonID 			: SJsonValue;
+	jsonValue		: SJsonValue;
+	//sMessage 		: STRING(255) := '{"Step":"1","Name":"Transfer","Value":"20"}';
+	sMessageNested : STRING(255) := '{"Recipe": "01", "Step":"01", "Name":"Transfer", "Properties":
+										{"Source":"R1", "Dest":"R2", "Mode": "TRUE", "nInterval":"30", "sIntervalType":"s"}}'; 
+	currentStepNo: INT;
+	
+	fglocal : FB_LocalSystemTime;
+	System_Time: TIMESTRUCT;
+	currentHour : STRING;
+	currentMinute : STRING;
+	currentSecond : STRING;
+	concatenatedHourMinuteString : STRING;
+	
+	sCurrentSecond : STRING;
+	sCurrentHour : STRING;
+	sCurrentMinute : STRING;
+	sConcatenatedHourMinuteString : STRING;
+	
+	bRecipeLocalTimer: BOOL;
+	nOfftimer: UDINT;
+	TimeInSeconds: LREAL;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+FOR k:= 0 TO 10 DO
+	FOR k_1 := 0 TO 10 DO
+		i_manualControl[k, k_1]:= fb_ManualControl[k, k_1];
+	END_FOR
+END_FOR
+
+fb_ManualImplementation(i_ManualControl:= i_manualControl);
+
+i_ShutDown := fb_ShutDown;
+iStirBlock := fbStirBlock;
+iN2PurgeBlock := fbN2PurgeBlock;
+//fb_RecipeControl(ipshutDown := i_ShutDown, ipStirBlock := iStirBlock, ipTransfer := iTransfer);
+
+fb_Assigner(i_TagAssignment := fb_TagAssignment);
+
+RecipeControl.ipStirBlock := iStirBlock;
+RecipeControl.ipN2PurgeBlock := iN2PurgeBlock;
+//RecipeControl();
+
+//=========================================================
+// Analog Scaling
+
+AnalogScaling_1();
+
+
+Modbus();
+
+
+//=========================================================
+// System Time
+
+fglocal(
+	sNetID:='',
+	bEnable:=TRUE,
+	dwCycle:=5,
+	dwOpt:=1,
+	tTimeOut:=DEFAULT_ADS_TIMEOUT,
+	bValid=> ,
+	systemTime=>System_Time ,
+	tzID=> );
+	
+//update current hour and minute strings	
+currentHour := WORD_TO_STRING(fglocal.systemTime.wHour);
+currentMinute := WORD_TO_STRING(fglocal.systemTime.wMinute);
+currentSecond := WORD_TO_STRING(fglocal.systemTime.wSecond);
+
+concatenatedHourMinuteString := CONCAT(STR1:=currentHour, STR2:= ':');
+concatenatedHourMinuteString := CONCAT(STR1:=concatenatedHourMinuteString, STR2:= currentMinute);
+
+
+IF RecipeTags.bRecipeStatus THEN
+	bRecipeLocalTimer := TRUE;	
+ELSE
+	bRecipeLocalTimer := FALSE;	
+END_IF
+IF bRecipeLocalTimer  THEN
+	nOfftimer := nOfftimer + 1;
+ELSE
+	nOfftimer := 0;
+END_IF
+TimeInSeconds := nOfftimer/100;
+
+sCurrentSecond := LREAL_TO_STRING(TimeInSeconds);
+sCurrentMinute := INT_TO_STRING(ABS(LREAL_TO_INT(TimeInSeconds/60)));
+sCurrentHour	:= 	INT_TO_STRING(ABS(LREAL_TO_INT(TimeInSeconds/3600)));
+sConcatenatedHourMinuteString := CONCAT(STR1:=sCurrentHour, STR2:= ':');
+sConcatenatedHourMinuteString := CONCAT(STR1:=sConcatenatedHourMinuteString, STR2:= sCurrentMinute);
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="387" Count="1" />
+      <LineId Id="6" Count="9" />
+      <LineId Id="17" Count="4" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="26" Count="4" />
+      <LineId Id="275" Count="1" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="31" Count="16" />
+      <LineId Id="332" Count="0" />
+      <LineId Id="331" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="95" Count="18" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

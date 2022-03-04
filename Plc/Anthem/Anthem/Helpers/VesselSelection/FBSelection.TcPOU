@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="FBSelection" Id="{d3e65dcb-c79d-4220-964a-13ed148d42f5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FBSelection IMPLEMENTS ISelection
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="TargetConverter" Id="{86fa9da8-8495-4eaf-a2e9-48f9bffb3873}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD TargetConverter : INT
+VAR_INPUT
+	sTargetName : STRING;	
+END_VAR
+VAR_OUTPUT
+	TargetConverter_output : INT;	
+END_VAR
+
+VAR
+	nTemp: INT;
+	nVar: INT;
+	bVar1: BOOL;
+	bVar3: BOOL;
+	bVar2: BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF sTargetName = 'R1' THEN
+	nTemp := 0;
+ELSIF sTargetName = 'R2' THEN
+	nTemp := 1;
+ELSIF sTargetName = 'R3' THEN
+	nTemp := 2;
+ELSIF sTargetName = 'R4' THEN
+	nTemp := 3;
+ELSIF sTargetName = 'R5' THEN
+	nTemp := 4;
+ELSIF sTargetName = 'AA1' THEN
+	nTemp := 5;
+ELSIF sTargetName = 'AA2' THEN
+	nTemp := 6;
+ELSIF sTargetName = 'DCM' THEN
+	nTemp := 7;
+ELSIF sTargetName = 'MVB' THEN
+	nTemp := 8;
+ELSIF sTargetName = 'RV_50L' THEN
+	nTemp := 10;
+ELSIF sTargetName = 'MVA' THEN
+	nTemp := 9;
+ELSIF sTargetName = 'RV_25L' THEN
+	nTemp := 11;
+ELSIF sTargetName = 'Fill In' THEN
+	nTemp := 12;
+ELSIF sTargetName = 'Flash' THEN
+	nTemp := 13;
+ELSE
+	nTemp := 14;	
+END_IF
+
+TargetConverter_output := nTemp;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FBSelection">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FBSelection.TargetConverter">
+      <LineId Id="36" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="74" Count="15" />
+      <LineId Id="107" Count="1" />
+      <LineId Id="124" Count="1" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="31" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="AnalogScaling" Id="{83baf03b-b90b-448f-ba4d-dc76eb3bff9c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM AnalogScaling
+VAR
+	fbScaling: FB_Scaling;
+	i: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//=========================================================
+// RV  Scaling
+
+FOR i:=0 TO 2 DO
+	fbScaling(
+		nRawInputValue:= IO.Reactors[i].Temperature.RawValue, 
+		nInputLowerLimit:= IO.Reactors[i].Temperature.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[i].Temperature.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[i].Temperature.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[i].Temperature.ScaledHighLimit, 
+		nScaledValueF=> IO.Reactors[i].Temperature.ScaledValue, 
+		nScaledValueD=> );
+	
+	fbScaling(
+		nRawInputValue:= IO.Reactors[i].Pressure.RawValue, 
+		nInputLowerLimit:= IO.Reactors[i].Pressure.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[i].Pressure.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[i].Pressure.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[i].Pressure.ScaledHighLimit, 
+		nScaledValueF=> IO.Reactors[i].Pressure.ScaledValue, 
+		nScaledValueD=> );
+	
+	fbScaling(
+		nRawInputValue:= IO.Reactors[i].Level.RawValue, 
+		nInputLowerLimit:= IO.Reactors[i].Level.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[i].Level.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[i].Level.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[i].Level.ScaledHighLimit, 
+		nScaledValueF=> IO.Reactors[i].Level.ScaledValue, 
+		nScaledValueD=> );
+
+END_FOR
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="AnalogScaling">
+      <LineId Id="9" Count="1" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="44" Count="25" />
+      <LineId Id="41" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <Itf Name="I_TagAssignment" Id="{2dface39-54e7-4a27-85ee-612eb6543226}">
+    <Declaration><![CDATA[INTERFACE I_TagAssignment
+]]></Declaration>
+    <Method Name="AA1" Id="{ca9802ad-c522-4e6c-a620-c230b2bcbd89}">
+      <Declaration><![CDATA[METHOD AA1 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AA2" Id="{40d73585-59d1-40d6-a6a9-b8b1fabe94be}">
+      <Declaration><![CDATA[METHOD AA2 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="DCM" Id="{cbd7a888-8f42-4ec5-98a4-1ebc65f6ae46}">
+      <Declaration><![CDATA[METHOD DCM : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MVA" Id="{c91a9a6f-4cca-4baa-b620-10d1934acfec}">
+      <Declaration><![CDATA[METHOD MVA : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MVB" Id="{c2bf5e29-92d3-477a-b64f-9b10287a1589}">
+      <Declaration><![CDATA[METHOD MVB : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="R1" Id="{64014a1e-2d2b-4be0-a505-8dd25b6a4924}">
+      <Declaration><![CDATA[METHOD R1 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="R2" Id="{8c4e5655-d103-498e-b21c-aeef081ab15c}">
+      <Declaration><![CDATA[METHOD R2 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="R3" Id="{03156c94-07f6-4609-85b2-4f32791f9075}">
+      <Declaration><![CDATA[METHOD R3 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="R4" Id="{831b4d41-c642-473b-a36f-142647e79b20}">
+      <Declaration><![CDATA[METHOD R4 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="R5" Id="{248eba15-7dd6-47ac-a0e8-1cda66179fe7}">
+      <Declaration><![CDATA[METHOD R5 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="RV" Id="{d1dfa7b8-a737-4382-9552-c2b263406157}">
+      <Declaration><![CDATA[METHOD RV : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <DUT Name="Properties" Id="{c46e132c-9560-474e-98a7-9344c2fbbb47}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE Properties :
+STRUCT
+	bStartCommand : BOOL;
+	bStopCommand : BOOL;
+	bBlockStarted : BOOL;
+	bBlockEnded : BOOL;
+	sStartTime 	: STRING(10);
+	sRemainingTime	: STRING(10);
+	sEndTime	: STRING(10);
+	sSource 	: STRING(20); (*Transfer blocks*)
+	sDestination 	: STRING(20); (*Transfer blocks*)
+	lrSetPoint 	: LREAL; (*Stirrer, HC blocks*)
+	bModeSelection : BOOL; (*0=Jacket, 1=Process => HC Block and 0=Level, 1=Time => Transfer Block*)
+	nInterval : DINT; (*Transfer, Wait Blocks*)
+	sIntervalType : STRING(10); (*Seconds, Minutes, Hours => Wait, Transfer Blocks*)	
+
+
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <Itf Name="IFlush" Id="{46f4c250-ff2e-47f6-91cc-1a4eca9b162c}">
+    <Declaration><![CDATA[INTERFACE IFlush
+]]></Declaration>
+    <Method Name="Flush" Id="{c36b7eed-361a-483d-bc3e-89303fb63d7e}">
+      <Declaration><![CDATA[METHOD Flush : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="pEndFeedback" Id="{61bb2440-1087-4dbb-aa9e-f872a47e78c6}">
+      <Declaration><![CDATA[PROPERTY pEndFeedback : BOOL]]></Declaration>
+      <Get Name="Get" Id="{396036eb-2ae3-4c28-8d86-8d5854b5bb35}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

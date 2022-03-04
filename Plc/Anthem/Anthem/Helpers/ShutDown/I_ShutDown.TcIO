@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <Itf Name="I_ShutDown" Id="{a35ad707-20a3-44ac-a565-a79de4fc6be3}">
+    <Declaration><![CDATA[
+INTERFACE I_ShutDown
+]]></Declaration>
+    <Method Name="ShutDown" Id="{bff6cd5a-1b39-4fe3-9da8-f1c1563e03a0}">
+      <Declaration><![CDATA[METHOD ShutDown : BOOL
+VAR_INPUT
+		GvlIdentifier : STRING;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

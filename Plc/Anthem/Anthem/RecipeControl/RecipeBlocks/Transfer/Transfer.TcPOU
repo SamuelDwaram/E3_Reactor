@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="Transfer" Id="{3c5090f8-8148-4616-b5f6-620b86144fac}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Transfer
+VAR
+	nSource: INT;
+	nDestination: INT;
+	bTransferStartTime : BOOL;
+	nStartTimeInSeconds :UDINT;
+	nTime: UDINT;
+	
+	tempSecondsToAddWhilePause: DINT;
+	SecondsToAddWhilePause: DINT;
+	
+	RemainingTime: UDINT;
+	fbRTRIG: R_TRIG;
+	fbRTRIGEnable : BOOL;
+	fbRTRIG2: F_TRIG;
+	fbRTRIG2Enable : BOOL;
+
+
+	fbFTRIGLLS : F_TRIG;
+	fbFTRIGLLSEnable : BOOL;
+	fbFTRIGLLS2 : F_TRIG;
+	fbFTRIGLLS2Enable : BOOL;
+	fbFTRIGULS : F_TRIG;
+	fbFTRIGULSEnable : BOOL;
+	bCommandToPumpStart:BOOL;
+	fbSelection : FBSelection;
+
+	
+	bStartCommand: BOOL;
+	CLK: INT;
+	Q: INT;
+	btransferBlockEnded: BOOL;
+	
+	sSourceName: STRING;
+	sDestinationName: STRING;
+	bMode: BOOL;
+	
+	DestinationULSON: BOOL;
+END_VAR
+
+VAR_INPUT	
+	nCurrentBlock : INT;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// RECEIVE SOURCE , DESTINATION AND MODE INFORMATION FROM THE BLOCK //
+
+sSourceName:= RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sSource;
+sDestinationName:=RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sDestination;
+bMode := RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bModeSelection;
+
+// Converting Names to NUmbers FROM HELPERS/VESSEL SELECTION.FBSELECTION.TARGETCONVERTER //
+
+fbSelection.TargetConverter(sTargetName:= sSourceName, TargetConverter_output => nSource); 
+fbSelection.TargetConverter(sTargetName:=sDestinationName, TargetConverter_output=>nDestination);
+
+
+
+
+
+
+IF nSource<9 THEN
+	fbFTRIGLLS(CLK:=IO.Vessels[nSource].LLS);
+END_IF
+
+
+IF nDestination<9 THEN
+	DestinationULSON := Not(IO.Vessels[nDestination].ULS);
+
+//ELSIF nDestination>=9 AND nDestination<=11 THEN
+//	fbFTRIGLLS2(CLK:=IO.Vessels[nSource].LLS);
+//	IF fbFTRIGLLS2.Q THEN
+//		DestinationULSON := TRUE;
+//	ELSE
+//		DestinationULSON := FALSE;
+//	END_IF
+ELSE
+	DestinationULSON :=  FALSE;
+END_IF
+
+
+
+IF fbFTRIGLLS.Q THEN
+	fbFTRIGLLSEnable := TRUE;
+END_IF
+
+
+IF nSource=12 THEN
+	fbRTRIG2(CLK:=IO.Vessels[nDestination].ULS);
+END_IF
+
+
+
+IF fbRTRIG2.Q THEN
+	fbRTRIG2Enable := TRUE;
+	RecipeTags.bBlockStart[nCurrentBlock] := FALSE;
+END_IF	
+
+
+
+
+
+// Start Time - Writing start time to structure //
+
+IF (bTransferStartTime=FALSE) THEN
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime:=MAIN.sConcatenatedHourMinuteString;
+	nStartTimeInSeconds:= STRING_TO_UDINT(MAIN.sCurrentSecond);
+	bTransferStartTime:=  TRUE;
+END_IF
+
+// Time Intervals - Conversion of input time as per selection//
+
+IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'S' THEN
+	nTime := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval);
+ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'M' THEN
+	nTime := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 60);
+ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'H' THEN
+	nTime := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 3600);
+END_IF
+
+// Track time elapsed for resume when pause is released //
+
+IF RecipeTags.enWaitPause[nCurrentBlock] THEN
+	tempSecondsToAddWhilePause := tempSecondsToAddWhilePause + 1;
+	SecondsToAddWhilePause := tempSecondsToAddWhilePause; 
+ELSE
+	tempSecondsToAddWhilePause := 0;
+	SecondsToAddWhilePause :=0;
+END_IF
+
+// TO CHECK BLOCK START //
+
+IF NOT(RecipeTags.bPauseRecipe) THEN
+		RecipeTags.enWaitPause[nCurrentBlock] := FALSE;
+		RecipeTags.bBlockStart[nCurrentBlock] := TRUE;
+		//IF bmode THEN
+		//	RemainingTime := ABS(nTime- nStartTimeInSeconds-STRING_TO_UDINT(MAIN.sCurrentSecond));
+		//ELSE
+		//	RemainingTime := 0;
+		//END_IF
+ELSE
+		RecipeTags.bBlockStart[nCurrentBlock] := FALSE;
+		RecipeTags.enWaitPause[nCurrentBlock] := TRUE;
+END_IF
+
+// TO CHECK BLOCK COMPLETION  //
+
+IF bmode THEN
+	// time based mode //
+	IF  (nTime + nStartTimeInSeconds + DINT_TO_UDINT(TRUNC(SecondsToAddWhilePause/100))) 
+		          <= (STRING_TO_UDINT(MAIN.sCurrentSecond)) OR DestinationULSON  OR fbRTRIG2Enable THEN
+		RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := TRUE;
+		RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+		RecipeTags.bBlockStart[nCurrentBlock] := FALSE;
+		RecipeTags.bBlockEnd[nCurrentBlock] := TRUE;
+		fbFTRIGLLSEnable := FALSE;
+		fbRTRIG2Enable := FALSE;
+		
+	ELSE
+		RecipeTags.bBlockEnd[nCurrentBlock] := FALSE;
+	END_IF
+ELSE
+	// level based mode //
+	RecipeTags.bBlockEnd[nCurrentBlock] := FALSE;
+	IF DestinationULSON OR fbRTRIG2Enable OR (fbFTRIGLLSEnable AND nDestination>=9 AND nDestination<12 ) THEN
+		EndLogic(nCurrentBlock:=RecipeTags.bBlockEnd[nCurrentBlock]); 
+		RecipeTags.bBlockEnd[nCurrentBlock] := TRUE;
+		RecipeTags.bBlockStart[nCurrentBlock] := FALSE;
+		fbFTRIGLLSEnable := FALSE;
+		fbRTRIG2Enable := FALSE;
+	END_IF
+END_IF
+
+
+
+ActivationLogic(nCurrentBlock:= nCurrentBlock, nSource:=nSource, nDestination:=nDestination);
+
+   // IF BLOCK END HAS BEEN MADE TRUE //
+EndLogic(nCurrentBlock:=RecipeTags.bBlockEnd[nCurrentBlock]);
+IF EndLogic.OutputBool THEN
+	fbRTRIGEnable := TRUE;
+	RecipeTags.bBlockStart[nCurrentBlock] :=FALSE;
+	EndLogic(nCurrentBlock:=RecipeTags.bBlockEnd[nCurrentBlock]);
+END_IF
+
+IF ((fbRTRIGEnable AND NOT(RecipeTags.bRuntimeEdit))  AND RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'Transfer') THEN
+	ActivationLogic(nCurrentBlock:= nCurrentBlock, nSource:=nSource, nDestination:=nDestination);
+	SecondsToAddWhilePause := 0;
+	fbRTRIGEnable := FALSE;
+	nTime := 0;
+	bTransferStartTime := FALSE;
+	//nStartTimeInSeconds := 0;
+	RecipeTags.bBlockStart[nCurrentBlock]  :=FALSE;
+	RecipeTags.bStartTimeEnable[nCurrentBlock] := FALSE;
+	RecipeTags.bBlockEnd[nCurrentBlock] := FALSE;
+//	EndLogic(nCurrentBlock:=RecipeTags.bBlockEnd[nCurrentBlock]);
+	RecipeTags.bStartTimeEnable[nCurrentBlock] :=  FALSE;
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := TRUE;
+	
+
+END_IF
+	
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="Transfer">
+      <LineId Id="1911" Count="9" />
+      <LineId Id="1905" Count="5" />
+      <LineId Id="1825" Count="33" />
+      <LineId Id="1860" Count="0" />
+      <LineId Id="1859" Count="0" />
+      <LineId Id="1822" Count="2" />
+      <LineId Id="1449" Count="0" />
+      <LineId Id="1333" Count="1" />
+      <LineId Id="102" Count="5" />
+      <LineId Id="112" Count="1" />
+      <LineId Id="1335" Count="0" />
+      <LineId Id="758" Count="5" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="1336" Count="1" />
+      <LineId Id="764" Count="0" />
+      <LineId Id="428" Count="4" />
+      <LineId Id="765" Count="0" />
+      <LineId Id="433" Count="0" />
+      <LineId Id="1341" Count="0" />
+      <LineId Id="1338" Count="0" />
+      <LineId Id="434" Count="0" />
+      <LineId Id="766" Count="2" />
+      <LineId Id="1130" Count="1" />
+      <LineId Id="1134" Count="0" />
+      <LineId Id="1133" Count="0" />
+      <LineId Id="1132" Count="0" />
+      <LineId Id="770" Count="2" />
+      <LineId Id="442" Count="0" />
+      <LineId Id="1340" Count="0" />
+      <LineId Id="967" Count="0" />
+      <LineId Id="445" Count="1" />
+      <LineId Id="1342" Count="0" />
+      <LineId Id="447" Count="5" />
+      <LineId Id="1163" Count="0" />
+      <LineId Id="1162" Count="0" />
+      <LineId Id="1231" Count="0" />
+      <LineId Id="453" Count="1" />
+      <LineId Id="456" Count="1" />
+      <LineId Id="1343" Count="0" />
+      <LineId Id="1428" Count="0" />
+      <LineId Id="458" Count="1" />
+      <LineId Id="1208" Count="0" />
+      <LineId Id="460" Count="0" />
+      <LineId Id="1089" Count="1" />
+      <LineId Id="465" Count="1" />
+      <LineId Id="1138" Count="0" />
+      <LineId Id="467" Count="0" />
+      <LineId Id="543" Count="2" />
+      <LineId Id="1455" Count="4" />
+      <LineId Id="1776" Count="0" />
+      <LineId Id="1433" Count="2" />
+      <LineId Id="1734" Count="0" />
+      <LineId Id="1436" Count="0" />
+      <LineId Id="1775" Count="0" />
+      <LineId Id="1437" Count="5" />
+      <LineId Id="1777" Count="0" />
+      <LineId Id="1443" Count="5" />
+      <LineId Id="1426" Count="0" />
+      <LineId Id="1425" Count="0" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

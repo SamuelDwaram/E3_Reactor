@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <Itf Name="I_ManualControl" Id="{45a4907c-dc70-4978-8b7a-d2fa2733690e}">
+    <Declaration><![CDATA[INTERFACE I_ManualControl
+]]></Declaration>
+    <Method Name="M_RunPump" Id="{382576b9-a992-4a6d-adc8-e3eaff8bc674}">
+      <Declaration><![CDATA[METHOD M_RunPump : BOOL
+VAR_INPUT
+	bStart : BOOL;
+	NTimes : INT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="M_RunValve" Id="{a8996780-dd86-413d-9995-90f1268bfcd4}">
+      <Declaration><![CDATA[METHOD M_RunValve : BOOL
+VAR_INPUT
+	bStart : BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

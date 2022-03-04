@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="ClearRecipe" Id="{a54f7d6b-5f74-425e-a1dd-d3a56698d305}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ClearRecipe
+VAR
+	i: INT;
+	j: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Manual Logic for Reactors.Valves
+	
+FOR i:=0 TO 1 DO
+	FOR j :=0 TO 7 DO
+		IO.Reactors[i].Valves[j].bStart :=	FALSE;
+	END_FOR
+END_FOR
+	
+	//Manual Logic for Reactors.Pumps
+	
+FOR i:=0 TO 1 DO
+	FOR j :=0 TO 1 DO
+		IO.Reactors[i].Pumps[j].bStart :=FALSE;
+	END_FOR
+END_FOR
+
+FOR i := 0 TO 699 DO
+	RecipeTags.Recipe.Blocks[i].Properties.bBlockStarted := FALSE;
+	RecipeTags.Recipe.Blocks[i].Properties.bStartCommand := FALSE;
+	RecipeTags.Recipe.Blocks[i].Properties.bBlockEnded := FALSE;
+	RecipeTags.Recipe.Blocks[i].Properties.bStopCommand := FALSE;
+	RecipeTags.Recipe.Blocks[i].Properties.bModeSelection := FALSE;
+	RecipeTags.Recipe.Blocks[i].Properties.sStartTime := '';
+	RecipeTags.Recipe.Blocks[i].Properties.sEndTime := '';
+	
+	RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockStarted := FALSE;
+	RecipeTags.SlaveRecipe.Blocks[i].Properties.bStartCommand := FALSE;
+	RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockEnded := FALSE;
+	RecipeTags.SlaveRecipe.Blocks[i].Properties.bStopCommand := FALSE;
+	RecipeTags.SlaveRecipe.Blocks[i].Properties.bModeSelection := FALSE;
+	RecipeTags.SlaveRecipe.Blocks[i].Properties.sStartTime := '';
+	RecipeTags.SlaveRecipe.Blocks[i].Properties.sEndTime := '';
+	
+	RecipeTags.bBlockStart[i] := FALSE;
+	RecipeTags.enWaitPause[i] := FALSE;
+	RecipeTags.bBlockEnd[i] := FALSE;
+	RecipeTags.bStartTimeEnable[i] := FALSE;
+
+END_FOR
+
+
+FOR i := 0 TO 2 DO
+	IO.Reactors[i].VFD.bStart := FALSE;
+	IO.Reactors[i].VFD.nRPMSetPointScaled := 0; 
+END_FOR
+
+FOR i:=0 TO 8 DO
+	FOR j :=0 TO 7 DO
+		IO.Vessels[i].Valves[j].bStart := FALSE;
+	END_FOR
+END_FOR
+	
+	//Manual Logic for Vessels.Pumps
+	
+FOR i:=0 TO 8 DO
+	FOR j :=0 TO 1 DO
+		IO.Vessels[i].Pumps[j].bStart :=FALSE;
+	END_FOR
+END_FOR
+
+RecipeTags.bDrainStatus := FALSE;
+RecipeTags.bSkipDrain := FALSE;
+RecipeTags.bPauseRecipe := FALSE;
+		
+]]></ST>
+    </Implementation>
+    <LineIds Name="ClearRecipe">
+      <LineId Id="72" Count="14" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="6" Count="5" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="107" Count="3" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="113" Count="1" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="33" Count="2" />
+      <LineId Id="37" Count="6" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="120" Count="1" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

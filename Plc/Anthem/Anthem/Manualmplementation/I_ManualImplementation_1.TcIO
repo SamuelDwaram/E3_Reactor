@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <Itf Name="I_ManualImplementation_1" Id="{c88c4bf4-402e-4185-90df-d2ecc5fa3db8}">
+    <Declaration><![CDATA[INTERFACE I_ManualImplementation_1
+]]></Declaration>
+    <Property Name="ipManualControl" Id="{a7e1bbad-d3e1-4dd3-b266-295d3d5931bf}">
+      <Declaration><![CDATA[PROPERTY ipManualControl : Array [0..10, 0..10] of I_ManualControl]]></Declaration>
+      <Get Name="Get" Id="{be53d314-55a1-41f9-bc85-9bb46f75cea5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

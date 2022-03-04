@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="IndividualProcess" Id="{c0c5b9ef-64ee-4532-bc52-b1a04c8b469d}">
+    <Declaration><![CDATA[TYPE IndividualProcess :
+STRUCT
+	RawValue : INT;
+	ScaledValue : LREAL;
+	RawLowLimit : INT := 0;
+	RawHighLimit : DINT := 32768;
+	ScaledLowLimit : LREAL;
+	ScaledHighLimit : LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

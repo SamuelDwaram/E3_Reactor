@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="AnalogScaling_1" Id="{4e564fb9-e53e-4438-8d19-2032129e2c22}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM AnalogScaling_1
+VAR_INPUT
+
+END_VAR
+VAR
+	fbScaling: ARRAY[0..15] OF FB_Scaling;
+	i: INT;
+	tempTagForChangingDec : ARRAY[0..15] OF REAL;
+	
+	fbTON :TON;
+	fbTONTrig : TON;
+	
+	fbStirControl : FBStirControl;
+	iStirControl : IStirControl;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[iStirControl := fbStirControl;
+
+IF iStirControl <> 0 THEN
+	iStirControl := iStirControl;
+END_IF
+	
+
+
+
+//=========================================================
+//  Scaling
+
+//FOR i:=0 TO 1 DO
+//	fbScaling[0](
+//		nRawInputValue:= IO.Reactors[i].Temperature.RawValue, 
+//		nInputLowerLimit:= IO.Reactors[i].Temperature.RawLowLimit, 
+//		nInputHigherLimit:= IO.Reactors[i].Temperature.RawHighLimit, 
+//		nOutputLowerLimit:= IO.Reactors[i].Temperature.ScaledLowLimit, 
+//		nOutputHigherLimit:= IO.Reactors[i].Temperature.ScaledHighLimit, 
+//		nScaledValueF=> tempTagForChangingDec[i], 
+//		nScaledValueD=> );
+	
+//	IO.Reactors[i].Temperature.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[i]*100))/100;
+	
+//	fbScaling[1](
+//		nRawInputValue:= IO.Reactors[i].Pressure.RawValue, 
+//		nInputLowerLimit:= IO.Reactors[i].Pressure.RawLowLimit, 
+//		nInputHigherLimit:= IO.Reactors[i].Pressure.RawHighLimit, 
+//		nOutputLowerLimit:= IO.Reactors[i].Pressure.ScaledLowLimit, 
+//		nOutputHigherLimit:= IO.Reactors[i].Pressure.ScaledHighLimit, 
+//		nScaledValueF=> tempTagForChangingDec[i], 
+//		nScaledValueD=> );
+	
+//	IO.Reactors[i].Pressure.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[i]*100))/100;
+	
+//	fbScaling[2](
+//		nRawInputValue:= IO.Reactors[i].Level.RawValue, 
+//		nInputLowerLimit:= IO.Reactors[i].Level.RawLowLimit, 
+//		nInputHigherLimit:= IO.Reactors[i].Level.RawHighLimit, 
+//		nOutputLowerLimit:= IO.Reactors[i].Level.ScaledLowLimit, 
+//		nOutputHigherLimit:= IO.Reactors[i].Level.ScaledHighLimit, 
+//		nScaledValueF=> tempTagForChangingDec[i], 
+//		nScaledValueD=> );
+	
+//	IO.Reactors[i].Level.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[i]*100))/100;	
+		
+//	fbScaling[3](
+//		nRawInputValue:= IO.Reactors[i].VFD.nRPMFeedBackRaw, 
+//		nInputLowerLimit:= 0, 
+//		nInputHigherLimit:= 32767, 
+//		nOutputLowerLimit:= 0, 
+//		nOutputHigherLimit:= 200, 
+//		nScaledValueF=> tempTagForChangingDec[3], 
+//		nScaledValueD=> );
+		
+//	IO.Reactors[i].VFD.nRPMFeedBackScaled := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[i]));		
+		
+//	fbScaling[4](
+//		nRawInputValue:= REAL_TO_INT(IO.Reactors[i].VFD.nRPMSetPointScaled), 
+//		nInputLowerLimit:= 0, 
+//		nInputHigherLimit:= 200, 
+//		nOutputLowerLimit:= 6553, 
+//		nOutputHigherLimit:= 32767, 
+//		nScaledValueF=> , 
+//		nScaledValueD=> );
+	
+//	IO.Reactors[i].VFD.nRPMSetPointRaw := LREAL_TO_INT(fbScaling[4].nScaledValueF);
+	
+//END_FOR
+
+fbScaling[0](
+		nRawInputValue:= IO.Reactors[0].Temperature.RawValue, 
+		nInputLowerLimit:= IO.Reactors[0].Temperature.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[0].Temperature.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[0].Temperature.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[0].Temperature.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[0], 
+		nScaledValueD=> );
+	
+	IO.Reactors[0].Temperature.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[0]*100))/100;
+
+fbScaling[1](
+		nRawInputValue:= IO.Reactors[1].Temperature.RawValue, 
+		nInputLowerLimit:= IO.Reactors[1].Temperature.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[1].Temperature.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[1].Temperature.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[1].Temperature.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[1], 
+		nScaledValueD=> );
+	
+	IO.Reactors[1].Temperature.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[1]*100))/100;
+
+fbScaling[2](
+		nRawInputValue:= IO.Reactors[2].Temperature.RawValue, 
+		nInputLowerLimit:= IO.Reactors[2].Temperature.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[2].Temperature.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[2].Temperature.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[2].Temperature.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[2], 
+		nScaledValueD=> );
+	
+	IO.Reactors[2].Temperature.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[2]*100))/100;
+	
+fbScaling[3](
+		nRawInputValue:= IO.Reactors[0].Pressure.RawValue, 
+		nInputLowerLimit:= IO.Reactors[0].Pressure.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[0].Pressure.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[0].Pressure.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[0].Pressure.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[3], 
+		nScaledValueD=> );
+	
+	IO.Reactors[0].Pressure.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[3]*100))/100;
+
+fbScaling[4](
+		nRawInputValue:= IO.Reactors[1].Pressure.RawValue, 
+		nInputLowerLimit:= IO.Reactors[1].Pressure.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[1].Pressure.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[1].Pressure.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[1].Pressure.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[4], 
+		nScaledValueD=> );
+	
+	IO.Reactors[1].Pressure.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[4]*100))/100;
+
+fbScaling[5](
+		nRawInputValue:= IO.Reactors[2].Pressure.RawValue, 
+		nInputLowerLimit:= IO.Reactors[2].Pressure.RawLowLimit, 
+		nInputHigherLimit:= IO.Reactors[2].Pressure.RawHighLimit, 
+		nOutputLowerLimit:= IO.Reactors[2].Pressure.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[2].Pressure.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[5], 
+		nScaledValueD=> );
+	
+	IO.Reactors[2].Pressure.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[5]*100))/100;
+	
+fbScaling[6](
+		nRawInputValue:= IO.Reactors[0].Level.RawValue, 
+		nInputLowerLimit:= 15780, 
+		nInputHigherLimit:= 27500, 
+		nOutputLowerLimit:= IO.Reactors[0].Level.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[0].Level.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[6], 
+		nScaledValueD=> );
+		
+		IF (tempTagForChangingDec[6] < 0) THEN
+			IO.Reactors[0].Level.ScaledValue := 0;
+		ELSIF (tempTagForChangingDec[6] > 100) THEN
+			IO.Reactors[0].Level.ScaledValue := 100;
+		ELSE
+			IO.Reactors[0].Level.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[6]*100))/100;	
+		END_IF
+	
+
+fbScaling[7](
+		nRawInputValue:= IO.Reactors[1].Level.RawValue, 
+		nInputLowerLimit:= 2500, 
+		nInputHigherLimit:= 20000, 
+		nOutputLowerLimit:= IO.Reactors[1].Level.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[1].Level.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[7], 
+		nScaledValueD=> );
+		IF (tempTagForChangingDec[7] < 0) THEN
+			IO.Reactors[1].Level.ScaledValue := 0;
+		ELSIF (tempTagForChangingDec[7] > 100) THEN
+			IO.Reactors[1].Level.ScaledValue := 100;
+		ELSE
+			IO.Reactors[1].Level.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[7]*100))/100;	
+		END_IF
+	
+	
+fbScaling[8](
+		nRawInputValue:= IO.Reactors[2].Level.RawValue, 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 23120, 
+		nOutputLowerLimit:= IO.Reactors[2].Level.ScaledLowLimit, 
+		nOutputHigherLimit:= IO.Reactors[2].Level.ScaledHighLimit, 
+		nScaledValueF=> tempTagForChangingDec[8], 
+		nScaledValueD=> );
+	
+	IO.Reactors[2].Level.ScaledValue := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[8]*100))/100;	
+		
+	fbScaling[9](
+		nRawInputValue:= IO.Reactors[0].VFD.nRPMFeedBackRaw, 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 32767, 
+		nOutputLowerLimit:= 0, 
+		nOutputHigherLimit:= 200, 
+		nScaledValueF=> tempTagForChangingDec[9], 
+		nScaledValueD=> );
+		
+		IF (INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[9]))) < 5 THEN
+			IO.Reactors[0].VFD.nRPMFeedBackScaled := 0;
+		ELSE
+			IO.Reactors[0].VFD.nRPMFeedBackScaled := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[9]));		
+		END_IF
+	
+fbScaling[10](
+		nRawInputValue:= IO.Reactors[1].VFD.nRPMFeedBackRaw, 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 32767, 
+		nOutputLowerLimit:= 0, 
+		nOutputHigherLimit:= 200, 
+		nScaledValueF=> tempTagForChangingDec[10], 
+		nScaledValueD=> );
+	
+		IF (INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[10]))) < 5 THEN
+			IO.Reactors[1].VFD.nRPMFeedBackScaled := 0;
+		ELSE
+			IO.Reactors[1].VFD.nRPMFeedBackScaled := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[10]));		
+		END_IF
+	
+		
+	
+fbScaling[11](
+		nRawInputValue:= IO.Reactors[2].VFD.nRPMFeedBackRaw, 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 32767, 
+		nOutputLowerLimit:= 0, 
+		nOutputHigherLimit:= 200, 
+		nScaledValueF=> tempTagForChangingDec[11], 
+		nScaledValueD=> );
+		IF (INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[11]))) < 5 THEN
+			IO.Reactors[2].VFD.nRPMFeedBackScaled := 0;
+		ELSE
+			IO.Reactors[2].VFD.nRPMFeedBackScaled := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[11]));		
+		END_IF
+		
+ //VFDSetpointOutput => fb_scaling[0].nRawInputValue);
+iStirControl.StirControl(i:=0);
+fbScaling[12](
+		nRawInputValue:= LREAL_TO_INT(iStirControl.pSetpoint), 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 200, 
+		nOutputLowerLimit:= 6553, 
+		nOutputHigherLimit:= 32767, 
+		nScaledValueF=> tempTagForChangingDec[12], 
+		nScaledValueD=> );
+		IO.Reactors[0].VFD.nRPMSetPointRaw := LREAL_TO_INT(tempTagForChangingDec[12]);		
+
+iStirControl.StirControl(i:=1);
+fbScaling[13](
+		nRawInputValue:= LREAL_TO_INT(iStirControl.pSetpoint), 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 200, 
+		nOutputLowerLimit:= 6553, 
+		nOutputHigherLimit:= 32767, 
+		nScaledValueF=> tempTagForChangingDec[13], 
+		nScaledValueD=> );
+		IO.Reactors[1].VFD.nRPMSetPointRaw := LREAL_TO_INT(tempTagForChangingDec[13]);		
+	
+iStirControl.StirControl(i:=2);
+fbScaling[14](
+		nRawInputValue:= LREAL_TO_INT(iStirControl.pSetpoint), 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 200, 
+		nOutputLowerLimit:= 6553, 
+		nOutputHigherLimit:= 32767, 
+		nScaledValueF=> tempTagForChangingDec[14], 
+		nScaledValueD=> );
+		IO.Reactors[2].VFD.nRPMSetPointRaw := LREAL_TO_INT(tempTagForChangingDec[14]);		
+		
+fbScaling[15](
+		nRawInputValue:= IO.PhysicalIO.JacketTemperature, 
+		nInputLowerLimit:= 0, 
+		nInputHigherLimit:= 32767, 
+		nOutputLowerLimit:= 0, 
+		nOutputHigherLimit:= 200, 
+		nScaledValueF=> tempTagForChangingDec[15], 
+		nScaledValueD=> );
+		IO.JacketTemperature := INT_TO_LREAL(LREAL_TO_INT(tempTagForChangingDec[15]*100))/100;
+		]]></ST>
+    </Implementation>
+    <LineIds Name="AnalogScaling_1">
+      <LineId Id="478" Count="0" />
+      <LineId Id="477" Count="0" />
+      <LineId Id="465" Count="2" />
+      <LineId Id="461" Count="3" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="44" Count="7" />
+      <LineId Id="240" Count="1" />
+      <LineId Id="52" Count="8" />
+      <LineId Id="242" Count="1" />
+      <LineId Id="61" Count="8" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="244" Count="1" />
+      <LineId Id="120" Count="7" />
+      <LineId Id="222" Count="1" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="213" Count="7" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="248" Count="9" />
+      <LineId Id="291" Count="21" />
+      <LineId Id="258" Count="10" />
+      <LineId Id="313" Count="10" />
+      <LineId Id="334" Count="0" />
+      <LineId Id="324" Count="9" />
+      <LineId Id="269" Count="8" />
+      <LineId Id="502" Count="2" />
+      <LineId Id="510" Count="0" />
+      <LineId Id="512" Count="0" />
+      <LineId Id="505" Count="0" />
+      <LineId Id="508" Count="0" />
+      <LineId Id="506" Count="0" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="335" Count="8" />
+      <LineId Id="530" Count="6" />
+      <LineId Id="529" Count="0" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="346" Count="9" />
+      <LineId Id="280" Count="9" />
+      <LineId Id="389" Count="3" />
+      <LineId Id="381" Count="0" />
+      <LineId Id="357" Count="0" />
+      <LineId Id="377" Count="0" />
+      <LineId Id="358" Count="6" />
+      <LineId Id="393" Count="0" />
+      <LineId Id="395" Count="4" />
+      <LineId Id="394" Count="0" />
+      <LineId Id="365" Count="0" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="378" Count="0" />
+      <LineId Id="368" Count="6" />
+      <LineId Id="402" Count="3" />
+      <LineId Id="401" Count="0" />
+      <LineId Id="460" Count="0" />
+      <LineId Id="415" Count="0" />
+      <LineId Id="479" Count="0" />
+      <LineId Id="416" Count="7" />
+      <LineId Id="427" Count="0" />
+      <LineId Id="481" Count="1" />
+      <LineId Id="430" Count="8" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="483" Count="0" />
+      <LineId Id="440" Count="8" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="232" Count="6" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="500" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

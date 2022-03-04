@@ -65,6 +65,17 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             }
         }
 
+        private string _remainingTime;
+        public string RemainingTime
+        {
+            get => !string.IsNullOrWhiteSpace(_remainingTime) ? _remainingTime : "00:00";
+            set
+            {
+                _remainingTime = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private string _enabled;
         public string Enabled
         {
@@ -112,8 +123,15 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
         private string transferMode;
         public string TransferMode
         {
-            get => transferMode ?? bool.FalseString;
+            get => transferMode??bool.FalseString;
             set { SetProperty(ref transferMode, value); }
+        }
+
+        private string transferModeString;
+        public string TransferModeString
+        {
+            get => this.TransferMode == bool.FalseString ? "Level" : "Time";
+            set { SetProperty(ref transferModeString, value); }
         }
 
         private string timeInterval;
@@ -140,11 +158,13 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
                 Ended = this.Ended?.Clone().ToString(),
                 EndedTime = this.EndedTime?.Clone().ToString(),
                 Enabled = this.Enabled?.Clone().ToString(),
+                RemainingTime = this.RemainingTime?.Clone().ToString(),
 
                 Source = this.Source?.Clone().ToString(),
                 Destination = this.Destination?.Clone().ToString(),
                 Volume = this.Volume?.Clone().ToString(),
                 TransferMode = this.TransferMode?.Clone().ToString(),
+                TransferModeString = this.TransferModeString?.Clone().ToString(),
                 TimeInterval = this.TimeInterval?.Clone().ToString(),
                 IntervalType = this.IntervalType?.Clone().ToString(),
             };

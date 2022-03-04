@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_Scaling" Id="{9d98f2c2-045a-45d7-a8db-68b4e460594c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Scaling
+VAR_INPUT
+	nRawInputValue			: INT;
+	nInputLowerLimit		: INT;
+	nInputHigherLimit		: DINT;
+	nOutputLowerLimit		: LREAL;
+	nOutputHigherLimit		: LREAL;
+END_VAR
+VAR_OUTPUT 
+		nScaledValueF		: LREAL;
+	    nScaledValueD		: INT;
+END_VAR
+VAR
+	 nGain		: REAL;
+	Temp: STRING(510);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Scaling Calculations //
+
+	IF	nRawInputValue	<	0	THEN
+		nRawInputValue	:=	0;
+	END_IF
+
+
+	IF	 ((nInputHigherLimit - nInputLowerLimit)	<= 0)	THEN
+//		 ((nOutputHigherLimit  - nOutputLowerLimit)	<= 0)	THEN
+		nGain	:=	0;
+	ELSE
+//				nGain:=(((nRawInputValue - nInputLowerLimit) / (nInputHigherLimit - nInputLowerLimit)) * (nOutputHigherLimit  - nOutputLowerLimit)) + nOutputLowerLimit;
+		nGain:=(nRawInputValue - nInputLowerLimit)*((nOutputHigherLimit - nOutputLowerLimit) / (nInputHigherLimit - nInputLowerLimit)) + nOutputLowerLimit;
+	END_IF
+
+
+		Temp	:=	LREAL_TO_FMTSTR( nGain, 1, TRUE );
+		
+		nScaledValueF	:=	STRING_TO_REAL(Temp);
+		nScaledValueD	:=	REAL_TO_INT(nGain);]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Scaling">
+      <LineId Id="3" Count="11" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="15" Count="3" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="FBRemTimeCalc" Id="{e42f2c73-8b5b-40d5-aceb-55270e1e9125}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FBRemTimeCalc
+VAR_INPUT
+	udRemainingTime: UDINT;
+END_VAR
+VAR_OUTPUT
+	strRemainingTime: STRING(255);
+END_VAR
+VAR
+	s1: STRING(255);
+	s2: STRING(255);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[s1 := INT_TO_STRING(REAL_TO_INT(udRemainingTime/60));
+s2 := INT_TO_STRING(REAL_TO_INT(udRemainingTime MOD 60));
+				
+IF STRING_TO_INT(s1) < 10 THEN
+	s1 := concat('0',s1);
+ELSE
+	s1 := s1;
+END_IF
+IF STRING_TO_INT(s2) < 10 THEN
+	s2 := concat('0',s2);
+ELSE
+	s2 := s2;
+END_IF
+				
+strRemainingTime := concat(s1, concat(':',s2));]]></ST>
+    </Implementation>
+    <LineIds Name="FBRemTimeCalc">
+      <LineId Id="10" Count="7" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="19" Count="3" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

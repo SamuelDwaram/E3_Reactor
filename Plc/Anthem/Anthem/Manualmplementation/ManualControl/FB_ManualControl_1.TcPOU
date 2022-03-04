@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="FB_ManualControl_1" Id="{713584f3-8ee5-4aeb-86fc-744dcb4914cf}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ManualControl_1 IMPLEMENTS  I_ManualControl
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	TEMP_1 : BOOL;
+	Counter : INT;
+	TEMP : BOOL;
+
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="M_RunPump" Id="{143d5c78-d854-4d14-a8a0-894e56593f3f}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD M_RunPump : BOOL
+VAR_INPUT
+	bStart	: BOOL;
+	NTimes : INT;
+
+END_VAR
+VAR
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF NTimes <> 0 THEN
+	IF TRUE THEN
+	Counter := Counter + 1;
+	END_IF
+	IF Counter >= (100/(2*NTimes)) THEN
+		TEMP := TRUE;
+	ELSE
+		TEMP := FALSE;
+	END_IF
+	IF Counter >= (200/(2*NTimes)) THEN
+		Counter := 0;
+	END_IF
+ELSE
+	RETURN;
+END_IF
+
+IF bstart THEN
+	M_RunPump := TEMP;
+ELSE
+	M_RunPump := FALSE;
+END_IF
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_RunValve" Id="{2879ea4d-dcfb-4ea7-82d5-a5d34e3e8e6a}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD M_RunValve : BOOL
+VAR_INPUT
+	bStart	: BOOL;
+END_VAR
+VAR
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[M_RunValve := bStart;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ManualControl_1">
+      <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ManualControl_1.M_RunPump">
+      <LineId Id="13" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="118" Count="1" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="123" Count="1" />
+      <LineId Id="126" Count="1" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="131" Count="4" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="70" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ManualControl_1.M_RunValve">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="Modbus" Id="{916482c7-f302-4872-b236-f0924dd81096}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Modbus
+VAR
+	fbModbusRtuMaster_PcCOM:ModbusRtuMaster_PcCOM;
+	ChillerRead : ARRAY[0..10] OF WORD;
+	ChillerWrite : ARRAY[0..10] OF WORD;
+
+	bWrite: BOOL;
+	bRead: BOOL;
+	
+	fbTON :TON;
+	fbTONTrig : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbTON(IN:=NOT(fbTONTrig.Q), PT:= T#1S);
+fbTONTrig(IN:=fbTON.Q, PT:= T#1s);
+
+
+fbModbusRtuMaster_PcCOM.ReadRegs(
+	UnitID:= 01, 
+	Quantity:= 7, 
+	MBAddr:= 16#0
+, 
+	cbLength:= SIZEOF(ChillerRead), 
+	pMemoryAddr:= ADR(ChillerRead), 
+	Execute:= fbTON.Q, 
+	Timeout:= T#5S);
+	
+IO.ChillerTemperature := WORD_TO_REAL(ChillerRead[5]);
+ChillerWrite[0] := REAL_TO_WORD(IO.ChillerTempSetpoint);	
+	
+fbModbusRtuMaster_PcCOM.WriteRegs(
+	UnitID:= 01, 
+	Quantity:= 1, 
+	MBAddr:= 16#8, 
+	cbLength:= SIZEOF(ChillerWrite), 
+	pMemoryAddr:= ADR(ChillerWrite), 
+	Execute:= NOT(fbTON.Q), 
+	Timeout:= T#5S);
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="Modbus">
+      <LineId Id="52" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="53" Count="1" />
+      <LineId Id="6" Count="9" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="34" Count="8" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

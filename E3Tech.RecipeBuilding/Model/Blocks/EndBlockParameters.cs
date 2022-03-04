@@ -64,6 +64,16 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
                 RaisePropertyChanged();
             }
         }
+        private string _remainingTime;
+        public string RemainingTime
+        {
+            get => !string.IsNullOrWhiteSpace(_remainingTime) ? _remainingTime : "00:00";
+            set
+            {
+                _remainingTime = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public object Clone()
         {

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="FB_Assigner" Id="{f811e592-2cf9-45e4-9aaa-764034fb0f89}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Assigner
+VAR_INPUT
+	i_TagAssignment : I_TagAssignment;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF i_TagAssignment <> 0 THEN
+		THIS^.i_TagAssignment := i_TagAssignment;
+END_IF	
+	
+
+
+i_TagAssignment.R1();
+i_TagAssignment.R2();
+i_TagAssignment.R3();
+i_TagAssignment.R4();
+i_TagAssignment.R5();
+i_TagAssignment.AA1();
+i_TagAssignment.AA2();
+i_TagAssignment.DCM();
+i_TagAssignment.MVA();
+i_TagAssignment.MVB();
+i_TagAssignment.RV();
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Assigner">
+      <LineId Id="26" Count="2" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="8" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

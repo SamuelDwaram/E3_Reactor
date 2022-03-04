@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="FbStirBlock" Id="{d248f781-87bd-4dd5-a8fb-b266f7d526ef}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FbStirBlock IMPLEMENTS IStirBlock
+VAR_INPUT
+	
+END_VAR
+VAR_OUTPUT
+	bStirBlockStarted: BOOL;
+	bStirBlockEnded: BOOL;
+	
+END_VAR
+VAR
+	FbSimulator : fbSimulator;
+	CurrentTarget: INT;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="pEndFeedback" Id="{23a29034-4c18-42e6-a6a6-521d1f79e941}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pEndFeedback : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{8f07b5f0-423b-417e-95cc-b20cff45f624}">
+        <Declaration><![CDATA[VAR
+	
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pEndFeedback := bStirBlockEnded;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="pStartFeedback" Id="{e83c7ec6-b3b8-43ba-8ea2-63faf54b561e}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pStartFeedback : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{50e09bad-c4f5-433d-8549-a774c22315f6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pStartFeedback := bStirBlockStarted;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Stir" Id="{c5838d98-cc2d-43cf-94b4-56f833afffaf}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Stir : BOOL
+VAR_INPUT
+	sTargetName : STRING;
+	bStirStartCommand : BOOL;
+	bStirEndCommand : BOOL;
+	nStirSetPoint : INT;
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF sTargetName = 'RV_50L' THEN
+	CurrentTarget := 1;
+ELSIF  sTargetName = 'RV_25L' THEN
+	CurrentTarget := 2;	
+ELSIF  sTargetName = 'MVA' THEN
+	CurrentTarget := 0;	
+END_IF
+
+IF nStirSetPoint <> 0 AND RecipeTags.bRecipeStatus THEN
+
+
+	IF bStirStartCommand AND NOT(bStirEndCommand)THEN
+		bStirBlockStarted := TRUE;
+		IO.Reactors[CurrentTarget].VFD.nRPMSetPointScaled := nStirSetPoint;
+	ELSE
+		bStirBlockStarted := FALSE;
+		IO.Reactors[CurrentTarget].VFD.nRPMSetPointScaled := 0;
+	END_IF
+ELSE
+	bStirBlockStarted := FALSE;
+END_IF
+
+IO.Reactors[CurrentTarget].VFD.bStart := bStirBlockStarted;
+
+IO.Reactors[CurrentTarget].VFD.nRPMSetPointScaled := nStirSetPoint;
+//FbSimulator(CurrentValue := IO.Reactors[CurrentTarget].VFD.nRPMFeedBackScaled, TargetValue :=  nStirSetPoint,SimulatedValue => IO.Reactors[CurrentTarget].VFD.nRPMFeedBackScaled );
+
+//	IF R1.RecipeStep[R1.StepCount].StirrerStartedTime = '' THEN
+//		R1.RecipeStep[R1.StepCount].StirrerStartedTime := Main.concatenatedHourMinuteString;
+//	END_IF
+
+IF ABS(IO.Reactors[CurrentTarget].VFD.nRPMFeedBackScaled - nStirSetPoint)<= 5 THEN
+	bStirBlockEnded := TRUE;	
+//	IF R1.RecipeStep[R1.StepCount].StirrerEndedTime = '' THEN
+//			R1.RecipeStep[R1.StepCount].StirrerEndedTime := Main.concatenatedHourMinuteString;
+//		END_IF
+ELSE 
+		bStirBlockEnded := FALSE;	
+
+END_IF
+
+Stir := true;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FbStirBlock">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FbStirBlock.pEndFeedback.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FbStirBlock.pStartFeedback.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FbStirBlock.Stir">
+      <LineId Id="35" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="158" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="80" Count="4" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="103" Count="3" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="116" Count="2" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="101" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <DUT Name="Recipe" Id="{10dc3850-87e9-4715-85e5-71a6afb439dd}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE Recipe :
+STRUCT
+	Blocks : ARRAY[0..699] OF Block;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

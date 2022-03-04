@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <Itf Name="IStirBlock" Id="{c17dbb49-032c-44b2-90e7-d518fc69893c}">
+    <Declaration><![CDATA[INTERFACE IStirBlock
+]]></Declaration>
+    <Property Name="pEndFeedback" Id="{744fb7d2-aa5b-4cc0-9c56-55c9b30d5a7b}">
+      <Declaration><![CDATA[PROPERTY pEndFeedback : BOOL]]></Declaration>
+      <Get Name="Get" Id="{3256aeb7-a26a-47a2-9f6c-7a650b828995}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="pStartFeedback" Id="{a894cdd6-2f2d-4054-a465-b216ed6054ef}">
+      <Declaration><![CDATA[PROPERTY pStartFeedback : BOOL]]></Declaration>
+      <Get Name="Get" Id="{cffad5f0-460e-4e8e-b8e1-5267934251e9}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Stir" Id="{708211cb-132d-4d88-ad06-c7e31eb209be}">
+      <Declaration><![CDATA[METHOD Stir : BOOL
+VAR_INPUT
+	sTargetName : STRING;
+	bStirStartCommand : BOOL;
+	bStirEndCommand : BOOL;
+	nStirSetPoint : INT;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <GVL Name="RecipeTags" Id="{90b747db-6db2-431c-9c56-179cbdb060b0}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	SlaveRecipe : Recipe;
+	Recipe	: Recipe;
+	bRecipeStatus : BOOL;
+	ClearRecipe : BOOL;
+	bAbortRecipe : BOOL;
+	bClearRecipe : BOOL;
+	bPauseRecipe : BOOL;
+	bResumeRecipe : BOOL;
+	bSkipDrain : BOOL;
+	bDrainStatus : BOOL;
+	bRuntimeEdit : BOOL;
+	CurrentExecutingStep: STRING;
+	
+	bBlockEnd:ARRAY[0..699] OF BOOL;
+	enWaitPause:ARRAY[0..699] OF BOOL;
+	bBlockStart : ARRAY[0..699] OF BOOL;
+	bStartTimeEnable : ARRAY[0..699] OF BOOL;
+
+END_VAR		]]></Declaration>
+  </GVL>
+</TcPlcObject>

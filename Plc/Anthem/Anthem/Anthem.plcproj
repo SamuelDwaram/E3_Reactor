@@ -1,0 +1,275 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{cdf942d5-7054-4b17-b3d7-da7c7ce02ff2}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Anthem</Name>
+    <ProgramVersion>3.1.4023.0</ProgramVersion>
+    <Application>{4d818d71-ef89-403c-8bc7-fbb901e5ef8d}</Application>
+    <TypeSystem>{58de5825-a59e-4d18-8929-117fd29ad165}</TypeSystem>
+    <Implicit_Task_Info>{d0116647-6119-4679-acc8-e685bdd5e3a1}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{c3a8cd2a-3942-47e9-ba2b-c6fb8c1b9970}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{c8f3c57e-bf6e-472b-b903-6d8311c9fc16}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{292b64dd-5dda-4171-a4b7-0c55f39951b6}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AnalogScaling.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Block.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\EachRecipeStep.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\IndividualProcess.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\PhysicalIO.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Properties.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Pump.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Reactor.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Recipe.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Valve.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Vessel.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\VFD.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\IO.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\RecipeTags.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\Assigner\FB_Assigner.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\Assigner\FB_TagAssignment.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\Assigner\I_TagAssignment.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\fbSimulator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\FB_Scaling.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\MessageProvider.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\RecipeCommHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\RemainingTimeCalculator\FBRemTimeCalc.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\ShutDown\FB_Shutdown.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\ShutDown\I_ShutDown.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\StirControl\FbStirControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\StirControl\IStirControl.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\VesselSelection\FBSelection.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\VesselSelection\ISelection.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManualControl\FB_ManualControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManualControl\I_ManualControl.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManualControl\ManualImplementation\FB_ManualImplementation.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManualControl\ManualImplementation\I_ManualImplementation.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Manualmplementation\FB_ManualImplementation_1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Manualmplementation\I_ManualImplementation_1.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Manualmplementation\ManualControl\FB_ManualControl_1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Manualmplementation\ManualControl\I_ManualControl_1.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\AnalogScaling_1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Modbus.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\ClearRecipe.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Drain\Drain.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Flush\FbFlush.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Flush\IFlush.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\N2Purge\FbN2PurgeBlock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\N2Purge\IN2PurgeBlock.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\N2Purge\N2Purge.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Stir\FbStirBlock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Stir\IStirBlock.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Transfer\ActivationLogic.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Transfer\EndLogic.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Transfer\Transfer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Wait\fbWaitBlock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeBlocks\Wait\IWaitBlock.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RecipeControl\RecipeControl.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Recipe_1.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GVLs" />
+    <Folder Include="Helpers\Assigner" />
+    <Folder Include="Helpers\RemainingTimeCalculator" />
+    <Folder Include="Helpers\StirControl" />
+    <Folder Include="Helpers\ShutDown" />
+    <Folder Include="Helpers\VesselSelection" />
+    <Folder Include="ManualControl\ManualImplementation" />
+    <Folder Include="Manualmplementation\ManualControl" />
+    <Folder Include="DUTs" />
+    <Folder Include="Helpers" />
+    <Folder Include="ManualControl" />
+    <Folder Include="Manualmplementation" />
+    <Folder Include="RecipeControl" />
+    <Folder Include="RecipeControl\RecipeBlocks" />
+    <Folder Include="RecipeControl\RecipeBlocks\Drain" />
+    <Folder Include="RecipeControl\RecipeBlocks\Flush" />
+    <Folder Include="RecipeControl\RecipeBlocks\N2Purge" />
+    <Folder Include="RecipeControl\RecipeBlocks\Stir" />
+    <Folder Include="RecipeControl\RecipeBlocks\Transfer" />
+    <Folder Include="RecipeControl\RecipeBlocks\Wait" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_ModbusRTU">
+      <DefaultResolution>Tc2_ModbusRTU, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_ModbusRTU</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Anthem.tmc">
+      <SubType>Content</SubType>
+    </None>
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+        <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
+        <o>
+          <v n="Name">"{40450F57-0AA3-4216-96F3-5444ECB29763}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>ActiveVisuProfile</v>
+            <v>IR0whWr8bwfwBwAAiD2qpQAAAABVAgAA37x72QAAAAABAAAAAAAAAAEaUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwACTHsAZgA5ADUAYgBiADQAMgA2AC0ANQA1ADIANAAtADQAYgA0ADUALQA5ADQAMAAwAC0AZgBiADAAZgAyAGUANwA3AGUANQAxAGIAfQADCE4AYQBtAGUABDBUAHcAaQBuAEMAQQBUACAAMwAuADEAIABCAHUAaQBsAGQAIAA0ADAAMgA0AC4ANwAFFlAAcgBvAGYAaQBsAGUARABhAHQAYQAGTHsAMQA2AGUANQA1AGIANgAwAC0ANwAwADQAMwAtADQAYQA2ADMALQBiADYANQBiAC0ANgAxADQANwAxADMAOAA3ADgAZAA0ADIAfQAHEkwAaQBiAHIAYQByAGkAZQBzAAhMewAzAGIAZgBkADUANAA1ADkALQBiADAANwBmAC0ANABkADYAZQAtAGEAZQAxAGEALQBhADgAMwAzADUANgBhADUANQAxADQAMgB9AAlMewA5AGMAOQA1ADgAOQA2ADgALQAyAGMAOAA1AC0ANAAxAGIAYgAtADgAOAA3ADEALQA4ADkANQBmAGYAMQBmAGUAZABlADEAYQB9AAoOVgBlAHIAcwBpAG8AbgALBmkAbgB0AAwKVQBzAGEAZwBlAA0KVABpAHQAbABlAA4aVgBpAHMAdQBFAGwAZQBtAE0AZQB0AGUAcgAPDkMAbwBtAHAAYQBuAHkAEAxTAHkAcwB0AGUAbQARElYAaQBzAHUARQBsAGUAbQBzABIwVgBpAHMAdQBFAGwAZQBtAHMAUwBwAGUAYwBpAGEAbABDAG8AbgB0AHIAbwBsAHMAEyhWAGkAcwB1AEUAbABlAG0AcwBXAGkAbgBDAG8AbgB0AHIAbwBsAHMAFCRWAGkAcwB1AEUAbABlAG0AVABlAHgAdABFAGQAaQB0AG8AcgAVIlYAaQBzAHUATgBhAHQAaQB2AGUAQwBvAG4AdAByAG8AbAAWFHYAaQBzAHUAaQBuAHAAdQB0AHMAFwxzAHkAcwB0AGUAbQAYGFYAaQBzAHUARQBsAGUAbQBCAGEAcwBlABkmRABlAHYAUABsAGEAYwBlAGgAbwBsAGQAZQByAHMAVQBzAGUAZAAaCGIAbwBvAGwAGyJQAGwAdQBnAGkAbgBDAG8AbgBzAHQAcgBhAGkAbgB0AHMAHEx7ADQAMwBkADUAMgBiAGMAZQAtADkANAAyAGMALQA0ADQAZAA3AC0AOQBlADkANAAtADEAYgBmAGQAZgAzADEAMABlADYAMwBjAH0AHRxBAHQATABlAGEAcwB0AFYAZQByAHMAaQBvAG4AHhRQAGwAdQBnAGkAbgBHAHUAaQBkAB8WUwB5AHMAdABlAG0ALgBHAHUAaQBkACBIYQBmAGMAZAA1ADQANAA2AC0ANAA5ADEANAAtADQAZgBlADcALQBiAGIANwA4AC0AOQBiAGYAZgBlAGIANwAwAGYAZAAxADcAIRRVAHAAZABhAHQAZQBJAG4AZgBvACJMewBiADAAMwAzADYANgBhADgALQBiADUAYwAwAC0ANABiADkAYQAtAGEAMAAwAGUALQBlAGIAOAA2ADAAMQAxADEAMAA0AGMAMwB9ACMOVQBwAGQAYQB0AGUAcwAkTHsAMQA4ADYAOABmAGYAYwA5AC0AZQA0AGYAYwAtADQANQAzADIALQBhAGMAMAA2AC0AMQBlADMAOQBiAGIANQA1ADcAYgA2ADkAfQAlTHsAYQA1AGIAZAA0ADgAYwAzAC0AMABkADEANwAtADQAMQBiADUALQBiADEANgA0AC0ANQBmAGMANgBhAGQAMgBiADkANgBiADcAfQAmFk8AYgBqAGUAYwB0AHMAVAB5AHAAZQAnVFUAcABkAGEAdABlAEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwARgBvAHIAQwBvAG4AdgBlAHIAdABpAGIAbABlAEwAaQBiAHIAYQByAGkAZQBzACgQTABpAGIAVABpAHQAbABlACkUTABpAGIAQwBvAG0AcABhAG4AeQAqHlUAcABkAGEAdABlAFAAcgBvAHYAaQBkAGUAcgBzACs4UwB5AHMAdABlAG0ALgBDAG8AbABsAGUAYwB0AGkAbwBuAHMALgBIAGEAcwBoAHQAYQBiAGwAZQAsEnYAaQBzAHUAZQBsAGUAbQBzAC1INgBjAGIAMQBjAGQAZQAxAC0AZAA1AGQAYwAtADQAYQAzAGIALQA5ADAANQA0AC0AMgAxAGYAYQA3ADUANgBhADMAZgBhADQALihJAG4AdABlAHIAZgBhAGMAZQBWAGUAcgBzAGkAbwBuAEkAbgBmAG8AL0x7AGMANgAxADEAZQA0ADAAMAAtADcAZgBiADkALQA0AGMAMwA1AC0AYgA5AGEAYwAtADQAZQAzADEANABiADUAOQA5ADYANAAzAH0AMBhNAGEAagBvAHIAVgBlAHIAcwBpAG8AbgAxGE0AaQBuAG8AcgBWAGUAcgBzAGkAbwBuADIMTABlAGcAYQBjAHkAMzBMAGEAbgBnAHUAYQBnAGUATQBvAGQAZQBsAFYAZQByAHMAaQBvAG4ASQBuAGYAbwA0MEwAbwBhAGQATABpAGIAcgBhAHIAaQBlAHMASQBuAHQAbwBQAHIAbwBqAGUAYwB0ADUaQwBvAG0AcABhAHQAaQBiAGkAbABpAHQAeQDQAAIaA9ADAS0E0AUGGgfQBwgaAUUHCQjQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtDtAPAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAKAAAANAMC60BAAAA0A0BLRHQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0S0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAUAAAA0AwLrQIAAADQDQEtE9APAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAAAAAANAMC60CAAAA0A0BLRTQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0V0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtFtAPAS0X0AAJGgRFCgsEAwAAAAUAAAANAAAAKAAAANAMC60EAAAA0A0BLRjQDwEtENAZGq0BRRscAdAAHBoCRR0LBAMAAAAFAAAADQAAAAAAAADQHh8tINAhIhoCRSMkAtAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAAAAANADAS0n0CgBLRHQKQEtENAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAQAAANADAS0n0CgBLRHQKQEtEJoqKwFFAAEC0AABLSzQAAEtF9AAHy0t0C4vGgPQMAutAQAAANAxC60XAAAA0DIarQDQMy8aA9AwC60CAAAA0DELrQMAAADQMhqtANA0Gq0A0DUarQA=</v>
+          </d>
+        </o>
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <o>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" />
+        </o>
+      </d>
+      <d n="Values" t="Hashtable" />
+    </o>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>

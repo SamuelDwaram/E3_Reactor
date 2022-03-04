@@ -29,6 +29,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
                 Ended = this.Ended?.Clone().ToString(),
                 EndedTime = this.EndedTime?.Clone().ToString(),
                 Enabled = this.Enabled?.Clone().ToString(),
+                RemainingTime = this.RemainingTime?.Clone().ToString(),
 
                 Source = this.Source?.Clone().ToString(),
                 TimeInterval = this.TimeInterval?.Clone().ToString(),

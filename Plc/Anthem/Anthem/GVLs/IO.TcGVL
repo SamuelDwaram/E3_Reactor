@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="IO" Id="{75881cd9-1976-41ed-91b1-07fc65f0c18c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	(*R 1..5, AA1, AA2, DCM, MVB*)
+	Vessels : ARRAY[0..8] OF Vessel; 
+	(* RV50L, RV25L, MVA  *)
+	Reactors : ARRAY[0..2] OF Reactor;
+	
+	PhysicalIO : PhysicalIO;
+	
+	ChillerTempSetpoint : LREAL := 25;
+	ChillerTemperature : LREAL;
+	
+	StirrerSetpoint_1 : REAL;
+	
+	JacketTemperature : LREAL;
+	
+	Temperature_1 : LREAL;
+	Temperature_2 : LREAL;
+	
+	ReactorLevel_1 : int;
+	ReactorLevel_2 : LREAL;
+
+	Pressure_1 : LREAL;
+	Pressure_2 : LREAL;
+
+	StirrerCommand_1 : BOOL;
+	StirrerCommand_2 : BOOL;
+	
+	HeatCoolFailure : BOOl;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

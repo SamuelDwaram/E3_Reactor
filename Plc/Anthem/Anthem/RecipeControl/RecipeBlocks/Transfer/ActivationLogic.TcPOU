@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="ActivationLogic" Id="{eedea9e2-c0f7-4e93-b163-b0a0005431a3}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ActivationLogic
+VAR_INPUT
+	nCurrentBlock: INT;
+	nSource : INT;
+	nDestination : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//=========================================================
+// Valve Logic
+	
+	//AND (nDestination <9)
+	IF RecipeTags.bBlockStart[nCurrentBlock] THEN
+		// All Vessels except aa1 and aa2Source
+		IF nSource < 9 AND NOT(nSource = 5 OR nSource = 6 OR nSource=7) THEN
+			IO.Vessels[nSource].Valves[0].bStart := TRUE;       // OPENING VENT VALVE //
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;      // CLOSING PURGE VALVE //  
+			IF io.Vessels[nSource].LLS THEN                     // IF SOURCE LOWER LIQUID AVAILABLE //
+				IO.Vessels[nSource].Valves[2].bStart := TRUE;     // OPEN TRANSFER VALVE //
+			ELSE
+				IO.Vessels[nSource].Valves[2].bStart := FALSE;    // CLOSE TRANSFER VALVE //
+			END_IF
+		END_IF
+		
+		// DCM Source to RV
+		IF NOT(nSource<>7) AND nDestination=10 THEN
+			IO.Vessels[nSource].Valves[0].bStart := TRUE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IF io.Vessels[nSource].LLS THEN
+				IO.Vessels[nSource].Valves[2].bStart := TRUE;
+			ELSE
+				IO.Vessels[nSource].Valves[2].bStart := FALSE;
+			END_IF
+		END_IF
+		
+		// DCM Source 
+		IF NOT(nSource<>7) AND NOT(nDestination=10)THEN
+			IO.Vessels[nSource].Valves[0].bStart := TRUE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IF io.Vessels[nSource].LLS THEN
+				IO.Vessels[nSource].Valves[6].bStart := TRUE;
+			ELSE
+				IO.Vessels[nSource].Valves[6].bStart := FALSE;
+			END_IF
+		END_IF
+		
+		// AA1 and AA2 with RV Source 
+		IF (nSource = 5 OR nSource = 6) AND nDestination=10 THEN
+			IO.Vessels[nSource].Valves[0].bStart := TRUE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IF io.Vessels[nSource].LLS THEN
+				IO.Vessels[nSource].Valves[5].bStart := TRUE;
+			ELSE
+				IO.Vessels[nSource].Valves[5].bStart := FALSE;
+			END_IF
+		END_IF
+		
+		// AA1 and AA2 with MVA Source 
+		IF (nSource = 5 OR nSource = 6) AND nDestination=9 THEN
+			IO.Vessels[nSource].Valves[0].bStart := TRUE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IF io.Vessels[nSource].LLS THEN
+				IO.Vessels[nSource].Valves[2].bStart := TRUE;
+			ELSE
+				IO.Vessels[nSource].Valves[2].bStart := FALSE;
+			END_IF
+		END_IF
+		
+		//R5 to MVB
+		IF nDestination =8 AND nSource = 4 THEN
+			IO.Vessels[nDestination].Valves[0].bStart := TRUE;
+		END_IF
+		
+		//R1 to vessels
+		IF nDestination <9 AND NOT(nSource = 12) AND nSource=0 THEN
+			IO.Vessels[nDestination].Valves[0].bStart := TRUE;
+			IO.Vessels[nDestination].Valves[1].bStart := FALSE;
+			IF io.Vessels[nSource].LLS THEN
+				IO.Vessels[nSource].Valves[4].bStart := TRUE;
+				IO.Vessels[nDestination].Valves[4].bStart := TRUE;
+			ELSE
+				IO.Vessels[nSource].Valves[4].bStart := FALSE;
+				IO.Vessels[nDestination].Valves[4].bStart := FALSE;
+			END_IF
+		END_IF
+		
+		//  Reactors to Vessels
+		IF nSource >=9 AND NOT(nSource = 12) AND nDestination<9  THEN
+			IO.Reactors[nSource-9].Valves[0].bStart := TRUE;
+			IO.Reactors[nSource-9].Valves[1].bStart := FALSE;
+			IO.Reactors[nSource-9].Valves[2].bStart := TRUE;
+		END_IF
+		
+		// RV Destination
+		IF nDestination >=10 AND NOT(nSource=0) AND nSource<9 THEN
+			IO.Vessels[nSource].Valves[0].bStart := TRUE;
+
+//			IF io.Vessels[nSource].LLS THEN
+//			ELSE
+//				IO.Vessels[nSource].Valves[0].bStart := FALSE;
+//			END_IF
+			IO.Reactors[nDestination-9].Valves[1].bStart := FALSE;
+		END_IF
+		
+		//R1 to reactors 
+		IF nSource=0 AND nDestination >=9 THEN
+			IO.Reactors[nDestination-9].Valves[0].bStart := TRUE;
+			IO.Reactors[nDestination-9].Valves[1].bStart := FALSE;
+			IF io.Vessels[nSource].LLS THEN
+				IF nDestination = 9 THEN
+					IO.Reactors[nDestination-9].Valves[4].bStart := TRUE;
+				ELSE 
+					IO.Reactors[nDestination-9].Valves[4].bStart := TRUE;
+				END_IF
+//				IO.Vessels[nSource].Valves[4].bStart := TRUE;
+			ELSE
+//				IO.Vessels[nSource].Valves[4].bStart := FALSE;
+				IO.Reactors[nDestination-9].Valves[4].bStart := FALSE;
+				IO.Reactors[nDestination-9].Valves[4].bStart := FALSE;
+			END_IF
+		END_IF
+		
+		//R2-5,	AA1,2,MVB,DCM TO DCM,MVA,RV
+		IF nDestination=9 OR nDestination =10 AND NOT(nSource=0) AND nSource<9 THEN
+				//AND NOT(nSource = 5 OR nSource = 6) THEN
+			IO.Reactors[nDestination-9].Valves[0].bStart := TRUE;
+			IO.Reactors[nDestination-9].Valves[1].bStart := FALSE;
+		END_IF
+		
+//		//R2-5,	AA1 TO MVB
+//		IF nDestination =8  AND NOT(nSource=0) AND nSource<9 THEN
+//				//AND NOT(nSource = 5 OR nSource = 6) THEN
+//			IO.Reactors[nDestination-9].Valves[0].bStart := TRUE;
+//			IO.Reactors[nDestination-9].Valves[1].bStart := FALSE;
+//		END_IF
+		
+		//Filling OF VESSELS
+		IF nSource = 12 AND NOT(nSource<12) AND nDestination<9 THEN
+			IO.Vessels[nDestination].Valves[0].bStart := TRUE;
+			IO.Vessels[nDestination].Valves[3].bStart := TRUE;
+		END_IF
+		
+		//Flash
+		IF nSource = 13 AND nDestination>=9 AND nDestination<11 THEN
+			IO.Reactors[nDestination-9].Valves[0].bStart := TRUE;
+			IO.Reactors[nDestination-9].Valves[6].bStart := TRUE;
+			
+			IF io.Vessels[0].LLS THEN             
+				IO.Vessels[0].Valves[0].bStart := TRUE;	
+				IO.Vessels[0].Valves[2].bStart := TRUE;
+				IO.Vessels[0].Pumps[1].bStart := TRUE;
+				IO.Vessels[0].Valves[0].bStart := TRUE;
+			ELSE
+					
+				IO.Vessels[0].Valves[2].bStart := FALSE;
+				IO.Vessels[0].Pumps[1].bStart := FALSE;
+			END_IF
+			
+		END_IF
+		
+		//MVA to RV transer
+		IF nSource =9 AND nDestination = 10 THEN
+			IO.Reactors[nSource-9].Valves[0].bStart := TRUE;
+			IO.Reactors[nSource-9].Valves[2].bStart := TRUE;
+			IO.Reactors[nSource-9].Valves[7].bStart := TRUE;
+			IO.Reactors[nDestination-9].Valves[0].bStart := TRUE;
+		END_IF
+		
+	ELSE
+		// DCM Source
+		IF NOT(nSource<>7) THEN
+			IO.Vessels[nSource].Valves[0].bStart := FALSE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IO.Vessels[nSource].Valves[6].bStart := false;
+		END_IF
+		// DCM Source to RV
+		IF NOT(nSource<>7) AND nDestination=10 THEN
+			IO.Vessels[nSource].Valves[0].bStart := FALSE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IO.Vessels[nSource].Valves[2].bStart := FALSE;
+		END_IF
+		IF nSource < 9 THEN
+			IO.Vessels[nSource].Valves[0].bStart := FALSE;
+			IO.Vessels[nSource].Valves[2].bStart := FALSE;
+			IO.Vessels[nSource].Pumps[1].bStart := FALSE;
+			//bCommandToPumpStart[0] := FALSE;
+		END_IF
+		
+		// AA1 and AA2 Source
+		IF nSource = 5 OR nSource = 6 THEN
+			IO.Vessels[nSource].Valves[0].bStart := FALSE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IO.Vessels[nSource].Valves[5].bStart := FALSE;
+		END_IF
+		
+		// AA1 and AA2 with RV Source 
+		IF nSource = 5 OR nSource = 6 AND nDestination=10 THEN
+			IO.Vessels[nSource].Valves[0].bStart := FALSE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IO.Vessels[nSource].Valves[5].bStart := FALSE;
+		END_IF
+		
+		// AA1 and AA2 with MVA Source 
+		IF nSource = 5 OR nSource = 6 AND nDestination=9 THEN
+			IO.Vessels[nSource].Valves[0].bStart := FALSE;
+			IO.Vessels[nSource].Valves[1].bStart := FALSE;
+			IO.Vessels[nSource].Valves[6].bStart := FALSE;
+		END_IF
+		
+		IF nDestination < 9 AND NOT(nSource = 12) THEN
+			IO.Vessels[nSource].Pumps[1].bStart := false;
+			IO.Vessels[nDestination].Valves[0].bStart := FALSE;
+			IO.Vessels[nDestination].Valves[4].bStart := FALSE;
+		END_IF
+		IF nSource >=9 AND NOT(nSource = 12) THEN
+			IO.Reactors[nSource-9].Valves[0].bStart := FALSE;
+			IO.Reactors[nSource-9].Valves[2].bStart := FALSE;
+		END_IF
+		IF nDestination >=9 AND NOT(nSource=0) AND nSource<9  THEN
+			IO.Reactors[nDestination-9].Valves[0].bStart := FALSE;
+			IO.Reactors[nDestination-9].Valves[2].bStart := FALSE;
+		END_IF
+		IF nDestination >=9  THEN
+			IO.Reactors[nDestination-9].Valves[0].bStart := FALSE;
+			IO.Reactors[nDestination-9].Valves[4].bStart := FALSE;
+		END_IF
+		IF nSource = 12 AND NOT(nSource<12) AND nDestination<9 THEN
+			IO.Vessels[nDestination].Valves[3].bStart := FALSE;
+			IO.Vessels[nDestination].Valves[0].bStart := FALSE;
+
+		END_IF
+		IF nDestination =9 OR nDestination =10 AND NOT(nSource=0)  THEN
+			IO.Reactors[nDestination-9].Valves[0].bStart := FALSE;
+			IO.Reactors[nDestination-9].Valves[1].bStart := FALSE;
+		END_IF
+		//R5 to MVB
+		IF nDestination =8 AND nSource = 4 THEN
+			IO.Vessels[nDestination].Valves[0].bStart := FALSE;
+		END_IF
+		
+		//Flush
+		IF nSource = 13 AND nDestination>=9 AND nDestination<11 THEN
+			IO.Reactors[nDestination-9].Valves[0].bStart := FALSE;
+			IO.Reactors[nDestination-9].Valves[6].bStart := FALSE;
+			
+			IO.Vessels[0].Valves[0].bStart := FALSE;	
+			IO.Vessels[0].Valves[2].bStart := FALSE;
+			IO.Vessels[0].Pumps[1].bStart := FALSE;
+		END_IF
+		//MVA to RV transer
+		IF nSource =9 AND nDestination = 10 THEN
+			IO.Reactors[nSource-9].Valves[0].bStart := FALSE;
+			IO.Reactors[nSource-9].Valves[2].bStart := FALSE;
+			IO.Reactors[nSource-9].Valves[7].bStart := FALSE;
+			IO.Reactors[nDestination-9].Valves[0].bStart := FALSE;
+		END_IF
+	END_IF
+
+
+//=========================================================
+// Pump Logic
+	IF RecipeTags.bBlockStart[nCurrentBlock] THEN
+		
+		IF nSource < 9 AND NOT((nSource=5) OR (nSource=6))    THEN
+			IF io.Vessels[nSource].LLS THEN                         // CHECK SOURCE LOWER//
+				IO.Vessels[nSource].Pumps[1].bStart := TRUE;        // START PUMP // 
+			ELSE
+				IO.Vessels[nSource].Pumps[1].bStart := FALSE;       // STOP PUMP //
+			END_IF
+		END_IF
+		IF nSource >= 9 AND NOT((nSource=12) OR (nSource=13)) THEN
+				IO.Reactors[nSource-9].Pumps[1].bStart := TRUE;
+		END_IF
+		IF nSource = 12  THEN
+			IF io.Vessels[nDestination].ULS THEN
+				IO.Vessels[nDestination].Pumps[0].bStart := TRUE;
+			ELSE
+				IO.Vessels[nDestination].Pumps[0].bStart := FALSE;
+			END_IF
+			
+		END_IF
+		IF nSource = 13 THEN
+			IF io.Vessels[0].LLS THEN
+				IO.Vessels[0].Pumps[1].bStart := TRUE;
+			END_IF
+		END_IF
+	ELSE
+		IF nSource < 9  AND NOT((nSource=5) OR (nSource=6)) THEN
+			IO.Vessels[nSource].Pumps[1].bStart := FALSE;
+		END_IF
+		IF nSource >= 9  THEN
+				IO.Reactors[nSource-9].Pumps[1].bStart := FALSE;
+		END_IF
+		IF nSource = 12  THEN
+			IO.Vessels[nDestination].Pumps[0].bStart := FALSE;
+		END_IF
+		IF nSource = 13 THEN
+			IF io.Vessels[0].LLS THEN
+				IO.Vessels[0].Pumps[1].bStart := FALSE;
+			END_IF
+		END_IF
+	END_IF
+
+
+//WHILE (IO.Vessels[nSource].LLS AND NOT(IO.Vessels[nDestination].ULS) AND bCommandToPumpStart[0]) DO
+	//IO.Vessels[nSource].Pumps[1].bStart := TRUE;
+//END_WHILE;]]></ST>
+    </Implementation>
+    <LineIds Name="ActivationLogic">
+      <LineId Id="6" Count="70" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="79" Count="25" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="300" Count="1" />
+      <LineId Id="299" Count="0" />
+      <LineId Id="105" Count="2" />
+      <LineId Id="302" Count="1" />
+      <LineId Id="108" Count="8" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="290" Count="4" />
+      <LineId Id="289" Count="0" />
+      <LineId Id="117" Count="10" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="312" Count="0" />
+      <LineId Id="314" Count="1" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="316" Count="0" />
+      <LineId Id="318" Count="1" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="131" Count="83" />
+      <LineId Id="321" Count="3" />
+      <LineId Id="326" Count="2" />
+      <LineId Id="222" Count="57" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

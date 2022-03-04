@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <DUT Name="Reactor" Id="{3c3e6603-183d-4a68-ad96-8f00326fbaf6}">
+    <Declaration><![CDATA[TYPE Reactor EXTENDS Vessel :
+STRUCT
+	Temperature : IndividualProcess;
+	Pressure : IndividualProcess;
+	Level : IndividualProcess;
+	VFD : VFD;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

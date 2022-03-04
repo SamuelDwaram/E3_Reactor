@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <Itf Name="IWaitBlock" Id="{3f105005-e8ee-4b29-ba29-506e6ca5be5b}">
+    <Declaration><![CDATA[INTERFACE IWaitBlock
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

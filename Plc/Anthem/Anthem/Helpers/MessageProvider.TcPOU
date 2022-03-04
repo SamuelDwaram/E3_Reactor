@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="MessageProvider" Id="{1b8a6de6-d39b-459f-baa4-f4f250f34048}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MessageProvider
+VAR
+	Message : ARRAY[0..10] OF STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+Message[0] := concat('Block',RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock-1].Name);]]></ST>
+    </Implementation>
+    <LineIds Name="MessageProvider">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

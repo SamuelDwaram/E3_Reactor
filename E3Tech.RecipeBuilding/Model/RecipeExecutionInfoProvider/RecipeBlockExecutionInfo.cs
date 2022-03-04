@@ -32,6 +32,13 @@ namespace E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider
             set => SetProperty(ref _endTime, value);
         }
 
+        private string _remainingTime;
+        public string RemainingTime
+        {
+            get => _remainingTime;
+            set => SetProperty(ref _remainingTime, value);
+        }
+
         private string _duration;
         public string Duration
         {

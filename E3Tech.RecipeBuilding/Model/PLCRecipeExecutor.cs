@@ -182,6 +182,8 @@ namespace E3Tech.RecipeBuilding
             //waitBlock.Parameters.Ended = "True";
             waitBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
             waitBlock.Parameters.StartedTime = block.Properties.sStartedTime;
+            //waitBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
+            waitBlock.UpdateParameterValue("RemainingTime", block.Properties.sRemainingTime);
             //waitBlock.Parameters.StartedTime = "00:05";
             waitBlock.Parameters.EndedTime = block.Properties.sEndedTime;
             waitBlock.Parameters.TimeInterval = block.Properties.nInterval.ToString();
@@ -211,6 +213,7 @@ namespace E3Tech.RecipeBuilding
             transferBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
             transferBlock.Parameters.StartedTime = block.Properties.sStartedTime;
             transferBlock.Parameters.EndedTime = block.Properties.sEndedTime;
+            transferBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
             transferBlock.Parameters.Source = block.Properties.sSource;
             transferBlock.Parameters.Destination = block.Properties.sDestination;
             transferBlock.Parameters.IntervalType = block.Properties.sIntervalType;

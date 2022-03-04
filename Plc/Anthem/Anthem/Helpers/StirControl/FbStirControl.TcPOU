@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FbStirControl" Id="{c7a27a94-a89c-4e9d-b986-f8824acce40d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FbStirControl IMPLEMENTS IStirControl
+
+VAR_OUTPUT
+	VFDSetpointOutput : LREAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="pSetpoint" Id="{8d188022-86b1-4051-9705-09833a301424}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pSetpoint : LREAL
+]]></Declaration>
+      <Get Name="Get" Id="{787095fb-b933-4ce0-8ba3-2c5a54cea94c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pSetpoint := VFDSetpointOutput;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="StirControl" Id="{35bcf2e5-3ffe-4f7d-89ad-8ffc3320cb8d}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD StirControl : LREAL
+VAR_INPUT
+	i : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF IO.Reactors[i].VFD.bStart THEN
+	VFDSetpointOutput := IO.Reactors[i].VFD.nRPMSetPointScaled;
+ELSE
+	VFDSetpointOutput := 0;		
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FbStirControl">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FbStirControl.pSetpoint.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FbStirControl.StirControl">
+      <LineId Id="5" Count="5" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

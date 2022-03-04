@@ -65,6 +65,17 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             }
         }
 
+        private string _remainingTime;
+        public string RemainingTime
+        {
+            get => !string.IsNullOrWhiteSpace(_remainingTime) ? _remainingTime : "00:00";
+            set
+            {
+                _remainingTime = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private string _enabled;
         public string Enabled
         {
@@ -104,6 +115,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
                 Ended = this.Ended?.Clone().ToString(),
                 EndedTime = this.EndedTime?.Clone().ToString(),
                 Enabled = this.Enabled?.Clone().ToString(),
+                RemainingTime = this.RemainingTime?.Clone().ToString(),
 
                 SetPoint = this.SetPoint?.Clone().ToString(),
                 Destination = this.Destination?.Clone().ToString()

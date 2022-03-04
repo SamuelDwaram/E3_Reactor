@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FbN2PurgeBlock" Id="{1d0959d1-9804-4bde-a241-77bb0ef6427e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FbN2PurgeBlock IMPLEMENTS IN2PurgeBlock
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bN2PurgeBlockEnded: BOOL;
+
+END_VAR
+VAR
+	fb_FTRIG : F_TRIG;
+	fbSelection : FBSelection;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="pEndFeedback" Id="{716bb46a-72a1-4857-95e4-3fdb8a3df3be}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pEndFeedback : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{7a45e715-79ab-4552-9354-82278d16948f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pEndFeedback := bN2PurgeBlockEnded;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Purge" Id="{d13d96ab-9e0b-40cf-a4f8-81bb2c885273}">
+      <Declaration><![CDATA[METHOD Purge : BOOL
+VAR_INPUT
+	bStartCommand : BOOL;
+	sSourceName : STRING;
+	nCurrentBlock : INT;	
+END_VAR
+
+VAR
+	nSource: INT;
+	b: BOOL;
+	bN2PurgeStartTime: BOOL;
+	nStartTimeInSeconds: INT;
+	nTime: DINT;
+	bPumpStart: BOOL;
+	bRecipePause: BOOL;
+	enWaitPause: BOOL;
+	RemainingTime : DINT;
+	SecondsToAddWhilePause : INT;
+	tempSecondsToAddWhilePause: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbSelection.TargetConverter(sTargetName:= sSourceName, TargetConverter_output => nSource); 
+
+
+bN2PurgeStartTime:=TRUE;
+IF (bN2PurgeStartTime=TRUE) THEN
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime:=MAIN.sConcatenatedHourMinuteString;
+	nStartTimeInSeconds := STRING_TO_INT(MAIN.sCurrentSecond);
+	bN2PurgeStartTime :=  FALSE;
+END_IF
+
+IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'S' THEN
+	nTime := RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval;
+ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'M' THEN
+	nTime := RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 60;
+ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'H' THEN
+	nTime := RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 3600;
+END_IF
+
+IF enWaitPause THEN
+	tempSecondsToAddWhilePause := tempSecondsToAddWhilePause + 1;
+	SecondsToAddWhilePause := tempSecondsToAddWhilePause; 
+ELSE
+	tempSecondsToAddWhilePause := 0;
+END_IF
+
+//IF bStartCommand THEN
+	
+//END_IF
+IF NOT(RecipeTags.bPauseRecipe) THEN
+	enWaitPause := FALSE;
+	bPumpStart := TRUE;
+	RemainingTime := nTime- nStartTimeInSeconds-STRING_TO_DINT(MAIN.sCurrentSecond);
+ELSE
+	bPumpStart := FALSE;
+	enWaitPause := TRUE;
+END_IF
+
+//IF  (nTime + nStartTimeInSeconds + TRUNC(SecondsToAddWhilePause/100)) <= (STRING_TO_INT(MAIN.sCurrentSecond)) THEN
+IF  (nTime  + TRUNC(SecondsToAddWhilePause/100)) <= (STRING_TO_INT(MAIN.sCurrentSecond)) THEN
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := TRUE;
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+	bPumpStart := FALSE;
+END_IF
+
+IF bPumpStart THEN
+	IF nSource<9 THEN
+		IO.Vessels[nSource].Valves[1].bStart := TRUE;
+	END_IF
+	IF nSource>=9 AND nSource<=11 THEN
+		IO.Reactors[nSource-9].Valves[1].bStart := TRUE;
+	END_IF
+ELSE
+	IF nSource<9 THEN
+		IO.Vessels[nSource].Valves[1].bStart := FALSE;
+	END_IF
+	IF nSource>=9 AND nSource<=11 THEN
+		IO.Reactors[nSource-9].Valves[1].bStart := FALSE;
+	end_if
+END_IF
+
+fb_FTRIG(CLK:=bStartCommand, Q=> );
+
+IF fb_FTRIG.Q THEN
+	b := TRUE;
+	bN2PurgeBlockEnded := TRUE;	
+END_IF
+
+//	bN2PurgeBlockEnded := TRUE;	
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FbN2PurgeBlock">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FbN2PurgeBlock.pEndFeedback.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FbN2PurgeBlock.Purge">
+      <LineId Id="165" Count="8" />
+      <LineId Id="214" Count="0" />
+      <LineId Id="174" Count="15" />
+      <LineId Id="197" Count="1" />
+      <LineId Id="207" Count="6" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="199" Count="6" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="69" Count="1" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="72" Count="3" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

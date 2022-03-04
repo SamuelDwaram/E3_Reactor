@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FbFlush" Id="{0e455ef7-2034-461b-8511-9bfa5fbaa509}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FbFlush IMPLEMENTS IFlush
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Flush" Id="{c4e2aa7e-7e90-4b3f-9194-0a7dad1164cc}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Flush : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="pEndFeedback" Id="{a20b3349-1aed-482b-a114-53f06136594e}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pEndFeedback : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{288c188e-1c09-4ca2-9362-d33fd687a75b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FbFlush">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FbFlush.Flush">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FbFlush.pEndFeedback.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -74,6 +74,9 @@
     <Compile Include="UserControls\CircleProcessFlow.xaml.cs">
       <DependentUpon>CircleProcessFlow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\CircleProcessFlowULS.xaml.cs">
+      <DependentUpon>CircleProcessFlowULS.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\GraphicalParameter.xaml.cs">
       <DependentUpon>GraphicalParameter.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
     <Page Include="UserControls\CircleProcessFlow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CircleProcessFlowULS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\GraphicalParameter.xaml">
       <SubType>Designer</SubType>

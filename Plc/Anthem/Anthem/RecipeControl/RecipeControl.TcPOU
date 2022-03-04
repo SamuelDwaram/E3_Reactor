@@ -1,0 +1,379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="RecipeControl" Id="{6276de72-e816-4f14-8d82-adc8f52f09bc}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM RecipeControl
+VAR_INPUT
+	ipStirBlock : IStirBlock;
+	ipN2PurgeBlock : IN2PurgeBlock;
+
+END_VAR
+VAR
+	ipshutDown : I_Shutdown;
+	CurrentCount: INT;
+	nCurrentCount: INT;
+	ctu: CTU;
+	ctu_1: CTU;
+	CurrentCount_1: INT;
+	CU: INT;
+	CV: INT;
+	RESET: INT;
+	PV: INT;
+	nCurrentCount_1: INT;
+	TotalStepsCount: INT;
+	i: INT;
+	nCurrentBlock: INT;
+	sTemp: STRING(255);
+	sTime : STRING(255);
+	
+	fbRTRIG : R_TRIG;
+	fbFTRIG : F_TRIG;
+	offtimer : ARRAY[0..700] OF INT;
+	nTime : ARRAY[0..700] OF UDINT;
+	bPumpStart : ARRAY[0..700] OF BOOL;
+	bModeSelection: ARRAY[0..700] OF BOOL;
+	bTransferEn: ARRAY[0..700] OF BOOL;
+	bN2PurgeEn: BOOL;
+	Temp: ARRAY[0..700] OF INT;
+	fb_TOF: TOF;
+	bTempBit: BOOL;
+	fbRTRIG_1: R_TRIG;
+	bWaitStartTime: BOOL;
+	bN2PurgeStartTime: BOOL;
+	nStartTimeInSeconds: ARRAY[0..699] OF UDINT;
+	bTempStirrer: BOOL;
+
+
+	TagToStoreCurrentStep: INT;
+	bRecipePause: BOOL;
+	RemainingTime: UDINT;
+	enWaitBlock: BOOL;
+	SecondsToAddWhilePause: INT;
+	enWaitPause: BOOL;
+	tempSecondsToAddWhilePause: INT;
+	fb_FTRIG: F_TRIG;
+	s1: STRING;
+	s2: STRING;
+	strRemainingTime: STRING(255);
+	
+	
+	waitFBRemTimeCalc : FBRemTimeCalc;
+	waitRemTime : STRING(255);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RecipeCommHandler();
+
+//=========================================================
+// Instantiation Logic
+
+
+	IF ipshutDown <> 0 THEN
+		ipshutDown := ipshutDown;
+	END_IF
+	
+	IF ipStirBlock <> 0 THEN
+		ipStirBlock := ipStirBlock;
+	END_IF
+
+
+//=========================================================
+// Counter Check Logic
+
+	ctu(
+		CU:= IO.Reactors[0].Pumps[0].Output, 
+		RESET:= , 
+		PV:= , 
+		Q=> , 
+		CV=> CurrentCount);
+		
+	nCurrentCount := WORD_TO_INT(CurrentCount)/10;	
+	
+	ctu_1(
+		CU:= IO.Reactors[1].Pumps[1].Output, 
+		RESET:= , 
+		PV:= , 
+		Q=> , 
+		CV=> CurrentCount_1);
+	
+	nCurrentCount_1 := WORD_TO_INT(CurrentCount_1)/10;	
+	
+
+
+
+//=========================================================
+// Counter Logic
+
+	TotalStepsCount:=0;
+	FOR i := 0 TO 700 DO
+		IF NOT(RecipeTags.Recipe.Blocks[i].StepNo = 0) THEN
+			TotalStepsCount := TotalStepsCount + 1;
+		END_IF
+	END_FOR
+	
+	
+	fbRTRIG_1(CLK := RecipeTags.bRecipeStatus, Q=> bTempBit);
+	IF bTempBit = TRUE THEN
+		RecipeTags.bPauseRecipe := FALSE;	
+		RecipeTags.bAbortRecipe := FALSE;
+		RecipeTags.Recipe.Blocks[0].Properties.bBlockStarted := TRUE;
+		RecipeTags.Recipe.Blocks[1].Properties.bStartCommand := TRUE;
+		RecipeTags.Recipe.Blocks[1].Properties.bBlockStarted := TRUE;
+		RecipeTags.Recipe.Blocks[0].Properties.bStopCommand := TRUE;
+		RecipeTags.Recipe.Blocks[0].Properties.sStartTime:=MAIN.sConcatenatedHourMinuteString;
+
+		nCurrentBlock := 1;
+		bWaitStartTime :=  TRUE;
+		bN2PurgeStartTime := TRUE;
+		bTempBit := FALSE;
+
+	END_IF
+	IF RecipeTags.bAbortRecipe OR RecipeTags.bClearRecipe THEN
+		ClearRecipe();
+		RecipeTags.bPauseRecipe := FALSE;	
+		RecipeTags.bRecipeStatus := FALSE;
+		RecipeTags.bClearRecipe := FALSE;
+		nCurrentBlock := 0;
+		RecipeTags.bAbortRecipe := FALSE;
+		Temp[nCurrentBlock] := 0;
+		FOR i := 0 TO 700 DO
+			offtimer[i] := 0;
+		END_FOR
+
+	END_IF
+	RecipeTags.CurrentExecutingStep := RecipeTags.Recipe.Blocks[nCurrentBlock].Name;
+ 	IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand = TRUE AND NOT(RecipeTags.bAbortRecipe) THEN
+			nCurrentBlock := nCurrentBlock+1;
+			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bBlockStarted := TRUE;
+			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStartCommand := TRUE;
+
+			RecipeTags.Recipe.Blocks[nCurrentBlock-1].Properties.bStartCommand := FALSE;
+			RecipeTags.Recipe.Blocks[nCurrentBlock-1].Properties.bStopCommand := FALSE;
+			RecipeTags.Recipe.Blocks[nCurrentBlock-1].Properties.bBlockEnded := TRUE;
+			
+	END_IF
+	
+//	FOR i := 1 TO (TotalStepsCount) DO
+//		IF RecipeTags.Recipe.Blocks[i].Properties.bStopCommand = TRUE AND NOT(RecipeTags.bAbortRecipe) THEN
+//			nCurrentBlock := nCurrentBlock+1;
+//			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bBlockStarted := TRUE;
+//			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStartCommand := TRUE;
+
+//			RecipeTags.Recipe.Blocks[i].Properties.bStartCommand := FALSE;
+//			RecipeTags.Recipe.Blocks[i].Properties.bStopCommand := FALSE;
+//			RecipeTags.Recipe.Blocks[i].Properties.bBlockEnded := TRUE;
+			
+//	END_IF
+	
+//	END_FOR
+
+//=========================================================
+// Pause Logic
+	IF RecipeTags.bRecipeStatus AND NOT(RecipeTags.bPauseRecipe) THEN
+		TagToStoreCurrentStep := nCurrentBlock;
+		bRecipePause := FALSE;
+	END_IF
+	IF RecipeTags.bPauseRecipe AND RecipeTags.bRecipeStatus THEN
+		bRecipePause := TRUE;
+		FOR i:=0 TO 2 DO
+			IO.Reactors[i].VFD.bStart := FALSE;
+		END_FOR
+	END_IF
+	
+	
+//=========================================================
+// Stir Logic
+
+	
+	IF RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'Stirrer' THEN
+		IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStartCommand= TRUE AND NOT(RecipeTags.bAbortRecipe)  THEN
+			bTempStirrer := TRUE;
+		ELSE
+			bTempStirrer := FALSE;
+		END_IF
+		
+		ipStirBlock.Stir(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sDestination,
+							RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStartCommand, bRecipePause, LREAL_TO_INT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.lrSetPoint));
+		IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime = '' THEN
+			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime := MAIN.sConcatenatedHourMinuteString;
+		END_IF
+		
+		IF ipStirBlock.pEndFeedback THEN
+			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+		END_IF
+
+		RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := ipStirBlock.pEndFeedback;
+		
+	END_IF
+	
+
+//=========================================================
+// Transfer Logic
+	IF RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'Transfer' THEN
+		Transfer(nCurrentBlock:=nCurrentBlock);
+	END_IF
+
+
+	
+
+//=========================================================
+// N2 Purge Logic
+
+	
+	IF RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'N2Purge' THEN
+		N2Purge(nCurrentBlock := nCurrentBlock, sSourceName := RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sSource );
+	END_IF
+	
+	
+//=========================================================
+// Drain Logic
+
+	
+	IF RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'Drain' THEN
+		Drain(nCurrentBlock := nCurrentBlock, sSourceName := RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sSource );
+	END_IF
+	
+//=========================================================
+// Wait Logic
+
+	IF RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'Wait' THEN
+		IF (bWaitStartTime=TRUE) THEN
+			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime:=MAIN.sConcatenatedHourMinuteString;
+			nStartTimeInSeconds[nCurrentBlock] := STRING_TO_UDINT(MAIN.sCurrentSecond);
+			bWaitStartTime :=  FALSE;
+		END_IF
+		IF enWaitPause THEN
+			tempSecondsToAddWhilePause := tempSecondsToAddWhilePause + 1;
+			SecondsToAddWhilePause := tempSecondsToAddWhilePause; 
+		ELSE
+			tempSecondsToAddWhilePause := 0;
+		END_IF
+		
+		IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'S' THEN
+				nTime[nCurrentBlock] := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval);
+		ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'M' THEN
+				nTime[nCurrentBlock] := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 60);
+		ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'H' THEN
+				nTime[nCurrentBlock] := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 3600);
+		END_IF
+		IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bBlockStarted = TRUE THEN
+			IF NOT(bRecipePause) THEN
+				enWaitPause := FALSE;
+				RemainingTime := ABS(nTime[nCurrentBlock]- nStartTimeInSeconds[nCurrentBlock]-STRING_TO_UDINT(MAIN.sCurrentSecond));
+				
+				
+				RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sRemainingTime := waitRemTime;
+				IF (nTime[nCurrentBlock] + nStartTimeInSeconds[nCurrentBlock] + TRUNC(SecondsToAddWhilePause/100)) = (STRING_TO_INT(MAIN.sCurrentSecond)) THEN
+					bWaitStartTime := TRUE;
+					RemainingTime := 0;
+					RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+					RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := TRUE;
+
+				END_IF
+			ELSE
+				enWaitPause := True;
+
+			END_IF
+			
+		END_IF
+		
+	END_IF
+
+	waitFBRemTimeCalc(udRemainingTime:=RemainingTime);
+				
+	waitRemTime := waitFBRemTimeCalc.strRemainingTime;
+//=========================================================
+// End Logic
+
+	
+	IF RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'End' THEN
+		RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bBlockStarted := TRUE;
+		RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+		FOR i:=0 TO 2 DO
+			IO.Reactors[i].VFD.bStart := FALSE;
+			IO.Reactors[i].VFD.nRPMSetPointScaled :=0;
+		END_FOR
+		RecipeTags.bRecipeStatus := FALSE;
+		RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bBlockEnded := TRUE;
+	END_IF
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="RecipeControl">
+      <LineId Id="1734" Count="1" />
+      <LineId Id="883" Count="11" />
+      <LineId Id="898" Count="37" />
+      <LineId Id="1231" Count="0" />
+      <LineId Id="936" Count="2" />
+      <LineId Id="1176" Count="0" />
+      <LineId Id="939" Count="10" />
+      <LineId Id="1230" Count="0" />
+      <LineId Id="950" Count="1" />
+      <LineId Id="1180" Count="1" />
+      <LineId Id="1286" Count="0" />
+      <LineId Id="1289" Count="0" />
+      <LineId Id="1292" Count="0" />
+      <LineId Id="1291" Count="0" />
+      <LineId Id="1287" Count="0" />
+      <LineId Id="952" Count="1" />
+      <LineId Id="1156" Count="1" />
+      <LineId Id="1178" Count="1" />
+      <LineId Id="1160" Count="4" />
+      <LineId Id="954" Count="1" />
+      <LineId Id="1147" Count="0" />
+      <LineId Id="1165" Count="9" />
+      <LineId Id="966" Count="4" />
+      <LineId Id="1194" Count="1" />
+      <LineId Id="1198" Count="0" />
+      <LineId Id="1196" Count="0" />
+      <LineId Id="1200" Count="1" />
+      <LineId Id="1568" Count="0" />
+      <LineId Id="1571" Count="0" />
+      <LineId Id="1570" Count="0" />
+      <LineId Id="1202" Count="0" />
+      <LineId Id="971" Count="14" />
+      <LineId Id="1681" Count="1" />
+      <LineId Id="1680" Count="0" />
+      <LineId Id="987" Count="11" />
+      <LineId Id="1448" Count="0" />
+      <LineId Id="1454" Count="0" />
+      <LineId Id="1451" Count="0" />
+      <LineId Id="1447" Count="0" />
+      <LineId Id="999" Count="0" />
+      <LineId Id="1051" Count="6" />
+      <LineId Id="1431" Count="0" />
+      <LineId Id="1365" Count="0" />
+      <LineId Id="1445" Count="1" />
+      <LineId Id="1507" Count="6" />
+      <LineId Id="1104" Count="9" />
+      <LineId Id="1221" Count="1" />
+      <LineId Id="1226" Count="0" />
+      <LineId Id="1228" Count="1" />
+      <LineId Id="1223" Count="1" />
+      <LineId Id="1114" Count="7" />
+      <LineId Id="1203" Count="0" />
+      <LineId Id="1214" Count="0" />
+      <LineId Id="1211" Count="0" />
+      <LineId Id="1787" Count="0" />
+      <LineId Id="1800" Count="0" />
+      <LineId Id="1788" Count="0" />
+      <LineId Id="1207" Count="0" />
+      <LineId Id="1623" Count="1" />
+      <LineId Id="1209" Count="0" />
+      <LineId Id="1625" Count="1" />
+      <LineId Id="1206" Count="0" />
+      <LineId Id="1217" Count="2" />
+      <LineId Id="1205" Count="0" />
+      <LineId Id="1216" Count="0" />
+      <LineId Id="1126" Count="0" />
+      <LineId Id="1815" Count="0" />
+      <LineId Id="1127" Count="1" />
+      <LineId Id="1816" Count="1" />
+      <LineId Id="1129" Count="7" />
+      <LineId Id="1143" Count="1" />
+      <LineId Id="1146" Count="0" />
+      <LineId Id="1145" Count="0" />
+      <LineId Id="1137" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

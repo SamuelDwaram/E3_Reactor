@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="Drain" Id="{732252c0-8d85-472e-b5c9-8a1b06f29836}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Drain
+VAR
+	nSource: INT;
+	nStartTimeInSeconds: UDINT ;
+	nTime: UDINT;
+	tempSecondsToAddWhilePause: INT;
+	SecondsToAddWhilePause: INT;
+	RemainingTime: UDINT;
+	fb_FTRIG: R_TRIG;
+	bStartCommand: BOOL;
+	CLK: INT;
+	Q: INT;
+	b: BOOL;
+	bN2PurgeBlockEnded: BOOL;
+	fbSelection : FBSelection;
+	
+
+END_VAR
+
+VAR_INPUT
+	nCurrentBlock: INT;
+	sSourceName: STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbSelection.TargetConverter(sTargetName:= sSourceName, TargetConverter_output => nSource); 
+
+
+IF (RecipeTags.bStartTimeEnable[nCurrentBlock]=FALSE) THEN
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime:=MAIN.sConcatenatedHourMinuteString;
+	nStartTimeInSeconds := STRING_TO_UDINT(MAIN.sCurrentSecond);
+	RecipeTags.bStartTimeEnable[nCurrentBlock] :=  TRUE;
+END_IF
+
+
+
+IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'S' THEN
+	nTime := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval);
+ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'M' THEN
+	nTime := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 60);
+ELSIF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sIntervalType = 'H' THEN
+	nTime := DINT_TO_UDINT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.nInterval * 3600);
+END_IF
+
+
+IF RecipeTags.enWaitPause[nCurrentBlock] THEN
+	tempSecondsToAddWhilePause := tempSecondsToAddWhilePause + 1;
+	SecondsToAddWhilePause := tempSecondsToAddWhilePause; 
+ELSE
+	tempSecondsToAddWhilePause := 0;
+END_IF
+
+IF NOT(RecipeTags.bPauseRecipe) THEN
+		RecipeTags.enWaitPause[nCurrentBlock] := FALSE;
+		RecipeTags.bBlockStart[nCurrentBlock] := TRUE;
+		RemainingTime := nTime- nStartTimeInSeconds-STRING_TO_UDINT(MAIN.sCurrentSecond);
+ELSE
+		RecipeTags.bBlockStart[nCurrentBlock] := FALSE;
+		RecipeTags.enWaitPause[nCurrentBlock] := TRUE;
+END_IF
+
+IF  (nTime + nStartTimeInSeconds + DINT_TO_UDINT(TRUNC(SecondsToAddWhilePause/100))) <= (STRING_TO_UDINT(MAIN.sCurrentSecond)) AND RecipeTags.bSkipDrain THEN
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := TRUE;
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+	RecipeTags.bBlockStart[nCurrentBlock] := FALSE;
+	RecipeTags.bBlockEnd[nCurrentBlock] := TRUE;
+	RecipeTags.bDrainStatus := FALSE;
+	RecipeTags.bSkipDrain := FALSE;
+
+ELSIF RecipeTags.bSkipDrain THEN
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := TRUE;
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+	RecipeTags.bBlockStart[nCurrentBlock] := FALSE;
+	RecipeTags.bBlockEnd[nCurrentBlock] := TRUE;
+	RecipeTags.bDrainStatus := FALSE;
+	RecipeTags.bSkipDrain := FALSE;
+ELSE
+	RecipeTags.bBlockEnd[nCurrentBlock] := FALSE;
+END_IF
+
+IF RecipeTags.bBlockStart[nCurrentBlock] THEN
+	RecipeTags.bDrainStatus := TRUE;
+	IF (nSource>=0 AND nSource<5) OR (nSource>6 AND nSource<=8) THEN
+		IO.Vessels[nSource].Valves[0].bStart := TRUE;
+	END_IF
+	IF nSource=5 OR nSource=6 THEN
+		IO.Vessels[nSource].Valves[6].bStart := TRUE;
+		IO.Vessels[nSource].Valves[0].bStart := TRUE;
+	END_IF
+	//MVA drain
+	IF nSource=9 AND nSource<10 THEN
+		IO.Reactors[nSource-9].Valves[5].bStart := TRUE;
+		IO.Reactors[nSource-9].Valves[0].bStart := TRUE;
+		IO.Reactors[nSource-9].Valves[2].bStart := TRUE;
+	END_IF
+	//RV Drain
+	IF nSource=10 OR nSource=11 THEN
+		IO.Reactors[nSource-9].Valves[2].bStart := TRUE;
+		IO.Reactors[nSource-9].Valves[0].bStart := TRUE;
+
+	END_IF
+ELSE
+	IF (nSource>=0 AND nSource<5) OR (nSource>6 AND nSource<=8) THEN
+		IO.Vessels[nSource].Valves[0].bStart := FALSE;
+	END_IF
+	IF nSource<9 THEN
+		IO.Vessels[nSource].Valves[6].bStart := FALSE;
+		IO.Vessels[nSource].Valves[0].bStart := false;
+
+	END_IF
+	//MVA drain
+	IF nSource=9 AND nSource<10 THEN
+		IO.Reactors[nSource-9].Valves[5].bStart := FALSE;
+		IO.Reactors[nSource-9].Valves[0].bStart := FALSE;
+		IO.Reactors[nSource-9].Valves[2].bStart := FALSE;
+	END_IF
+	IF nSource=10 OR nSource=11 THEN
+		IO.Reactors[nSource-9].Valves[2].bStart := FALSE;
+		IO.Reactors[nSource-9].Valves[0].bStart := FALSE;
+
+	END_IF
+END_IF
+
+fb_FTRIG(CLK:=RecipeTags.bBlockEnd[nCurrentBlock], Q=> );
+IF fb_FTRIG.Q AND RecipeTags.Recipe.Blocks[nCurrentBlock].Name = 'Drain' THEN
+	RecipeTags.bSkipDrain := FALSE;
+	RecipeTags.bDrainStatus := FALSE;
+	RecipeTags.bBlockEnd[nCurrentBlock] := FALSE;
+	RecipeTags.bStartTimeEnable[nCurrentBlock] :=  FALSE;
+	SecondsToAddWhilePause := 0;
+	nTime := 0;
+	nStartTimeInSeconds := 0;
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sEndTime:=MAIN.sConcatenatedHourMinuteString;
+	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStopCommand := TRUE;
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="Drain">
+      <LineId Id="6" Count="9" />
+      <LineId Id="201" Count="7" />
+      <LineId Id="22" Count="8" />
+      <LineId Id="194" Count="6" />
+      <LineId Id="38" Count="6" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="250" Count="1" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="255" Count="1" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="48" Count="2" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="281" Count="0" />
+      <LineId Id="283" Count="0" />
+      <LineId Id="280" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="209" Count="0" />
+      <LineId Id="211" Count="3" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="216" Count="0" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="165" Count="1" />
+      <LineId Id="56" Count="1" />
+      <LineId Id="285" Count="1" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="169" Count="1" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="222" Count="4" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="218" Count="3" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="64" Count="2" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="133" Count="1" />
+      <LineId Id="136" Count="3" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

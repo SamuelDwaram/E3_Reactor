@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="RecipeCommHandler" Id="{1f000524-ce8e-46c3-90f9-87c9a45f108b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM RecipeCommHandler
+VAR
+	i: INT;
+	RuntimeEdit : F_TRIG;
+	FinalUpdate : F_TRIG;
+
+	bRuntimeEditDone: BOOL;
+	bFinalUpdateAfterEndBlock : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RuntimeEdit(CLK:=RecipeTags.bRuntimeEdit);
+
+IF RuntimeEdit.Q THEN
+	bRuntimeEditDone := TRUE;
+END_IF
+//OnRecipeTriggerEdit(CLK:=RecipeTags.bRecipeStatus);
+
+
+
+
+IF RecipeTags.bRecipeStatus AND NOT(RecipeTags.bRuntimeEdit) AND NOT(bRuntimeEditDone) THEN
+//IF RecipeTags.bRecipeStatus  THEN
+	FOR i := 0 TO 699 DO
+		RecipeTags.Recipe.Blocks[i].Name := Recipetags.SlaveRecipe.Blocks[i].Name;
+		RecipeTags.Recipe.Blocks[i].StepNo := Recipetags.SlaveRecipe.Blocks[i].StepNo;
+		RecipeTags.Recipe.Blocks[i].Properties.sSource := Recipetags.SlaveRecipe.Blocks[i].Properties.sSource;
+		RecipeTags.Recipe.Blocks[i].Properties.sDestination := Recipetags.SlaveRecipe.Blocks[i].Properties.sDestination;
+		RecipeTags.Recipe.Blocks[i].Properties.bModeSelection := Recipetags.SlaveRecipe.Blocks[i].Properties.bModeSelection;
+		RecipeTags.Recipe.Blocks[i].Properties.lrSetPoint := Recipetags.SlaveRecipe.Blocks[i].Properties.lrSetPoint;
+		RecipeTags.Recipe.Blocks[i].Properties.nInterval := Recipetags.SlaveRecipe.Blocks[i].Properties.nInterval;
+		RecipeTags.Recipe.Blocks[i].Properties.sIntervalType := Recipetags.SlaveRecipe.Blocks[i].Properties.sIntervalType;
+	END_FOR
+	FOR i := 0 TO 699 DO
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockEnded := Recipetags.Recipe.Blocks[i].Properties.bBlockEnded;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockStarted := Recipetags.Recipe.Blocks[i].Properties.bBlockStarted;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bStartCommand := Recipetags.Recipe.Blocks[i].Properties.bStartCommand;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bStopCommand := Recipetags.Recipe.Blocks[i].Properties.bStopCommand;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.sStartTime := Recipetags.Recipe.Blocks[i].Properties.sStartTime;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.sEndTime := Recipetags.Recipe.Blocks[i].Properties.sEndTime;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.sRemainingTime := Recipetags.Recipe.Blocks[i].Properties.sRemainingTime;
+
+	END_FOR
+END_IF
+IF bRuntimeEditDone THEN
+	FOR i := RecipeControl.nCurrentBlock TO RecipeControl.TotalStepsCount DO
+		RecipeTags.Recipe.Blocks[i].Name := Recipetags.SlaveRecipe.Blocks[i].Name;
+		RecipeTags.Recipe.Blocks[i].StepNo := Recipetags.SlaveRecipe.Blocks[i].StepNo;
+		RecipeTags.Recipe.Blocks[i].Properties.sSource := Recipetags.SlaveRecipe.Blocks[i].Properties.sSource;
+		RecipeTags.Recipe.Blocks[i].Properties.sDestination := Recipetags.SlaveRecipe.Blocks[i].Properties.sDestination;
+		RecipeTags.Recipe.Blocks[i].Properties.bModeSelection := Recipetags.SlaveRecipe.Blocks[i].Properties.bModeSelection;
+		RecipeTags.Recipe.Blocks[i].Properties.lrSetPoint := Recipetags.SlaveRecipe.Blocks[i].Properties.lrSetPoint;
+		RecipeTags.Recipe.Blocks[i].Properties.nInterval := Recipetags.SlaveRecipe.Blocks[i].Properties.nInterval;
+		RecipeTags.Recipe.Blocks[i].Properties.sIntervalType := Recipetags.SlaveRecipe.Blocks[i].Properties.sIntervalType;
+	END_FOR
+	FOR i := 0 TO RecipeControl.nCurrentBlock DO
+		RecipeTags.SlaveRecipe.Blocks[i].Name := Recipetags.Recipe.Blocks[i].Name;
+		RecipeTags.SlaveRecipe.Blocks[i].StepNo := Recipetags.Recipe.Blocks[i].StepNo;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockStarted := RecipeTags.Recipe.Blocks[i].Properties.bBlockStarted;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockEnded := Recipetags.Recipe.Blocks[i].Properties.bBlockEnded;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bStartCommand := Recipetags.Recipe.Blocks[i].Properties.bStartCommand;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bStopCommand := Recipetags.Recipe.Blocks[i].Properties.bStopCommand;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.sStartTime := Recipetags.Recipe.Blocks[i].Properties.sStartTime;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.sEndTime := Recipetags.Recipe.Blocks[i].Properties.sEndTime;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.sRemainingTime := Recipetags.Recipe.Blocks[i].Properties.sRemainingTime;
+	END_FOR
+	bRuntimeEditDone := FALSE;
+END_IF
+//To Handle the situation where the recipestatus turning off as soon as the end block completed
+FinalUpdate(CLK:=Recipetags.bRecipeStatus);
+
+IF FinalUpdate.Q THEN
+	bFinalUpdateAfterEndBlock := TRUE;
+END_IF
+
+
+IF bFinalUpdateAfterEndBlock THEN
+	FOR i := 0 TO 699 DO
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockEnded := Recipetags.Recipe.Blocks[i].Properties.bBlockEnded;
+		RecipeTags.SlaveRecipe.Blocks[i].Properties.bBlockStarted := Recipetags.Recipe.Blocks[i].Properties.bBlockStarted;
+	END_FOR
+	bFinalUpdateAfterEndBlock := false;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="RecipeCommHandler">
+      <LineId Id="32" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="101" Count="2" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="40" Count="8" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="87" Count="3" />
+      <LineId Id="148" Count="1" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="51" Count="10" />
+      <LineId Id="70" Count="6" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="108" Count="1" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="122" Count="1" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="112" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

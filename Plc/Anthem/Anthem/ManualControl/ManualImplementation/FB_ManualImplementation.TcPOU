@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_ManualImplementation" Id="{d5d23203-6915-44ea-a76c-32f9df040844}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ManualImplementation IMPLEMENTS  I_ManualImplementation
+VAR_INPUT
+		i_ManualControl : ARRAY[0..12,0..12] OF I_ManualControl;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	i: INT;
+	j: INT;
+	k: INT;
+	k_1: INT;
+	bDosingPumpEnableVessels: BOOL;
+	bDosingPumpEnableReactors: BOOL;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//=========================================================
+// Instantiation Logic
+
+
+	FOR k:=0 TO 10 DO
+		FOR k_1 := 0 TO 10 DO
+			IF i_ManualControl[k, k_1] <> 0 THEN
+			THIS^.i_ManualControl[k, k_1] := i_ManualControl[k, k_1];
+		END_IF	
+		END_FOR
+		
+	END_FOR
+
+
+//=========================================================
+// Count Declaration Logic
+
+	
+
+//=========================================================
+// Manual Logic
+	
+	//Manual Logic for Vessels.Valves
+	
+	FOR i:=0 TO 8 DO
+		FOR j :=0 TO 7 DO
+			IO.Vessels[i].Valves[j].Output :=i_ManualControl[i, j].
+				M_RunValve(IO.Vessels[i].Valves[j].bStart);
+		END_FOR
+	END_FOR
+	
+	//Manual Logic for Vessels.Pumps
+	
+	FOR i:=0 TO 8 DO
+		FOR j :=0 TO 1 DO
+			//IO.Vessels[i].Pumps[j].nPulse := 6;
+			IO.Vessels[i].Pumps[j].Output :=i_ManualControl[i,j].
+				M_RunPump(IO.Vessels[i].Pumps[j].bStart,IO.Vessels[i].Pumps[j].nPulse);
+			IF IO.Vessels[i].Pumps[j].bStart THEN
+				bDosingPumpEnableVessels := TRUE;
+			ELSE
+				bDosingPumpEnableVessels := FALSE;
+			END_IF
+		END_FOR
+	END_FOR
+	
+	//Manual Logic for Reactors.Valves
+	
+	FOR i:=0 TO 1 DO
+		FOR j :=0 TO 7 DO
+			IO.Reactors[i].Valves[j].Output :=i_ManualControl[9+i,j].
+				M_RunValve(IO.Reactors[i].Valves[j].bStart);
+		END_FOR
+	END_FOR
+	
+	//Manual Logic for Reactors.Pumps
+	
+	FOR i:=0 TO 1 DO
+		FOR j :=0 TO 1 DO
+			IO.Reactors[i].Pumps[j].nPulse := 4;
+			IO.Reactors[i].Pumps[j].Output :=i_ManualControl[9+i,j+1].
+				M_RunPump(IO.Reactors[i].Pumps[j].bStart,IO.Reactors[i].Pumps[j].nPulse);
+			IF IO.Reactors[i].Pumps[j].bStart THEN
+				bDosingPumpEnableReactors := TRUE;
+			ELSE
+				bDosingPumpEnableReactors := FALSE;
+			END_IF
+		END_FOR
+	END_FOR
+	
+
+//=========================================================
+// Dosing Pump Enable Logic
+
+IF IO.Vessels[0].Pumps[0].bStart OR IO.Vessels[0].Pumps[1].bStart
+	OR IO.Vessels[1].Pumps[0].bStart OR IO.Vessels[1].Pumps[1].bStart
+	OR IO.Vessels[2].Pumps[0].bStart OR IO.Vessels[2].Pumps[1].bStart
+	OR IO.Vessels[3].Pumps[0].bStart OR IO.Vessels[3].Pumps[1].bStart
+	OR IO.Vessels[4].Pumps[0].bStart OR IO.Vessels[4].Pumps[1].bStart
+	OR IO.Vessels[5].Pumps[0].bStart OR IO.Vessels[5].Pumps[1].bStart
+	OR IO.Vessels[6].Pumps[0].bStart OR IO.Vessels[6].Pumps[1].bStart
+	OR IO.Vessels[7].Pumps[0].bStart OR IO.Vessels[7].Pumps[1].bStart
+	OR IO.Vessels[8].Pumps[0].bStart OR IO.Vessels[8].Pumps[1].bStart
+	OR IO.Reactors[0].Pumps[0].bStart OR IO.Reactors[0].Pumps[1].bStart
+	OR IO.Reactors[1].Pumps[0].bStart OR IO.Reactors[1].Pumps[1].bStart THEN
+	IO.PhysicalIO.DosingPumpEnable := TRUE;
+ELSE
+	IO.PhysicalIO.DosingPumpEnable := FALSE;
+
+END_IF
+
+//IF bDosingPumpEnableVessels OR bDosingPumpEnableReactors THEN
+
+//END_IF]]></ST>
+    </Implementation>
+    <Property Name="ipManualControl" Id="{ffd2fd39-3738-4c96-ac62-74dbe24a672c}">
+      <Declaration><![CDATA[PROPERTY ipManualControl : ARRAY [0..12,0..12] OF I_ManualControl
+]]></Declaration>
+      <Get Name="Get" Id="{b44032a2-4dc6-40ca-95bb-f854afed289d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ipManualControl	:= i_ManualControl;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="FB_ManualImplementation">
+      <LineId Id="301" Count="1" />
+      <LineId Id="299" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="249" Count="0" />
+      <LineId Id="253" Count="1" />
+      <LineId Id="250" Count="1" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="320" Count="1" />
+      <LineId Id="304" Count="0" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="305" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="297" Count="0" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="113" Count="3" />
+      <LineId Id="121" Count="1" />
+      <LineId Id="255" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="230" Count="2" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="241" Count="1" />
+      <LineId Id="342" Count="1" />
+      <LineId Id="345" Count="1" />
+      <LineId Id="344" Count="0" />
+      <LineId Id="236" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="209" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="200" Count="3" />
+      <LineId Id="206" Count="1" />
+      <LineId Id="257" Count="4" />
+      <LineId Id="323" Count="0" />
+      <LineId Id="264" Count="1" />
+      <LineId Id="351" Count="3" />
+      <LineId Id="350" Count="0" />
+      <LineId Id="266" Count="1" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="336" Count="2" />
+      <LineId Id="365" Count="0" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="372" Count="0" />
+      <LineId Id="374" Count="7" />
+      <LineId Id="366" Count="0" />
+      <LineId Id="389" Count="1" />
+      <LineId Id="369" Count="0" />
+      <LineId Id="368" Count="0" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="341" Count="0" />
+      <LineId Id="388" Count="0" />
+      <LineId Id="362" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ManualImplementation.ipManualControl.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

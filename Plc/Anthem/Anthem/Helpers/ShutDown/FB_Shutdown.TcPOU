@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+  <POU Name="FB_Shutdown" Id="{41d600f1-2237-4a02-b3af-e31def017b6b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Shutdown IMPLEMENTS I_ShutDown
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+]]></ST>
+    </Implementation>
+    <Method Name="ShutDown" Id="{fcb05a15-7607-42b3-85e6-d7399a1ca780}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD ShutDown : BOOL
+VAR_INPUT
+	GvlIdentifier	: STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF GvlIdentifier = 'R1' THEN
+//	R1.RecipeStatus		:= FALSE;
+//	R1.HeatCoolStatus	:= FALSE;
+//	R1.StirrerStatus	:= FALSE;
+//	R1.AbortRecipe		:= FALSE;
+//END_IF;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Shutdown">
+      <LineId Id="12" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Shutdown.ShutDown">
+      <LineId Id="8" Count="4" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
