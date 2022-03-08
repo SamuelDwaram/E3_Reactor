@@ -34,7 +34,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
 
         
 
-        private string transferMode = bool.TrueString;
+        private string transferMode;
         public string TransferMode
         {
             get => transferMode ?? bool.FalseString;

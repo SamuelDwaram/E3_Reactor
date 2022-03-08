@@ -127,8 +127,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" >
-                <Label Content="{Binding Index}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Medium"  FontSize="35" VerticalAlignment="Center"></Label>
-                <Label Content=" : " HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Medium"  FontSize="35" VerticalAlignment="Center"></Label>
+                <Label Content="{Binding Index}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Medium"  FontSize="28" VerticalAlignment="Center"></Label>
+                <Label Content=" : " HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Medium"  FontSize="28" VerticalAlignment="Center"></Label>
             </StackPanel>
             <UniformGrid Grid.Column="1" Grid.IsSharedSizeScope="True">
                 <Grid  >
@@ -143,7 +143,7 @@
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Parameters.UiLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontWeight="Medium"  FontSize="35" VerticalAlignment="Center" Grid.RowSpan="2" Margin="20,0,0,0" />
+                    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Parameters.UiLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontWeight="Medium"  FontSize="28" VerticalAlignment="Center" Grid.RowSpan="2" Margin="20,0,0,0" />
 
                     <Grid x:Name="sourceGrid" Grid.Row="0" Grid.Column="1"  >
                         <Grid.ColumnDefinitions>

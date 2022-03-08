@@ -12,10 +12,11 @@ namespace E3Tech.RecipeBuilding.Converters
         public object Convert(object value, Type targetType, object parameter,
            System.Globalization.CultureInfo culture)
         {
-            if (targetType != typeof(bool))
+            bool result = false;
+            if (targetType != typeof(bool) && bool.TryParse(value.ToString(),out result) == false)
                 throw new InvalidOperationException("The target must be a boolean");
 
-            return !(bool)value;
+            return result == false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

@@ -69,7 +69,7 @@
                 </Style>
             </ContentControl.Style>
         </ContentControl>
-        <Label Name="Warning" Grid.Row="1" Content=" Warning : Please fill all the details" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold"  Foreground="Red" Visibility="Collapsed"></Label>
+        <Label Name="Warning" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold"  Foreground="Red" Visibility="Collapsed"></Label>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>

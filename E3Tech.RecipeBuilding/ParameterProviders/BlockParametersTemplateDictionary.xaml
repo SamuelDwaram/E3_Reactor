@@ -4,7 +4,8 @@
                         xmlns:converters="clr-namespace:E3Tech.RecipeBuilding.Converters"
                         xmlns:userControls="clr-namespace:E3Tech.RecipeBuilding.UserControls">
     <converters:RecipeStepExecutionStatusCheckerConverter x:Key="RecipeStepExecutionStatusChecker"/>
-        
+    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+
     <Grid DataContext="{Binding Parameters}" x:Key="StartBlockParametersTemplate">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -130,8 +131,8 @@
         </ComboBox>
         <Label Content="Transfer Mode" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <RadioButton  Margin="3,10,3,3" Foreground="White" GroupName="TransferMode" IsChecked="{Binding TransferMode, Mode=OneTime, Converter={StaticResource InverseBooleanConverter }}" >LavelBased</RadioButton>
             <RadioButton Margin="3,10,3,3" Foreground="White" IsChecked="{Binding TransferMode}"  GroupName="TransferMode" >TimeBased</RadioButton>
-            <RadioButton  Margin="3,10,3,3" Foreground="White" GroupName="TransferMode" >LabelBased</RadioButton>
         </StackPanel>
         <Label Content="Time Interval" Foreground="White" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left" Style="{StaticResource TimeBasedTransferStyle}"/>
         <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TimeBasedTransferStyle}" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
