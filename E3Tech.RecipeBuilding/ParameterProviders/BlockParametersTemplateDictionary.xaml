@@ -14,24 +14,8 @@
         <Grid.Resources>
             <Style TargetType="Label">
                 <Setter Property="Foreground" Value="White"/>
-            </Style>     
+            </Style>
         </Grid.Resources>
-        <!--<Label Content="HC Mode Of Operation" Grid.Column="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center"/>
-        <CheckBox x:Name="heatCoolModeSelectionCheckBox" Grid.Column="1" HorizontalAlignment="Left" Margin="3" IsChecked="{Binding HeatCoolModeSelection, Mode=TwoWay, FallbackValue=False, TargetNullValue=False}" VerticalAlignment="Center"/>
-        <Label Grid.Column="2" HorizontalAlignment="Left" FontWeight="Bold" Margin="3" Foreground="White" VerticalAlignment="Center">
-            <Label.Style>
-                <Style TargetType="Label">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding HeatCoolModeSelection}" Value="True">
-                            <Setter Property="Content" Value="Process Mode"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding HeatCoolModeSelection}" Value="False">
-                            <Setter Property="Content" Value="Jacket Mode"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Label.Style>
-        </Label>-->
     </Grid>
         
     <Grid DataContext="{Binding Parameters}" x:Key="StirrerBlockParametersTemplate">
@@ -142,37 +126,12 @@
             <ComboBoxItem>DCM</ComboBoxItem>
         </ComboBox>
         <Label Content="Destination" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" SelectedValue="{Binding Path=Destination}" SelectedValuePath="Content">
-            <ComboBoxItem>R1</ComboBoxItem>
-            <ComboBoxItem>R2</ComboBoxItem>
-            <ComboBoxItem>R3</ComboBoxItem>
-            <ComboBoxItem>R4</ComboBoxItem>
-            <ComboBoxItem>R5</ComboBoxItem>
-            <ComboBoxItem>AA1</ComboBoxItem>
-            <ComboBoxItem>AA2</ComboBoxItem>
-            <ComboBoxItem>MVA</ComboBoxItem>
-            <ComboBoxItem>MVB</ComboBoxItem>
-            <ComboBoxItem>DCM</ComboBoxItem>
-            <ComboBoxItem>RV_50L</ComboBoxItem>
-            <ComboBoxItem>RV_25L</ComboBoxItem>
+        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding FilterDestination}" SelectedItem="{Binding Destination}" SelectedValuePath="Content">
         </ComboBox>
         <Label Content="Transfer Mode" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-            <CheckBox HorizontalAlignment="Left" Margin="3" IsChecked="{Binding TransferMode, Mode=TwoWay, FallbackValue=False, TargetNullValue=False}" VerticalAlignment="Center"/>
-            <Label HorizontalAlignment="Left" FontWeight="Bold" Margin="3" Foreground="White" VerticalAlignment="Center">
-                <Label.Style>
-                    <Style TargetType="Label">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding TransferMode}" Value="True">
-                                <Setter Property="Content" Value="Time Based"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding TransferMode}" Value="False">
-                                <Setter Property="Content" Value="Level Based"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
+            <RadioButton Margin="3,10,3,3" Foreground="White" IsChecked="{Binding TransferMode}"  GroupName="TransferMode" >TimeBased</RadioButton>
+            <RadioButton  Margin="3,10,3,3" Foreground="White" GroupName="TransferMode" >LabelBased</RadioButton>
         </StackPanel>
         <Label Content="Time Interval" Foreground="White" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left" Style="{StaticResource TimeBasedTransferStyle}"/>
         <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource TimeBasedTransferStyle}" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>

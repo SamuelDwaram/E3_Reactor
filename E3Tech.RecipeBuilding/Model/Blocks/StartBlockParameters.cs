@@ -3,7 +3,7 @@ using System;
 
 namespace E3Tech.RecipeBuilding.Model.Blocks
 {
-    public class StartBlockParameters : BindableBase, ICloneable
+    public class StartBlockParameters : BaseBlockParameters, ICloneable
     {
         public string Name
         {

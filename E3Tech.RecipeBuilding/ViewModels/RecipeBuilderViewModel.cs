@@ -58,12 +58,10 @@ namespace E3Tech.RecipeBuilding.ViewModels
         #region Initialization of Recipe Steps and Registered Recipe Blocks
         private void LoadSteps()
         {
-            /*
-             * If DeviceId has not started any Recipe and application was running fine
-             * then Load recipe from Recipe Builder
-             */
+            int index = 1;
             foreach (RecipeStep step in recipeBuilder.RecipeSteps)
             {
+                step.BlockOne.Index = index++;
                 RecipeSteps.Add(new RecipeStepViewModel(containerProvider) { RecipeStep = step });
             }
             if (IsSeqRecipeExecuting)
@@ -75,17 +73,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     UpdateNextSeqRecipeExecute();
                 }
             }
-            //SlaveRecipe recipe = fieldDevicesCommunicator.ReadAny<SlaveRecipe>(deviceId, plcHandle);
-            //foreach (Block block in recipe.Blocks)
-            //{
-            //    if (block.Name == string.Empty)
-            //    {
-            //        // This is an empty block => Recipe ended with previous block.
-            //        // No need to read further steps. It will be time consuming operation.
-            //        break;
-            //    }
-            //    IRecipeBlock recipeBlock = GetRecipeBlock(block);
-            //}
+
         }
         private void LoadRegisteredBlocks(IUnityContainer containerProvider)
         {
@@ -153,10 +141,12 @@ namespace E3Tech.RecipeBuilding.ViewModels
                         recipeBuilder.UpdateRecipeList(recipeSteps);
 
                         RecipeSteps.Clear();
+                        int stepno = 1;
                         foreach (RecipeStep step in recipeSteps)
                         {
                             RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
                             stepViewModel.RecipeStep = step;
+                            stepViewModel.RecipeStep.BlockOne.Index = stepno++;
                             RecipeSteps.Add(stepViewModel);
                         }
                         selectedSeqRecipeModel = keyvalueRecipeDetail.Key;
@@ -237,10 +227,12 @@ namespace E3Tech.RecipeBuilding.ViewModels
             if (recipeSteps != null)
             {
                 RecipeSteps.Clear();
+                int index = 1;
                 foreach (RecipeStep step in recipeSteps)
                 {
                     RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
                     stepViewModel.RecipeStep = step;
+                    stepViewModel.RecipeStep.BlockOne.Index = index++;
                     RecipeSteps.Add(stepViewModel);
                 }
             }
@@ -369,7 +361,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     {
                         selectedSeqRecipeModel.IsExecuting = false;
                     }
-                    
+
                     recipeBuilder.DeleteSeqRecipe();
                 }
                 AbortRecipeExecution();
@@ -442,7 +434,6 @@ namespace E3Tech.RecipeBuilding.ViewModels
             }
 
             recipeBlock.Configure(containerProvider);
-
         }
 
         private void HandleDeleteStep(RecipeStepViewModel stepViewModel)
@@ -452,6 +443,11 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 if (recipeBuilder.RemoveStep(stepViewModel.RecipeStep))
                 {
                     RecipeSteps.Remove(stepViewModel);
+                }
+                int index = 1;
+                foreach (var item in RecipeSteps)
+                {
+                    item.RecipeStep.BlockOne.Index = index++;
                 }
             }
         }
@@ -474,6 +470,12 @@ namespace E3Tech.RecipeBuilding.ViewModels
                         break;
                         index++;
                     }
+                }
+
+                index = 1;
+                foreach (var item in RecipeSteps)
+                {
+                    item.RecipeStep.BlockOne.Index = index++;
                 }
             }
         }
@@ -500,7 +502,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private void SaveChangesExecution()
         {
             IsSaveChange = false;
-            recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps); 
+            recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
             UpdateIsEditEnable();
             recipeExecutor.SaveUpdatedBlockExecution(DeviceId);
         }
@@ -724,10 +726,26 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     isBlockValid = recipeBuilder.UpdateStep(RecipeSteps[recipeStepIndex].RecipeStep, parameters.Block, block);
                 }
 
-                if (isBlockValid)
+                if (isBlockValid && block.Configure(containerProvider))
                 {
-                    block.Configure(containerProvider);
                     UpdateRecipeToExecuter(block, recipeStepIndex);
+                }
+                else
+                {
+                    RecipeSteps[recipeStepIndex].RecipeStep.BlockOne = null;
+                }
+
+                int index = 1;
+                foreach (var item in RecipeSteps)
+                {
+                    if (item.RecipeStep.BlockOne != null)
+                    {
+                        item.RecipeStep.BlockOne.Index = index++;
+                    }
+                    else
+                    {
+                        index++;
+                    }
                 }
             }
 
@@ -799,13 +817,23 @@ namespace E3Tech.RecipeBuilding.ViewModels
             {
                 RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
                 stepViewModel.RecipeStep = step;
-                if (!firstStep)
+                if (!firstStep && block.Configure(containerProvider))
                 {
                     RecipeSteps.Add(stepViewModel);
+                    SelectedStep = stepViewModel;
                 }
-
-                block.Configure(containerProvider);
-                SelectedStep = stepViewModel;
+            }
+            int index = 1;
+            foreach (var item in RecipeSteps)
+            {
+                if (item.RecipeStep.BlockOne != null)
+                {
+                    item.RecipeStep.BlockOne.Index = index++;
+                }
+                else
+                {
+                    index++;
+                }
             }
 
         }
@@ -823,17 +851,27 @@ namespace E3Tech.RecipeBuilding.ViewModels
             {
                 RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
                 stepViewModel.RecipeStep = newRecipeStep;
-                RecipeSteps.Insert(toBeAddedRecipeStepIndex, stepViewModel);
-                block.Configure(containerProvider);
-                SelectedStep = stepViewModel;
-
-                //if (bool.Parse(RecipeStatus))
-                //{
-                //    // If Recipe is running start it again to update all the steps to the plc
-                //    StartRecipe();
-                //}
+               
+                bool result = block.Configure(containerProvider);
+                if(result)
+                {
+                    RecipeSteps.Insert(toBeAddedRecipeStepIndex, stepViewModel);
+                    SelectedStep = stepViewModel;
+                }
+                
             }
-
+            int index = 1;
+            foreach (var item in RecipeSteps)
+            {
+                if (item.RecipeStep.BlockOne != null)
+                {
+                    item.RecipeStep.BlockOne.Index = index++;
+                }
+                else
+                {
+                    index++;
+                }
+            }
         }
 
         private void HandleMouseButton(MouseButtonCommandParameters parameters)

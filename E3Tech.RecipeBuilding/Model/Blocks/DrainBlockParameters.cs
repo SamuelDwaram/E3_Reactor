@@ -2,7 +2,7 @@
 
 namespace E3Tech.RecipeBuilding.Model.Blocks
 {
-    public class DrainBlockParameters : BaseDrainBlockParameters, ICloneable
+    public class DrainBlockParameters : BaseBlockParameters, ICloneable
     {
         public string Name
         {

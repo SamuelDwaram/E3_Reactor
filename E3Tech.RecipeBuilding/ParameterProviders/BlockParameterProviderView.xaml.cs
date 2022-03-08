@@ -1,4 +1,5 @@
-﻿using E3Tech.RecipeBuilding.ViewModels;
+﻿using E3Tech.RecipeBuilding.Model.Blocks;
+using E3Tech.RecipeBuilding.ViewModels;
 using System.Windows;
 
 namespace E3Tech.RecipeBuilding.ParameterProviders
@@ -16,8 +17,66 @@ namespace E3Tech.RecipeBuilding.ParameterProviders
             DataContext = ViewModel = viewModel;
         }
 
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if(ViewModel.Parameters is StirrerBlockParameters)
+            {
+                var stirrerBlockParameters = ViewModel.Parameters as StirrerBlockParameters;
+                if(stirrerBlockParameters.SetPoint == null || stirrerBlockParameters.Destination == null)
+                {
+                    Warning.Visibility = Visibility.Visible;
+                    return;
+                }
+            }
+            else if(ViewModel.Parameters is WaitBlockParameters)
+            {
+                var waitBlockParameters = ViewModel.Parameters as WaitBlockParameters;
+                if(waitBlockParameters.IntervalType == null || waitBlockParameters.TimeInterval == null)
+                {
+                    Warning.Visibility = Visibility.Visible;
+                    return;
+                }
+            }
+            else if(ViewModel.Parameters is N2PurgeBlockParameters)
+            {
+                var n2PurgeBlockParameters = ViewModel.Parameters as N2PurgeBlockParameters;
+                if (n2PurgeBlockParameters.IntervalType == null || n2PurgeBlockParameters.TimeInterval == null || n2PurgeBlockParameters.Source == null)
+                {
+                    Warning.Visibility = Visibility.Visible;
+                    return;
+                }
+            }
+            else if(ViewModel.Parameters is TransferBlockParameters)
+            {
+                var transferBlockParameters = ViewModel.Parameters as TransferBlockParameters;
+                if(transferBlockParameters.Source == null || transferBlockParameters.Destination == null)
+                {
+                    Warning.Visibility = Visibility.Visible;
+                    return;
+                }
+                else if(transferBlockParameters.TransferMode == bool.TrueString)
+                {
+                    if(transferBlockParameters.TimeInterval == null || transferBlockParameters.IntervalType == null)
+                    {
+                        Warning.Visibility = Visibility.Visible;
+                        return;
+                    }
+                }
+            }
+            else if(ViewModel.Parameters is DrainBlockParameters)
+            {
+                var drainBlockParameters = ViewModel.Parameters as DrainBlockParameters;
+                if (drainBlockParameters.IntervalType == null || drainBlockParameters.TimeInterval == null || drainBlockParameters.Source == null)
+                {
+                    Warning.Visibility = Visibility.Visible;
+                    return;
+                }
+            }
             this.DialogResult = true;
         }
     }

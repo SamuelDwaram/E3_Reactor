@@ -2,7 +2,7 @@
 
 namespace E3Tech.RecipeBuilding.Model.Blocks
 {
-    public class FlushBlockParameters : BaseDrainBlockParameters, ICloneable
+    public class FlushBlockParameters : BaseBlockParameters, ICloneable
     {
         public string Name
         {

@@ -11,11 +11,13 @@ namespace E3Tech.RecipeBuilding.Model
 
         string GuidID { get; set; }
 
-        void Configure(IUnityContainer unityContainer);
+        bool Configure(IUnityContainer unityContainer);
 
         void UpdateParameterValue(string parameterName, string paremeterValue);
 
         string GetParameterValue(string parameterName);
+
+        int Index { get; set; }
     }
 
 }

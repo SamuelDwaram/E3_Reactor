@@ -3,7 +3,7 @@ using System;
 
 namespace E3Tech.RecipeBuilding.Model.Blocks
 {
-    public class StirrerBlockParameters : BindableBase, ICloneable
+    public class StirrerBlockParameters : BaseBlockParameters, ICloneable
     {
         public string Name
         {
@@ -21,71 +21,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             }
         }
 
-        private string _started;
-        public string Started
-        {
-            get => _started ?? bool.FalseString;
-            set
-            {
-                _started = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string _ended;
-        public string Ended
-        {
-            get => _ended ?? bool.FalseString;
-            set
-            {
-                _ended = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string _startedTime;
-        public string StartedTime
-        {
-            get => !string.IsNullOrWhiteSpace(_startedTime) ? _startedTime : "00:00";
-            set
-            {
-                _startedTime = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string _endedTime;
-        public string EndedTime
-        {
-            get => !string.IsNullOrWhiteSpace(_endedTime) ? _endedTime : "00:00";
-            set
-            {
-                _endedTime = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string _remainingTime;
-        public string RemainingTime
-        {
-            get => !string.IsNullOrWhiteSpace(_remainingTime) ? _remainingTime : "00:00";
-            set
-            {
-                _remainingTime = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string _enabled;
-        public string Enabled
-        {
-            get { return _enabled; }
-            set
-            {
-                _enabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        
 
         private string _setPoint;
         public string SetPoint
@@ -96,13 +32,6 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
                 _setPoint = value;
                 RaisePropertyChanged();
             }
-        }
-
-        private string destination;
-        public string Destination
-        {
-            get { return destination; }
-            set { SetProperty(ref destination, value); }
         }
 
         public object Clone()

@@ -8,6 +8,7 @@ namespace E3Tech.RecipeBuilding.Model
         private string name;
         private string uiLabel;
         private string guidId;
+        private int index;
 
         public void RaisePropertyChanged(string propertyName)
         {
@@ -24,9 +25,9 @@ namespace E3Tech.RecipeBuilding.Model
 
         }
 
-        public void Configure(IUnityContainer unityContainer)
+        public bool Configure(IUnityContainer unityContainer)
         {
-            
+            return true;
         }
 
         public string GetParameterValue(string parameterName)
@@ -35,10 +36,13 @@ namespace E3Tech.RecipeBuilding.Model
         }
 
         public string Name { get => name; set => name = value; }
+
         public string UiLabel { get => uiLabel; set => uiLabel = value; }
 
         public string GuidID { get => guidId; set => guidId = value; }
-        
+
+        public int Index { get => index; set => index = value; }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

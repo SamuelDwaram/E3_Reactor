@@ -37,14 +37,16 @@ namespace E3Tech.RecipeBuilding.Model
             }
         }
 
-        public void Configure(IUnityContainer containerProvider)
+        public bool Configure(IUnityContainer containerProvider)
         {
             BlockParameterProvider<T> recipeBlockParemeterProvider = containerProvider.Resolve<BlockParameterProvider<T>>();
             recipeBlockParemeterProvider.Parameters = Parameters;
-            if (recipeBlockParemeterProvider.PopulateParameters())
+            bool result = recipeBlockParemeterProvider.PopulateParameters();
+            if (result)
             {
                 this.Parameters = recipeBlockParemeterProvider.Parameters;
             }
+            return result;
         }
 
         public string GetParameterValue(string parameterName)
@@ -94,6 +96,17 @@ namespace E3Tech.RecipeBuilding.Model
             {
                 guidId = value;
                 RaisePropertyChanged(nameof(GuidID));
+            }
+        }
+
+        private int index;
+        public int Index
+        {
+            get => index;
+            set
+            {
+                index = value;
+                RaisePropertyChanged(nameof(index));
             }
         }
 

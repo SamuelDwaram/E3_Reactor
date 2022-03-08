@@ -3,7 +3,7 @@ using System;
 
 namespace E3Tech.RecipeBuilding.Model.Blocks
 {
-    public class WaitBlockParameters : BaseDrainBlockParameters, ICloneable
+    public class WaitBlockParameters : BaseBlockParameters, ICloneable
     {
         public string Name
         {

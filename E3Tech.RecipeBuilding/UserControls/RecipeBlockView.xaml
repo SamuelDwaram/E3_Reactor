@@ -6,6 +6,7 @@
              xmlns:converters="clr-namespace:E3Tech.RecipeBuilding.Converters"
              xmlns:helpers="clr-namespace:E3Tech.RecipeBuilding.Helpers"
              xmlns:local="clr-namespace:E3Tech.RecipeBuilding.Views"
+             xmlns:controls="clr-namespace:E3Tech.RecipeBuilding.UserControls"
              mc:Ignorable="d"        
              Focusable="True"
              Background="White"
@@ -119,486 +120,35 @@
                 </Style>
             </Border.Style>
         </Border>
-        <Viewbox Stretch="None" Width="600">
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Parameters.UiLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontWeight="Medium"  FontSize="18" VerticalAlignment="Center" Grid.RowSpan="2" />
-
-                <Border Grid.Column="2" Grid.RowSpan="2"  BorderThickness="0,0,1,0" BorderBrush="Black">
-                    <Border.Style>
-                        <Style TargetType="{x:Type Border}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                </Border>
-                <Border Grid.Column="3" Grid.RowSpan="2"  BorderThickness="0,0,1,0" BorderBrush="Black">
-                    <Border.Style>
-                        <Style TargetType="{x:Type Border}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                </Border>
-
-                <Grid x:Name="sourceGrid" Grid.Row="0" Grid.Column="2" >
+        <Grid  Width="{Binding RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=ActualWidth}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" >
+                <Label Content="{Binding Index}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Medium"  FontSize="35" VerticalAlignment="Center"></Label>
+                <Label Content=" : " HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Medium"  FontSize="35" VerticalAlignment="Center"></Label>
+            </StackPanel>
+            <UniformGrid Grid.Column="1" Grid.IsSharedSizeScope="True">
+                <Grid  >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.25*"/>
+                        <ColumnDefinition Width="0.25*"/>
+                        <ColumnDefinition Width="0.25*"/>
+                        <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="Equipment :"/>
-                                    </DataTrigger>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="Source :"/>
-                                    </DataTrigger>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                        <Setter Property="Content" Value="Source :"/>
-                                    </DataTrigger>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Content" Value="Source :"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="{Binding Parameters.Destination}"/>
-                                    </DataTrigger>
-
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="{Binding Parameters.Source}"/>
-                                    </DataTrigger>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                        <Setter Property="Content" Value="{Binding Parameters.Source}"/>
-                                    </DataTrigger>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Content" Value="{Binding Parameters.Source}"/>
-                                    </DataTrigger>
-
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-
-                </Grid>
-
-                <Grid x:Name="destinationGrid" Grid.Column="2" Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                            <Style.Triggers>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="HeatCool">
-                                        <Setter Property="Content" Value="Set Point :"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="Set Point :"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Dosing">
-                                        <Setter Property="Content" Value="Remaining Dosable Amount :"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                        <Setter Property="Content" Value="Rem Time :"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Fill">
-                                        <Setter Property="Content" Value="Volume :"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="Destination :"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="HeatCool">
-                                        <Setter Property="Content" Value="{Binding Parameters.SetPoint}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="{Binding Parameters.SetPoint}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                        <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Dosing">
-                                        <Setter Property="Content" Value="{Binding Parameters.RemainingDosableAmount}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Fill">
-                                        <Setter Property="Content" Value="{Binding Parameters.Volume}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="{Binding Parameters.Destination}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                </Grid>
-                
-                <Grid x:Name="TimeIntervalGrid" Grid.Row="0" Grid.Column="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width=".5*"/>
-                        <ColumnDefinition Width=".5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Visible"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <Label Grid.Column="0" Content="Time Interval:" HorizontalContentAlignment="Right" FontSize="16"/>
-                    <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding Parameters.TimeInterval}" FontSize="16"/>
-                    <Label Grid.Column="2" HorizontalContentAlignment="Left" Content="{Binding Parameters.IntervalType}" FontSize="16"/>
-                </Grid>
-
-
-                <Grid x:Name="ModeGrid" Grid.Row="1" Grid.Column="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width=".5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                            <Style.Triggers>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="Transfer Mode:"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                        <Setter Property="Content" Value="Transfer Mode:"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Content" Value="Transfer Mode:"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                        <Setter Property="Content" Value="Transfer Mode::"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="Transfer Mode:"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="Time"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                        <Setter Property="Content" Value="Time"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Content" Value="Time"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                        <Setter Property="Content" Value="Time"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="{Binding Parameters.TransferModeString}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                </Grid>
-                <Grid x:Name="StartedTimeGrid" Grid.Row="0" Grid.Column="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.Style>
-                            <Style TargetType="Grid">
-                                <Setter Property="Visibility" Value="Visible"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
-                        <Label Grid.Column="0" Content="Start Time:" HorizontalContentAlignment="Right" FontSize="16"/>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding Parameters.StartedTime}" FontSize="16"/>
-                    </Grid>
-
-                <Grid x:Name="ReminingTimeGrid" Grid.Row="1" Grid.Column="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.Style>
-                        <Style TargetType="Grid">
-                            <Setter Property="Visibility" Value="Visible"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                                <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
-                    <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="Rem Time:"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                        <Setter Property="Content" Value="Rem Time:"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                        <Setter Property="Content" Value="Rem Time :"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Content" Value="Rem Time :"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="Rem Time:"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                        <Setter Property="Content" Value="End Time:"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                        <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                        <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                        <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                        <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                        <Setter Property="Content" Value="{Binding Parameters.EndedTime}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                </Grid>
-            </Grid>
-            <!--<DockPanel HorizontalAlignment="Left" >
-                <Grid x:Name="labelGrid">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <Label Content="{Binding Parameters.UiLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" FontWeight="Medium"  FontSize="8" VerticalAlignment="Center" Grid.RowSpan="1" />
 
-                </Grid>
-                <StackPanel>
-                    --><!--#region Set point Grid-->
-                    <!--Show set point Grid only for some blocks--><!--
-                    <Grid x:Name="sourceGrid">
+                    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Parameters.UiLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontWeight="Medium"  FontSize="35" VerticalAlignment="Center" Grid.RowSpan="2" Margin="20,0,0,0" />
+
+                    <Grid x:Name="sourceGrid" Grid.Row="0" Grid.Column="1"  >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.Style>
                             <Style TargetType="Grid">
@@ -607,30 +157,37 @@
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
-                                    
+
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
-                                    
+
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
-                                    
+
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
-                                    
+
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
-                                    
+
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
@@ -650,11 +207,17 @@
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
                                             <Setter Property="Content" Value="Source :"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
+                                            <Setter Property="Content" Value="End Time:"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
+                                            <Setter Property="Content" Value="Start Time:"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Label.Style>
                         </Label>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16" VerticalAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
@@ -675,6 +238,12 @@
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
                                             <Setter Property="Content" Value="{Binding Parameters.Source}"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
+                                            <Setter Property="Content" Value="{Binding Parameters.EndedTime}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
+                                            <Setter Property="Content" Value="{Binding Parameters.StartedTime}"/>
+                                        </DataTrigger>
 
                                     </Style.Triggers>
                                 </Style>
@@ -683,18 +252,16 @@
 
                     </Grid>
 
-                    --><!--#region Set point Grid-->
-                    <!--Show set point Grid only for some blocks--><!--
-                    <Grid x:Name="destinationGrid">
+                    <Grid x:Name="destinationGrid" Grid.Column="1" Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.Style>
                             <Style TargetType="Grid">
                                 <Setter Property="Visibility" Value="Hidden"/>
                                 <Style.Triggers>
-                                    
+
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
@@ -718,11 +285,11 @@
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
-                                    
+
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="0" HorizontalContentAlignment="Left" FontSize="16" VerticalContentAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
@@ -748,7 +315,7 @@
                                 </Style>
                             </Label.Style>
                         </Label>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="1" HorizontalContentAlignment="Left" FontSize="16" VerticalContentAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
@@ -775,18 +342,12 @@
                             </Label.Style>
                         </Label>
                     </Grid>
-                </StackPanel>
-                --><!--#endregion--><!--
 
-                <StackPanel>
-                    
-
-                    
-                    <Grid x:Name="TimeIntervalGrid">
+                    <Grid x:Name="TimeIntervalGrid" Grid.Row="0" Grid.Column="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width=".5*"/>
-                            <ColumnDefinition Width=".5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+
                         </Grid.ColumnDefinitions>
                         <Grid.Style>
                             <Style TargetType="Grid">
@@ -804,16 +365,26 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Label Grid.Column="0" Content="Time Interval:" HorizontalContentAlignment="Right" FontSize="8"/>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding Parameters.TimeInterval}" FontSize="8"/>
-                        <Label Grid.Column="2" HorizontalContentAlignment="Left" Content="{Binding Parameters.IntervalType}" FontSize="8"/>
+                        <Label Grid.Column="0" Content="Time Interval:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16"/>
+
+                        <Label Grid.Column="1" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalContentAlignment="Center"  FontSize="16">
+                            <Label.Content>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Parameters.TimeInterval" />
+                                            <Binding Path="Parameters.IntervalType" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Label.Content>
+                        </Label>
                     </Grid>
 
-
-                    <Grid x:Name="ModeGrid">
+                    <Grid x:Name="ModeGrid" Grid.Row="1" Grid.Column="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width=".5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.Style>
                             <Style TargetType="Grid">
@@ -829,15 +400,15 @@
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
@@ -847,24 +418,21 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="0" HorizontalContentAlignment="Left" FontSize="16" VerticalContentAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="HeatCool">
-                                            <Setter Property="Content" Value="Set Point :"/>
-                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                            <Setter Property="Content" Value="Set Point :"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Dosing">
-                                            <Setter Property="Content" Value="Remaining Dosable Amount :"/>
+                                            <Setter Property="Content" Value="Transfer Mode:"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                            <Setter Property="Content" Value="Rem Time :"/>
+                                            <Setter Property="Content" Value="Transfer Mode:"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Fill">
-                                            <Setter Property="Content" Value="Volume :"/>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
+                                            <Setter Property="Content" Value="Transfer Mode:"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
+                                            <Setter Property="Content" Value="Transfer Mode::"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
                                             <Setter Property="Content" Value="Transfer Mode:"/>
@@ -873,24 +441,21 @@
                                 </Style>
                             </Label.Style>
                         </Label>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="1" HorizontalContentAlignment="Left" FontSize="16" VerticalContentAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="HeatCool">
-                                            <Setter Property="Content" Value="{Binding Parameters.SetPoint}"/>
-                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                            <Setter Property="Content" Value="{Binding Parameters.SetPoint}"/>
+                                            <Setter Property="Content" Value="Time"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                            <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
+                                            <Setter Property="Content" Value="Time"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Dosing">
-                                            <Setter Property="Content" Value="{Binding Parameters.RemainingDosableAmount}"/>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
+                                            <Setter Property="Content" Value="Time"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Fill">
-                                            <Setter Property="Content" Value="{Binding Parameters.Volume}"/>
+                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
+                                            <Setter Property="Content" Value="Time"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
                                             <Setter Property="Content" Value="{Binding Parameters.TransferModeString}"/>
@@ -900,15 +465,11 @@
                             </Label.Style>
                         </Label>
                     </Grid>
-                </StackPanel>
 
-
-
-                <StackPanel>
-                    <Grid x:Name="StartedTimeGrid">
+                    <Grid x:Name="StartedTimeGrid" Grid.Row="0" Grid.Column="3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.Style>
                             <Style TargetType="Grid">
@@ -920,15 +481,17 @@
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Label Grid.Column="0" Content="Start Time:" HorizontalContentAlignment="Right" FontSize="8"/>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding Parameters.StartedTime}" FontSize="8"/>
+                        <Label Grid.Column="0" Content="Start Time:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16"/>
+                        <Label Grid.Column="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Content="{Binding Parameters.StartedTime}" FontSize="16"/>
                     </Grid>
-                    --><!--#endregion--><!--
 
-                    <Grid x:Name="ReminingTimeGrid">
+                    <Grid x:Name="ReminingTimeGrid" Grid.Row="1" Grid.Column="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -960,19 +523,15 @@
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
-                                    
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
 
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Label Grid.Column="0" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="0" HorizontalContentAlignment="Left" FontSize="16" VerticalContentAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
-                                      
+
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
                                             <Setter Property="Content" Value="Rem Time:"/>
                                         </DataTrigger>
@@ -988,18 +547,16 @@
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
                                             <Setter Property="Content" Value="Rem Time:"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                            <Setter Property="Content" Value="End Time:"/>
-                                        </DataTrigger>
+
                                     </Style.Triggers>
                                 </Style>
                             </Label.Style>
                         </Label>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Center" FontSize="8" VerticalAlignment="Center">
+                        <Label Grid.Column="1" HorizontalContentAlignment="Left" FontSize="16" VerticalContentAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
-                                     
+
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
                                             <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
                                         </DataTrigger>
@@ -1015,81 +572,15 @@
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
                                             <Setter Property="Content" Value="{Binding Parameters.RemainingTime}"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                            <Setter Property="Content" Value="{Binding Parameters.EndedTime}"/>
-                                        </DataTrigger>
+
                                     </Style.Triggers>
                                 </Style>
                             </Label.Style>
                         </Label>
                     </Grid>
-                    --><!--#region Ended Time Grid-->
-                    <!--<Grid>
-                        <Grid x:Name="EndedTimeGrid">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
-                                            <Setter Property="Visibility" Value="Hidden"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                            <Label Grid.Column="0" Content="End Time :" HorizontalContentAlignment="Right" FontSize="8"/>
-                            <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding Parameters.EndedTime}" FontSize="8"/>
-                        </Grid>-->
-                    <!--</Grid>--><!--
-
-                </StackPanel>
-                --><!--#region Remaining Time Grid-->
-                <!--<StackPanel>
-                    <Grid x:Name="RemainingTimeGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.Style>
-                            <Style TargetType="Grid">
-                                <Setter Property="Visibility" Value="Visible"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="{x:Null}">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
-                        <Label Grid.Column="0" Content="Rem Time:" HorizontalContentAlignment="Right" FontSize="8"/>
-                        <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding Parameters.RemainingTime}" FontSize="8"/>
-                    </Grid>
-                   
-                </StackPanel>-->
-                <!--#endregion--><!--
-                
-            </DockPanel>-->
-        </Viewbox>
+                </Grid>
+            </UniformGrid>
+        </Grid>
         <Grid.Style>
             <Style TargetType="Grid">
                 <Setter Property="Background" Value="{Binding Parameters.Name, Converter={StaticResource RecipeBlockBackgroundColorConverter}}"/>

@@ -1,9 +1,13 @@
-﻿using Prism.Mvvm;
+﻿using E3Tech.RecipeBuilding.Helpers;
+using Prism.Mvvm;
+using System;
+using System.Collections.ObjectModel;
 
 namespace E3Tech.RecipeBuilding.Model.Blocks
 {
-    public class BaseDrainBlockParameters : BindableBase
+    public class BaseBlockParameters : BindableBase
     {
+        public event EventHandler<SourceChangesEventErgs> OnSourceChanged;
         private string _started;
         public string Started
         {
@@ -77,6 +81,35 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             {
                 source = value;
                 RaisePropertyChanged();
+                if (source != null)
+                {
+                    OnSourceChanged?.Invoke(this, new SourceChangesEventErgs() { Source = source });
+                }
+            }
+        }
+
+        private string destination;
+        public string Destination
+        {
+            get => destination;
+            set
+            {
+                destination = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<string> filterDestination;
+        public ObservableCollection<string> FilterDestination
+        {
+            get
+            {
+                return filterDestination;
+            }
+            set
+            {
+                filterDestination = value;
+                OnPropertyChanged();
             }
         }
 

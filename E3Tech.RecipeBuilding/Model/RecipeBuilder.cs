@@ -183,6 +183,10 @@ namespace E3Tech.RecipeBuilding.Model
             {
                 step.Name = "Step " + stepIndex;
                 stepIndex += 1;
+                if (step.BlockOne != null)
+                {
+                    step.BlockOne.Index = stepIndex;
+                }
             }
         }
 

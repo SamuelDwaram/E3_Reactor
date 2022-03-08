@@ -25,7 +25,7 @@
 
 
             <DataTemplate x:Key="GridViewColumnCellTemplate">
-                <controls:RecipeBlockView  Height="100" Margin="3"/>
+                <controls:RecipeBlockView HorizontalAlignment="Left" Height="100" Margin="3"/>
             </DataTemplate>
             <DataTemplate x:Key="AddButtonColumnCellTemplate">
                 <Border BorderBrush="LightGray" BorderThickness="1" Margin="3">
@@ -198,7 +198,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label  Content="Receipe Builder" Style="{StaticResource HeaderLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+            <Label  Content="Recipe Builder" Style="{StaticResource HeaderLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
 
             <!--#region BatchNameRequest Popup-->
             <Popup Name="BatchNameRequestPopup" Grid.Row="1"
@@ -464,14 +464,6 @@
                 <DataGrid.Columns>
                     <controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
                                     Binding="{Binding RecipeStep.BlockOne}"/>
-                    <!--<controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
-                                    Binding="{Binding RecipeStep.BlockTwo}"/>
-                    <controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
-                                    Binding="{Binding RecipeStep.BlockThree}"/>
-                    <controls:DataGridBoundTemplateColumn Width="*" CellTemplate="{StaticResource ResourceKey=GridViewColumnCellTemplate}"
-                                    Binding="{Binding RecipeStep.BlockFour}"/>-->
-                    <!--<controls:DataGridBoundTemplateColumn Width="0.5*" CellTemplate="{StaticResource ResourceKey=AddButtonColumnCellTemplate}"
-                                    Binding="{Binding}"/>-->
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,20,0">
@@ -701,7 +693,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label  Content="Sequence Receipe" Style="{StaticResource HeaderLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+            <Label  Content="Sequence Recipe" Style="{StaticResource HeaderLabelStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
             <Grid Grid.Row="1" Margin="10,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Start Seq:" Style="{StaticResource HeaderLabelStyle}"></Label>
