@@ -711,9 +711,14 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
         private void HandleDropOnCell(DataGridCellDropCommandParameters parameters)
         {
-
+            var parameter = parameters.DataContext as RecipeStepViewModel;
+            if (parameter.RecipeStep.BlockOne != null)
+            {
+                return;
+            }
             IRecipeBlock block = GetBlockInstance(parameters.DataObject);
-            int recipeStepIndex = RecipeSteps.IndexOf(parameters.DataContext as RecipeStepViewModel);
+
+            int recipeStepIndex = RecipeSteps.IndexOf(parameter);
             if (IsDropBlockAllowed(block, recipeStepIndex))
             {
                 bool isBlockValid = false;
@@ -851,14 +856,14 @@ namespace E3Tech.RecipeBuilding.ViewModels
             {
                 RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
                 stepViewModel.RecipeStep = newRecipeStep;
-               
+
                 bool result = block.Configure(containerProvider);
-                if(result)
+                if (result)
                 {
                     RecipeSteps.Insert(toBeAddedRecipeStepIndex, stepViewModel);
                     SelectedStep = stepViewModel;
                 }
-                
+
             }
             int index = 1;
             foreach (var item in RecipeSteps)
@@ -1229,6 +1234,9 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 {
                     SeqRecipeModels.Insert(index, seqRecipeBuilder);
                 }
+                UpdateSeqRecipeCount();
+
+                EndSeq = (uint)SeqRecipeModels.Count;
             }
         }
 
