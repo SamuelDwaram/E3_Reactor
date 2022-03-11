@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
   <POU Name="N2Purge" Id="{c101128e-3ae6-46fa-b4e9-38bad4c7d592}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM N2Purge
 VAR
@@ -27,8 +27,11 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbSelection.TargetConverter(sTargetName:= sSourceName, TargetConverter_output => nSource); 
 
-
+IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime = '' THEN
+	RecipeTags.StaredTimeForRecipeBanner := MAIN.concatenatedHourMinuteString;
+END_IF
 IF (RecipeTags.bStartTimeEnable[nCurrentBlock]=FALSE) THEN
+//	RecipeControl.StaredTimeForRecipeBanner := MAIN.concatenatedHourMinuteString;
 	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime:=MAIN.sConcatenatedHourMinuteString;
 	nStartTimeInSeconds := STRING_TO_UDINT(MAIN.sCurrentSecond);
 	RecipeTags.bStartTimeEnable[nCurrentBlock] :=  TRUE;
@@ -105,8 +108,12 @@ END_IF
 ]]></ST>
     </Implementation>
     <LineIds Name="N2Purge">
-      <LineId Id="101" Count="2" />
-      <LineId Id="105" Count="4" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="303" Count="1" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="299" Count="0" />
+      <LineId Id="106" Count="3" />
       <LineId Id="187" Count="0" />
       <LineId Id="186" Count="0" />
       <LineId Id="269" Count="7" />

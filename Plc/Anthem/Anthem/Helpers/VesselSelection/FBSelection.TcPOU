@@ -50,7 +50,7 @@ ELSIF sTargetName = 'MVB' THEN
 	nTemp := 8;
 ELSIF sTargetName = 'RV_50L' THEN
 	nTemp := 10;
-ELSIF sTargetName = 'MVA' THEN
+ELSIF sTargetName = 'MVA 25L' or sTargetName = 'MVA' THEN
 	nTemp := 9;
 ELSIF sTargetName = 'RV_25L' THEN
 	nTemp := 11;
