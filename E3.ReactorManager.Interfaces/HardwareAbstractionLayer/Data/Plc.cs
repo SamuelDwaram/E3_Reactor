@@ -92,7 +92,7 @@ namespace E3.ReactorManager.Interfaces.HardwareAbstractionLayer.Data
         /// <param name="PlcHandle"></param>
         public string ReadString(int PlcHandle)
         {
-            AdsStream adsStream = new AdsStream(30);
+            AdsStream adsStream = new AdsStream(1000);
             AdsBinaryReader reader = new AdsBinaryReader(adsStream);
 
             string toBeReturnedValue = string.Empty;

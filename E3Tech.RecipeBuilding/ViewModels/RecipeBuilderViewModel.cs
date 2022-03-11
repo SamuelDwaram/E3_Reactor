@@ -183,6 +183,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 Task.Factory.StartNew(new Func<object, LiveDataEventArgs>(ValidateLiveDataReceived), liveDataEventArgs)
                     .ContinueWith(new Action<Task<LiveDataEventArgs>>(UpdatePropertyValue), taskScheduler);
             }
+            UpdateRecipeParameters();
         }
 
         private LiveDataEventArgs ValidateLiveDataReceived(object liveData)
@@ -383,6 +384,14 @@ namespace E3Tech.RecipeBuilding.ViewModels
                                           "PauseRecipe",
                                           "bool",
                                           Boolean.TrueString);
+        }
+        private void ResumeRecipe()
+        {
+            fieldDevicesCommunicator
+               .SendCommandToDevice(DeviceId,
+                                          "PauseRecipe",
+                                          "bool",
+                                          Boolean.FalseString);
         }
         private void SkipDrainExecution()
         {
@@ -1080,6 +1089,12 @@ namespace E3Tech.RecipeBuilding.ViewModels
         {
             get => pauseRecipeCommand ?? (pauseRecipeCommand = new DelegateCommand(new Action(PauseRecipe)));
             set => SetProperty(ref pauseRecipeCommand, value);
+        }
+        private ICommand _resumeRecipeCommand;
+        public ICommand ResumeRecipeCommand
+        {
+            get => _resumeRecipeCommand ?? (_resumeRecipeCommand = new DelegateCommand(new Action(ResumeRecipe)));
+            set => SetProperty(ref _resumeRecipeCommand, value);
         }
         private ICommand _skipDrainExecutionCommand;
         public ICommand SkipDrainExecutionCommand
