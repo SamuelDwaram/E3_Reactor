@@ -35,9 +35,6 @@
           Tag="{Binding DataContext,RelativeSource={RelativeSource AncestorType=DataGrid}}">
         <Grid.InputBindings>
             <KeyBinding Key="F5" Command="{Binding DataContext.UpdateBlockCommand,RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" ></KeyBinding>
-            <!--<MouseBinding MouseAction="LeftDoubleClick" 
-                          Command="{Binding DataContext.ConfigureBlockCommand,RelativeSource={RelativeSource AncestorType=DataGridCell}}"
-                          CommandParameter="{Binding}"/>-->
         </Grid.InputBindings>
         <Border>
             <Border.Style>
@@ -714,8 +711,6 @@
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </MultiDataTrigger.Setters>
                                 </MultiDataTrigger>
-
-
                             </Style.Triggers>
                         </Style>
                     </MenuItem.Style>

@@ -116,11 +116,15 @@
     <Compile Include="Model\PlcObjects.cs" />
     <Compile Include="Model\PLCRecipeExecutor.cs" />
     <Compile Include="Model\PLCRecipeReloader.cs" />
+    <Compile Include="Model\RecipeBlockPreviewModel.cs" />
     <Compile Include="Model\RecipesManager.cs" />
     <Compile Include="Model\SeqRecipeModel.cs" />
     <Compile Include="ViewModels\DesignExperimentViewModel.cs" />
     <Compile Include="Views\DesignExperimentView.xaml.cs">
       <DependentUpon>DesignExperimentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PreviewBuilderView.xaml.cs">
+      <DependentUpon>PreviewBuilderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RecipesView.xaml.cs">
       <DependentUpon>RecipesView.xaml</DependentUpon>
@@ -146,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MultiRecipeBuilderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PreviewBuilderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
