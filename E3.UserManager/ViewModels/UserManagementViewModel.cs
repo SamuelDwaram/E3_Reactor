@@ -159,7 +159,7 @@ namespace E3.UserManager.ViewModels
         private bool CanModifyUser(User selectedUser)
         {
             //A user can modify only his details
-            return selectedUser.UserID == UserDetails.UserID;
+            return selectedUser.UserID == UserDetails.UserID || UserDetails.Roles.FirstOrDefault()?.Name == "Admin";
         }
 
         public void ModifyUser(User selectedUser)
