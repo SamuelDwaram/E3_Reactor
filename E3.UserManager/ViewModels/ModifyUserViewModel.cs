@@ -6,6 +6,8 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,8 +46,9 @@ namespace E3.UserManager.ViewModels
 
         public void UpdateParameters(User selectedUser, User loggedInUser)
         {
-            SelectedUser = selectedUser;
             LoggedInUser = loggedInUser;
+            SelectedUser = selectedUser;
+            
         }
 
         public void PageLoaded(UserControl userControl)
@@ -98,7 +101,7 @@ namespace E3.UserManager.ViewModels
         public IList<Role> AvailableRoles
         {
             get { return _availableRoles; }
-            set { SetProperty(ref _availableRoles, value); }
+            set { SetProperty(ref _availableRoles, value); RaisePropertyChanged(); }
         }
 
         private Window _currentWindow;
@@ -147,7 +150,19 @@ namespace E3.UserManager.ViewModels
             {
                 _selectedUser = value;
                 RaisePropertyChanged();
+                UpdateFieldsSelector();
             }
+        }
+
+        private void UpdateFieldsSelector()
+        {
+            FieldSelector.Add("Username");
+            FieldSelector.Add("Password");
+            if (LoggedInUser.Roles.FirstOrDefault()?.Name == "Admin")
+            {
+                FieldSelector.Add("AccessLevel");
+            }
+           
         }
 
         private User _loggedInUser;
@@ -157,6 +172,17 @@ namespace E3.UserManager.ViewModels
             set
             {
                 _loggedInUser = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ObservableCollection<string> fieldSelector;
+        public ObservableCollection<string> FieldSelector
+        {
+            get => fieldSelector ?? (fieldSelector = new ObservableCollection<string>());
+            set
+            {
+                fieldSelector = value;
                 RaisePropertyChanged();
             }
         }

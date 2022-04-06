@@ -1,10 +1,16 @@
-﻿using E3.ReactorManager.Interfaces.HardwareAbstractionLayer;
+﻿using E3.ReactorManager.DesignExperiment.Model;
+using E3.ReactorManager.DesignExperiment.Model.Data;
+using E3.ReactorManager.Interfaces.HardwareAbstractionLayer;
 using E3.ReactorManager.Interfaces.HardwareAbstractionLayer.Data;
+using E3.UserManager.Model.Data;
 using E3Tech.RecipeBuilding.Helpers;
 using E3Tech.RecipeBuilding.Model;
 using E3Tech.RecipeBuilding.Model.Blocks;
+using E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider;
+using E3Tech.RecipeBuilding.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,12 +20,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Unity;
-using E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider;
-using Prism.Regions;
-using E3.ReactorManager.DesignExperiment.Model.Data;
-using E3.ReactorManager.DesignExperiment.Model;
-using E3.UserManager.Model.Data;
-using E3.ReactorManager.Recipe.PLCIntegrator.Models;
 
 namespace E3Tech.RecipeBuilding.ViewModels
 {
@@ -1208,6 +1208,70 @@ namespace E3Tech.RecipeBuilding.ViewModels
             set => SetProperty(ref startSeqReceipeCommand, value);
         }
 
+        private ICommand previewSequenceCommand;
+        public ICommand PreviewSequenceCommand
+        {
+            get => previewSequenceCommand ?? (addAboveSeqReciepeCommand = new DelegateCommand<object>(new Action<object>(PreviewSequenceCommandExecute)));
+            set => SetProperty(ref previewSequenceCommand, value);
+        }
+
+        private void PreviewSequenceCommandExecute(object obj)
+        {
+            if (obj is SeqRecipeModel)
+            {
+                var seqRecipeModel = obj as SeqRecipeModel;
+
+                if (recipeSeqDetail == null || recipeSeqDetail.ContainsKey(seqRecipeModel) == false)
+                {
+                    recipeSeqDetail = recipeBuilder.LoadSeqRecipeList();
+                }
+                PreviewBuilderView view = new PreviewBuilderView();
+                List<RecipeBlockPreviewModel> recipeBlockPreviewModels = new List<RecipeBlockPreviewModel>();
+                int no = 1;
+                foreach(var recipeStep in recipeSeqDetail[seqRecipeModel])
+                {
+                    RecipeBlockPreviewModel recipeBlockPreviewModel = new RecipeBlockPreviewModel();
+                    recipeBlockPreviewModel.Name = recipeStep?.BlockOne.Name;
+                    recipeBlockPreviewModel.BlockNo = no++.ToString() + ": ";
+                    switch (recipeStep?.BlockOne.Name)
+                    {
+                       
+                        case "Wait":
+                            ParameterizedRecipeBlock<WaitBlockParameters> waitBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<WaitBlockParameters>;
+                            recipeBlockPreviewModel.PropertyThree = "Time Interval: " + waitBlock.Parameters.TimeInterval + " " + waitBlock.Parameters.IntervalType;
+                            
+                            break;
+                        case "Stirrer":
+                            ParameterizedRecipeBlock<StirrerBlockParameters> stirBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<StirrerBlockParameters>;
+                            recipeBlockPreviewModel.PropertyOne ="Set Point: " + stirBlock.Parameters.Destination;
+                            recipeBlockPreviewModel.PropertyTwo = "Destination: " + stirBlock.Parameters.SetPoint;
+                            break;
+                        case "Transfer":
+                            ParameterizedRecipeBlock<TransferBlockParameters> transferBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<TransferBlockParameters>;
+                            recipeBlockPreviewModel.PropertyOne = "Source: " + transferBlock.Parameters.Source;
+                            recipeBlockPreviewModel.PropertyTwo = "Destination: " + transferBlock.Parameters.Destination;
+                            recipeBlockPreviewModel.PropertyThree = "Time Interval: " + transferBlock.Parameters.TimeInterval + " " + transferBlock.Parameters.IntervalType;
+                            recipeBlockPreviewModel.PropertyFour = "Transfer Mode: " + (transferBlock.Parameters.TransferMode.Equals(bool.TrueString) ? "Time" : "Level");
+                            break;
+           
+                        case "Drain":
+                            ParameterizedRecipeBlock<DrainBlockParameters> drainBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<DrainBlockParameters>;
+                            recipeBlockPreviewModel.PropertyOne = "Source: " + drainBlock.Parameters.Source;
+                            recipeBlockPreviewModel.PropertyThree = "Time Interval: " + drainBlock.Parameters.TimeInterval + " " + drainBlock.Parameters.IntervalType;
+                            break;
+                        case "N2Purge":
+                            ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<N2PurgeBlockParameters>;
+                            recipeBlockPreviewModel.PropertyOne = "Source: " + n2PurgeBlock.Parameters.Source;
+                            recipeBlockPreviewModel.PropertyThree ="Time Interval: " + n2PurgeBlock.Parameters.TimeInterval + " " + n2PurgeBlock.Parameters.IntervalType;
+                            break;
+                    }
+                    recipeBlockPreviewModels.Add(recipeBlockPreviewModel);
+                }
+                view.PreviewListBox.ItemsSource = new ObservableCollection<RecipeBlockPreviewModel>(recipeBlockPreviewModels);
+                bool result = view.ShowDialog().Value;
+
+            }
+        }
 
         private ICommand addAboveSeqReciepeCommand;
         public ICommand AddAboveSeqReciepeCommand

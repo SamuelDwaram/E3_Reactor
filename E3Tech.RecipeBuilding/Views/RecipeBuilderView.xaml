@@ -658,16 +658,6 @@
                             <Setter Property="Command" Value="{Binding ValidateAndOpenPopupCommand}"/>
                             <!--<Setter Property="Command" Value="{Binding StartRecipeCommand}"/>-->
                             <Style.Triggers>
-                                <!--<DataTrigger Binding="{Binding RecipeStatus}" Value="True">
-                                    <Setter Property="Background" Value="Red"/>
-                                    <Setter Property="Content" Value="Stop"/>
-                                    <Setter Property="Command" Value="{Binding AbortRecipeExecutionCommand}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding IsSeqRecipeExecuting}" Value="True">
-                                    <Setter Property="Background" Value="Red"/>
-                                    <Setter Property="Content" Value="Stop"/>
-                                    <Setter Property="Command" Value="{Binding AbortRecipeExecutionCommand}"/>
-                                </DataTrigger>-->
 
                                 <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
                                     <Setter Property="Visibility" Value="Hidden"/>
@@ -753,6 +743,10 @@
                                               Command="{Binding PlacementTarget.Tag.DeleteReciepeFromSequenceCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                               CommandParameter="{Binding}"
                                               IsEnabled="{Binding PlacementTarget.Tag.IsSeqRecipeExecuting, RelativeSource={RelativeSource AncestorType=ContextMenu} , Converter={StaticResource InverseBooleanConverter}}"
+                                            />
+                                    <MenuItem Header="Preview" 
+                                              Command="{Binding PlacementTarget.Tag.PreviewSequenceCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                              CommandParameter="{Binding}"
                                             />
                                 </ContextMenu>
                             </Setter.Value>
