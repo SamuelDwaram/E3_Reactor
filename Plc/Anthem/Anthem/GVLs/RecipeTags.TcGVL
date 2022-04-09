@@ -15,6 +15,8 @@ VAR_GLOBAL
 	bDrainStatus : BOOL;
 	bRuntimeEdit : BOOL;
 	CurrentExecutingStep: STRING;
+	RecipeMessage: STRING;
+	StaredTimeForRecipeBanner: STRING[255];
 	
 	bBlockEnd:ARRAY[0..699] OF BOOL;
 	enWaitPause:ARRAY[0..699] OF BOOL;

@@ -4,15 +4,106 @@
     <Declaration><![CDATA[PROGRAM MessageProvider
 VAR
 	Message : ARRAY[0..10] OF STRING;
+	FinalMessage : STRING[1000];
+	i: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
-Message[0] := concat('Block',RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock-1].Name);]]></ST>
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.bBlockStarted AND RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='Transfer' THEN
+	Message[0] := concat(RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name,' - ');
+	Message[1] := concat(Message[0], RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.sSource );
+	Message[2] := concat(Message[1],' to ' );
+	Message[3] := concat(Message[2], RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.sDestination);
+	Message[4] := concat(Message[3], ' Started At ');
+	Message[5] := concat(Message[4], RecipeTags.StaredTimeForRecipeBanner);
+	RecipeTags.RecipeMessage := Message[5];
+END_IF
+
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.bBlockStarted AND RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='Stirrer' THEN
+	Message[0] := concat(RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name,' - ');
+	Message[1] := concat(Message[0], RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.sSource );
+	Message[2] := concat(Message[1], ' Started At ');
+	Message[3] := concat(Message[2], RecipeTags.StaredTimeForRecipeBanner);
+	RecipeTags.RecipeMessage := Message[3];
+END_IF
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.bBlockStarted AND RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='Drain' THEN
+	Message[0] := concat(RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name,' - ');
+	Message[1] := concat(Message[0], RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.sSource );
+	Message[2] := concat(Message[1], ' Started At ');
+	Message[3] := concat(Message[2], RecipeTags.StaredTimeForRecipeBanner);
+	RecipeTags.RecipeMessage := Message[3];
+END_IF
+
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.bBlockStarted AND RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='N2Purge' THEN
+	Message[0] := concat(RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name,' - ');
+	Message[1] := concat(Message[0], RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.sSource );
+	Message[2] := concat(Message[1], ' Started At ');
+	Message[3] := concat(Message[2], RecipeTags.StaredTimeForRecipeBanner);
+	RecipeTags.RecipeMessage := Message[3];
+END_IF
+
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.bBlockStarted AND RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='Wait' THEN
+	Message[0] := concat(RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name,' - ');
+	Message[1] := concat(Message[0], RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.sSource );
+	Message[2] := concat(Message[1], ' Started At ');
+	Message[3] := concat(Message[2], RecipeTags.StaredTimeForRecipeBanner);
+	RecipeTags.RecipeMessage := Message[3];
+END_IF
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.bBlockStarted AND RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='Start' THEN
+	Message[0] := concat('Recipe Started At ',RecipeTags.StaredTimeForRecipeBanner);
+	RecipeTags.RecipeMessage := Message[0];
+END_IF
+
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Properties.bBlockStarted AND RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='End' THEN
+	Message[0] := concat('Recipe Ended At ',RecipeTags.StaredTimeForRecipeBanner);
+	RecipeTags.RecipeMessage := Message[0];
+END_IF
+
+IF RecipeTags.Recipe.Blocks[RecipeControl.nCurrentBlock].Name='' THEN
+	
+	FOR i:=0 TO 10 DO
+		Message[i] := ''; 
+	END_FOR
+	RecipeTags.RecipeMessage := '';
+END_IF
+
+]]></ST>
     </Implementation>
     <LineIds Name="MessageProvider">
-      <LineId Id="6" Count="0" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="36" Count="6" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="4" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="60" Count="6" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="69" Count="7" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="78" Count="7" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="87" Count="2" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="95" Count="4" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="112" Count="3" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="100" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

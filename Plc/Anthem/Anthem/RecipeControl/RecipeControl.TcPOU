@@ -58,11 +58,12 @@ VAR
 	
 	waitFBRemTimeCalc : FBRemTimeCalc;
 	waitRemTime : STRING(255);
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[RecipeCommHandler();
-
+MessageProvider();
 //=========================================================
 // Instantiation Logic
 
@@ -194,6 +195,7 @@ END_VAR
 		ipStirBlock.Stir(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sDestination,
 							RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.bStartCommand, bRecipePause, LREAL_TO_INT(RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.lrSetPoint));
 		IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime = '' THEN
+			RecipeTags.StaredTimeForRecipeBanner := MAIN.concatenatedHourMinuteString;
 			RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime := MAIN.sConcatenatedHourMinuteString;
 		END_IF
 		
@@ -331,7 +333,9 @@ END_VAR
       <LineId Id="1570" Count="0" />
       <LineId Id="1202" Count="0" />
       <LineId Id="971" Count="14" />
-      <LineId Id="1681" Count="1" />
+      <LineId Id="1681" Count="0" />
+      <LineId Id="1876" Count="0" />
+      <LineId Id="1682" Count="0" />
       <LineId Id="1680" Count="0" />
       <LineId Id="987" Count="11" />
       <LineId Id="1448" Count="0" />

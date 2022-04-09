@@ -103,6 +103,13 @@ namespace E3Tech.RecipeBuilding
             transferRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
             transferRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
             transferRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
+            transferRecipeBlock.UpdateParameterValue("Source", block.Properties.sSource);
+            transferRecipeBlock.UpdateParameterValue("Destination", block.Properties.sDestination);
+            transferRecipeBlock.UpdateParameterValue("TimeInterval", Convert.ToString(block.Properties.nInterval));
+            transferRecipeBlock.UpdateParameterValue("TransferMode", Convert.ToString(block.Properties.bModeSelection));
+            transferRecipeBlock.UpdateParameterValue("IntervalType", Convert.ToString(block.Properties.sIntervalType));
+
+
             transferRecipeBlock.UpdateParameterValue("TargetItemIndex", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "TransferTargetItemIndex_" + block.StepNo));
             transferRecipeBlock.UpdateParameterValue("SourceItemIndex", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "TransferSourceItemIndex_" + block.StepNo));
             transferRecipeBlock.UpdateParameterValue("Volume", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "TransferVolume_" + block.StepNo));
@@ -147,6 +154,8 @@ namespace E3Tech.RecipeBuilding
             stirrerRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
             stirrerRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
             stirrerRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
+            stirrerRecipeBlock.UpdateParameterValue("Source", block.Properties.sSource);
+            stirrerRecipeBlock.UpdateParameterValue("SetPoint", Convert.ToString(block.Properties.lrSetPoint));
             stirrerRecipeBlock.UpdateParameterValue("SetPoint", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "StirrerSetPoint_" + block.StepNo));
 
             return stirrerRecipeBlock;
@@ -177,6 +186,9 @@ namespace E3Tech.RecipeBuilding
             n2PurgeRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
             n2PurgeRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
             n2PurgeRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
+            n2PurgeRecipeBlock.UpdateParameterValue("Source", block.Properties.sSource);
+            n2PurgeRecipeBlock.UpdateParameterValue("TimeInterval", Convert.ToString(block.Properties.nInterval));
+            n2PurgeRecipeBlock.UpdateParameterValue("IntervalType", Convert.ToString(block.Properties.sIntervalType));
             n2PurgeRecipeBlock.UpdateParameterValue("Duration", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitDuration_" + block.StepNo));
             n2PurgeRecipeBlock.UpdateParameterValue("RemainingTime", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitRemainingTime_" + block.StepNo));
 
@@ -191,6 +203,9 @@ namespace E3Tech.RecipeBuilding
             drainRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
             drainRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
             drainRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
+            drainRecipeBlock.UpdateParameterValue("TimeInterval", Convert.ToString(block.Properties.nInterval));
+            drainRecipeBlock.UpdateParameterValue("IntervalType", Convert.ToString(block.Properties.sIntervalType));
+            drainRecipeBlock.UpdateParameterValue("Source", block.Properties.sSource);
             drainRecipeBlock.UpdateParameterValue("Duration", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitDuration_" + block.StepNo));
             drainRecipeBlock.UpdateParameterValue("RemainingTime", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitRemainingTime_" + block.StepNo));
 

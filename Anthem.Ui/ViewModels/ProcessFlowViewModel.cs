@@ -101,6 +101,10 @@ namespace Anathem.Ui.ViewModels
             {
                 StirrerFeedback_3 = Parameters["StirrerFeedback_3"];
             }
+            if (Parameters.ContainsKey("RecipeMessage"))
+            {
+                RecipeMessage = Parameters["RecipeMessage"];
+            }
         }
         private void AddToParameters(string fieldPointIdentifier, string newFieldPointData)
         {
@@ -273,6 +277,17 @@ namespace Anathem.Ui.ViewModels
             set
             {
                 stirrerFeedback_3 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string _recipeMessage;
+
+        public string RecipeMessage
+        {
+            get { return _recipeMessage; }
+            set
+            {
+                _recipeMessage = value;
                 RaisePropertyChanged();
             }
         }

@@ -131,7 +131,7 @@
         </ComboBox>
         <Label Content="Transfer Mode" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-            <RadioButton  Margin="3,10,3,3" Foreground="White" GroupName="TransferMode" IsChecked="{Binding TransferMode, Mode=OneTime, Converter={StaticResource InverseBooleanConverter }}" >LavelBased</RadioButton>
+            <RadioButton  Margin="3,10,3,3" Foreground="White" GroupName="TransferMode" IsChecked="{Binding TransferMode, Mode=OneTime, Converter={StaticResource InverseBooleanConverter }}" >LevelBased</RadioButton>
             <RadioButton Margin="3,10,3,3" Foreground="White" IsChecked="{Binding TransferMode}"  GroupName="TransferMode" >TimeBased</RadioButton>
         </StackPanel>
         <Label Content="Time Interval" Foreground="White" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left" Style="{StaticResource TimeBasedTransferStyle}"/>

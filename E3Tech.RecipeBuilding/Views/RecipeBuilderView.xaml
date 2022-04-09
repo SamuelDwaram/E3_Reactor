@@ -619,24 +619,38 @@
                     </Button.Style>
                 </Button>
 
-                <Button Grid.Column="4">
+                <Button Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
-                            <Setter Property="Content" Value="Pause"/>
                             <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="Content" Value="Pause"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                <!--<DataTrigger Binding="{Binding RecipeStatus}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>-->
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding RecipePaused}" Value="False" />
+                                        <Condition Binding="{Binding RecipeStatus}" Value="True" />
+                                    </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Setter Property="Command" Value="{Binding PauseRecipeCommand}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding RecipePaused}" Value="True">
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding RecipePaused}" Value="True" />
+                                        <Condition Binding="{Binding RecipeStatus}" Value="True" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
                                     <Setter Property="Content" Value="Resume"/>
-                                    <Setter Property="Command" Value="{Binding PauseRecipeCommand}"/>
-                                </DataTrigger>
+                                    <Setter Property="Command" Value="{Binding ResumeRecipeCommand}"/>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
                 </Button>
+
                 <Button Grid.Column="5">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource CommandButtonStyle}">
