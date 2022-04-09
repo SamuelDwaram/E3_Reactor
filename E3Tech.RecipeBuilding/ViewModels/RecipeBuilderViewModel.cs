@@ -1196,7 +1196,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private ICommand previewSequenceCommand;
         public ICommand PreviewSequenceCommand
         {
-            get => previewSequenceCommand ?? (addAboveSeqReciepeCommand = new DelegateCommand<object>(new Action<object>(PreviewSequenceCommandExecute)));
+            get => previewSequenceCommand ?? (previewSequenceCommand = new DelegateCommand<object>(new Action<object>(PreviewSequenceCommandExecute)));
             set => SetProperty(ref previewSequenceCommand, value);
         }
 
