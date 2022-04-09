@@ -597,10 +597,16 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 SelectedSeqRecipeModel = recipeSeqToExecute.Key;
                 recipeBuilder.UpdateRecipeList(recipeSeqToExecute.Value);
                 RecipeSteps.Clear();
+                int index = 1;
                 foreach (var step in recipeSeqToExecute.Value.ToList())
                 {
+                    if(step?.BlockOne != null)
+                    {
+                        step.BlockOne.Index = index++;
+                    }
                     RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
                     stepViewModel.RecipeStep = step;
+                    
                     RecipeSteps.Add(stepViewModel);
                 }
                 IsSeqRecipeExecuting = true;
