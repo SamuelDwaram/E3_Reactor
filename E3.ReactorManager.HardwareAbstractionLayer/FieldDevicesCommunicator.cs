@@ -296,7 +296,7 @@ namespace E3.ReactorManager.HardwareAbstractionLayer
             try
             {
                 //check if the command already invoked
-                if (CommandHistory.Any(
+                if (CommandHistory.Count > 0 && CommandHistory.Any(
                     x => x.FieldDeviceIdentifier.Equals(fieldDeviceIdentifier)
                          && x.FieldPointIdentifier.Equals(fieldPointLabel))) return;
 

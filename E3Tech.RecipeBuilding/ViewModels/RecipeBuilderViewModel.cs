@@ -605,8 +605,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                         step.BlockOne.Index = index++;
                     }
                     RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
-                    stepViewModel.RecipeStep = step;
-                    
+                    stepViewModel.RecipeStep = step;                  
                     RecipeSteps.Add(stepViewModel);
                 }
                 IsSeqRecipeExecuting = true;
