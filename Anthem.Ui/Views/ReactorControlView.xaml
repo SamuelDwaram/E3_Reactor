@@ -49,6 +49,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+
         <Style x:Key="UnitsLabelStyle" TargetType="Label">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="16"/>
@@ -69,6 +71,31 @@
             <Setter Property="Height" Value="60"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Foreground" Value="#FF8E94A1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TextBoxValueStyleSetpointBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="InputScope" Value="Number"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#1d2532"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="HeaderLabelStyleSetpointBox" TargetType="Label">
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="#FF8E94A1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="UnitsLabelStyleSetpointBox" TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
@@ -150,7 +177,7 @@
                         <Button Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
-                                    <uc_1:ButtonOnOffAnimation Tag="StirrerCommand_3" uiHelpers:UiHelpers.CommandToDevice="{Binding SendCommandToDevice}"/>
+                                    <uc_1:ButtonOnOffAnimation Tag="ChillerStatus" uiHelpers:UiHelpers.CommandToDevice="{Binding SendCommandToDevice}"/>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
@@ -168,10 +195,213 @@
             <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="0" Tag="ReactorLevel_1" ParamLabel="MVA&#xa;Level" Units="%" Limits="0|100"/>
             <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="1" Tag="ReactorLevel_2" ParamLabel="Reactor Vessel&#xa;Level" Units="%" Limits="0|100"/>
             <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="2" Tag="ReactorLevel_3" ParamLabel="Spare RV Vessel&#xa;Level" Units="%" Limits="0|100"/>
-            <uc_2:GraphicalParameter Grid.Row="7" Grid.Column="0" Tag="StirrerSetpoint_1" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="MVA Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>
-            <uc_2:GraphicalParameter Grid.Row="7" Grid.Column="1" Tag="StirrerSetpoint_2" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>
-            <uc_2:GraphicalParameter Grid.Row="7" Grid.Column="2" Tag="StirrerSetpoint_3" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="Spare RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>
-            <uc_2:GraphicalParameter Grid.Row="9" Grid.Column="1" Tag="ChillerLevel_1" ParamLabel="Chiller&#xa;Temperature SP"  Units="°C" Limits="0|50"/>
+
+
+
+
+            <Grid Grid.Column="0" Grid.Row="7" Background="#272e3e">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Margin="10,-5,0,0" Content="MVA Stirrer&#xa;Setpoint" Style="{StaticResource HeaderLabelStyleSetpointBox}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Viewbox HorizontalAlignment="Left">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding StirrerSetpoint_1, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValueStyleSetpointBox}"
+                                             Tag="ReactorControl" uiHelpers:UiHelpers.AllowedForUser="{Binding UserDetails}">
+                                <!--<i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="GotFocus">
+                                        <i:InvokeCommandAction Command="{Binding SaveOldHcSetPointCommand}" CommandParameter="{Binding HeatCoolSetPoint}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>-->
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding ChangeStirrer1SetPointCommand}"/>
+                                </TextBox.InputBindings>
+                                <!--<i:Interaction.Behaviors>
+                                    <behaviours:TextBoxEnterKeyUpdateBehavior />
+                                </i:Interaction.Behaviors>-->
+                            </TextBox>
+                            <Label Grid.Column="1" Content="RPM" Style="{StaticResource UnitsLabelStyleSetpointBox}"/>
+                        </Grid>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Viewbox Stretch="Fill">
+                        <StackPanel Margin="10,0,0,0">
+                            <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_1}" NegativeMaximumValue="0" PositiveMaximumValue="200" />
+                            <Grid>
+                                <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
+                                <Label Content="200" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Viewbox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="7" Background="#272e3e">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Margin="10,-5,0,0" Content="Raactor Stirrer&#xa;Setpoint" Style="{StaticResource HeaderLabelStyleSetpointBox}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Viewbox HorizontalAlignment="Left">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding StirrerSetpoint_2, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValueStyleSetpointBox}"
+                                             Tag="ReactorControl" uiHelpers:UiHelpers.AllowedForUser="{Binding UserDetails}">
+                                <!--<i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="GotFocus">
+                                        <i:InvokeCommandAction Command="{Binding SaveOldHcSetPointCommand}" CommandParameter="{Binding HeatCoolSetPoint}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>-->
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding ChangeStirrer2SetPointCommand}"/>
+                                </TextBox.InputBindings>
+                                <!--<i:Interaction.Behaviors>
+                                    <behaviours:TextBoxEnterKeyUpdateBehavior />
+                                </i:Interaction.Behaviors>-->
+                            </TextBox>
+                            <Label Grid.Column="1" Content="RPM" Style="{StaticResource UnitsLabelStyleSetpointBox}"/>
+                        </Grid>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Viewbox Stretch="Fill">
+                        <StackPanel Margin="10,0,0,0">
+                            <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_2}" NegativeMaximumValue="0" PositiveMaximumValue="200" />
+                            <Grid>
+                                <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
+                                <Label Content="200" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Viewbox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="2" Grid.Row="7" Background="#272e3e">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Margin="10,-5,0,0" Content="Spare RV Stirrer&#xa;Setpoint" Style="{StaticResource HeaderLabelStyleSetpointBox}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Viewbox HorizontalAlignment="Left">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding StirrerSetpoint_3, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValueStyleSetpointBox}"
+                                             Tag="ReactorControl" uiHelpers:UiHelpers.AllowedForUser="{Binding UserDetails}">
+                                <!--<i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="GotFocus">
+                                        <i:InvokeCommandAction Command="{Binding SaveOldHcSetPointCommand}" CommandParameter="{Binding HeatCoolSetPoint}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>-->
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding ChangeStirrer3SetPointCommand}"/>
+                                </TextBox.InputBindings>
+                                <!--<i:Interaction.Behaviors>
+                                    <behaviours:TextBoxEnterKeyUpdateBehavior />
+                                </i:Interaction.Behaviors>-->
+                            </TextBox>
+                            <Label Grid.Column="1" Content="RPM" Style="{StaticResource UnitsLabelStyleSetpointBox}"/>
+                        </Grid>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Viewbox Stretch="Fill">
+                        <StackPanel Margin="10,0,0,0">
+                            <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_3}" NegativeMaximumValue="0" PositiveMaximumValue="200" />
+                            <Grid>
+                                <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
+                                <Label Content="200" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Viewbox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="9" Background="#272e3e">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Margin="10,-5,0,0" Content="Chiller&#xa;Temperature SP" Style="{StaticResource HeaderLabelStyleSetpointBox}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Viewbox HorizontalAlignment="Left">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding ChillerSetpoint, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxValueStyleSetpointBox}"
+                                             Tag="ReactorControl" uiHelpers:UiHelpers.AllowedForUser="{Binding UserDetails}">
+                                <!--<i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="GotFocus">
+                                        <i:InvokeCommandAction Command="{Binding SaveOldHcSetPointCommand}" CommandParameter="{Binding HeatCoolSetPoint}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>-->
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding ChangeChillerSetPointCommand}"/>
+                                </TextBox.InputBindings>
+                                <!--<i:Interaction.Behaviors>
+                                    <behaviours:TextBoxEnterKeyUpdateBehavior />
+                                </i:Interaction.Behaviors>-->
+                            </TextBox>
+                            <Label Grid.Column="1" Content="°C" Style="{StaticResource UnitsLabelStyleSetpointBox}"/>
+                        </Grid>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Viewbox Stretch="Fill">
+                        <StackPanel Margin="10,0,0,0">
+                            <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=ChillerSetpoint}" NegativeMaximumValue="0" PositiveMaximumValue="50" />
+                            <Grid>
+                                <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
+                                <Label Content="50" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Viewbox>
+                </Grid>
+            </Grid>
+
+
+
+
+
+
+
+
+            <!--<uc_2:GraphicalParameter Grid.Row="7" Grid.Column="0" Tag="StirrerSetpoint_1" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="MVA Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>-->
+            <!--<uc_2:GraphicalParameter Grid.Row="7" Grid.Column="1" Tag="StirrerSetpoint_2" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>-->
+            <!--<uc_2:GraphicalParameter Grid.Row="7" Grid.Column="2" Tag="StirrerSetpoint_3" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="Spare RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>-->
+            <!--<uc_2:GraphicalParameter Grid.Row="9" Grid.Column="1" Tag="ChillerLevel_1" ParamLabel="Chiller&#xa;Temperature SP"  Units="°C" Limits="0|50"/>-->
             <uc_2:GraphicalParameter Grid.Row="9" Grid.Column="2" Tag="ReactorLevel_1" ParamLabel="Chiller&#xa;Temperature" Units="°C" Limits="0|50"/>
 
             <Viewbox Grid.Row="8" Grid.Column="0"
