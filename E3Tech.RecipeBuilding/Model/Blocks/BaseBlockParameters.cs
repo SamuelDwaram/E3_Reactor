@@ -89,7 +89,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
         }
 
         private string destination;
-        public string Destination
+        public virtual string Destination
         {
             get => destination;
             set

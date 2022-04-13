@@ -10,6 +10,26 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             get => "Transfer";
         }
 
+        private string destination;
+        public override string Destination
+        {
+            get => destination;
+            set
+            {
+                destination = value;
+                RaisePropertyChanged();
+                if(Destination == "MVA 25L" || Destination == "RV 50L")
+                {
+                    TransferMode = bool.TrueString;
+                    IsLevelBasedVisible = false;
+                }
+                else
+                {
+                    IsLevelBasedVisible = true;
+                }
+            }
+        }
+
         private string _uiLabel;
         public string UiLabel
         {
@@ -32,13 +52,37 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             }
         }
 
+        private bool  isLevelBasedVisible = true;
+        public bool IsLevelBasedVisible
+        {
+            get
+            {
+                return isLevelBasedVisible;
+            }
+            set
+            {
+                isLevelBasedVisible = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
         
 
         private string transferMode;
         public string TransferMode
         {
             get => transferMode ?? bool.FalseString;
-            set { SetProperty(ref transferMode, value); }
+            set
+            {
+                transferMode = value;
+                OnPropertyChanged();
+                if (transferMode == bool.FalseString)
+                {
+                    TimeInterval = null;
+                    IntervalType = null;
+                }
+            }
         }
 
         private string transferModeString;
