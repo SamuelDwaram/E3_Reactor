@@ -18,7 +18,7 @@ namespace E3.TrendsManager
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
- 
+            containerProvider.Resolve<LiveTrendsViewModel>();
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -30,6 +30,7 @@ namespace E3.TrendsManager
             regionManager.RegisterViewWithRegion("LiveTrends", typeof(LiveTrendsView));
 
             containerRegistry.RegisterForNavigation(typeof(NavigableTrendsView), "Trends");
+
         }
     }
 }

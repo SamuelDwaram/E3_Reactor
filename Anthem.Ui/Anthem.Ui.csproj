@@ -221,6 +221,10 @@
       <Project>{620c94fe-d355-4801-92b0-f86d1b08fb02}</Project>
       <Name>E3.ReactorManager.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\E3.TrendsManager\E3.TrendsManager.csproj">
+      <Project>{32B42DCC-7CA0-4799-BA97-6B106557416E}</Project>
+      <Name>E3.TrendsManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E3.UserManager\E3.UserManager.csproj">
       <Project>{69ac2a36-9a64-4f29-adfe-3595248eabf8}</Project>
       <Name>E3.UserManager</Name>

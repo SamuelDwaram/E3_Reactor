@@ -24,7 +24,7 @@ namespace Anathem.Ui.ViewModels
         private readonly IAuditTrailManager auditTrailManager;
         private readonly TaskScheduler taskScheduler;
         private readonly User user;
-
+        
         public ProcessFlowViewModel(IFieldDevicesCommunicator fieldDevicesCommunicator, IRegionManager regionManager, IAuditTrailManager auditTrailManager)
         {
 
@@ -43,6 +43,7 @@ namespace Anathem.Ui.ViewModels
                 }
             }).ContinueWith(t => this.fieldDevicesCommunicator.FieldPointDataReceived += FieldDevicesCommunicator_FieldPointDataReceived);
             user = (User)Application.Current.Resources["LoggedInUser"];
+            RecipeMessage = fieldDevicesCommunicator.ReadFieldPointValue<string>(DeviceId, "RecipeMessage");
         }
 
         private void FieldDevicesCommunicator_FieldPointDataReceived(object sender, FieldPointDataReceivedArgs args)
@@ -108,6 +109,10 @@ namespace Anathem.Ui.ViewModels
         }
         private void AddToParameters(string fieldPointIdentifier, string newFieldPointData)
         {
+            if(fieldPointIdentifier == "RecipeMessage")
+            {
+                RecipeMessage = newFieldPointData;
+            }
             if (Parameters.ContainsKey(fieldPointIdentifier))
             {
                 if (Parameters[fieldPointIdentifier] == newFieldPointData)
@@ -280,6 +285,7 @@ namespace Anathem.Ui.ViewModels
                 RaisePropertyChanged();
             }
         }
+
         private string _recipeMessage;
 
         public string RecipeMessage
