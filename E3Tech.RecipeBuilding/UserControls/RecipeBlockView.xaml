@@ -661,6 +661,10 @@
                                 </DataTrigger>
                                 <!--#endregion-->
 
+                                <DataTrigger Binding="{Binding Parameters}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </DataTrigger>
+
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding PlacementTarget.Tag.RecipeStatus, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Value="True"/>
@@ -701,6 +705,8 @@
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
                                 <!--#endregion-->
+                               
+
 
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>

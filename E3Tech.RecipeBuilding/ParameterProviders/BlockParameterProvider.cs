@@ -27,6 +27,7 @@ namespace E3Tech.RecipeBuilding.ParameterProviders
             if (view.ViewModel.Parameters is BaseBlockParameters)
             {
                 var baseBlockParameter = view.ViewModel.Parameters as BaseBlockParameters;
+                UpdateFilterDestination(baseBlockParameter);
                 baseBlockParameter.OnSourceChanged += OnSourceChanged;
             }
             //Don't show BlockParameterProviderView for End Recipe block
@@ -43,6 +44,14 @@ namespace E3Tech.RecipeBuilding.ParameterProviders
                     Parameters = (T)view.ViewModel.Parameters;
                 }
                 return result;
+            }
+        }
+
+        private void UpdateFilterDestination(BaseBlockParameters baseBlockParameter)
+        {
+            if(baseBlockParameter != null && baseBlockParameter.Source != null && baseBlockParameter.Destination != null)
+            {
+                baseBlockParameter.FilterDestination = new ObservableCollection<string>( SourceDestinationMapping.SourceDestinationPair[baseBlockParameter.Source]);
             }
         }
 

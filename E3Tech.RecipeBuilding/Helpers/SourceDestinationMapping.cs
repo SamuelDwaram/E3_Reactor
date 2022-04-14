@@ -19,7 +19,9 @@ namespace E3Tech.RecipeBuilding.Helpers
             { "R2", new List<string>{ "MVA 25L"} },
             { "R3", new List<string>{ "MVA 25L"} },
             { "R4", new List<string>{ "MVA 25L"} },
-            { "R5", new List<string>{ "MVB 25L"} }
+            { "R5", new List<string>{ "MVB 25L"} },
+            { "MVB", new List<string>{ } },
+            { "DCM",  new List<string>{ }}
 
         };
     }

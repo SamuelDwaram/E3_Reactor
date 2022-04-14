@@ -18,7 +18,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             {
                 destination = value;
                 RaisePropertyChanged();
-                if(Destination == "MVA 25L" || Destination == "RV 50L")
+                if(Destination == "MVA 25L" || Destination == "RV 50L" || Destination == "RV 25L")
                 {
                     TransferMode = bool.TrueString;
                     IsLevelBasedVisible = false;

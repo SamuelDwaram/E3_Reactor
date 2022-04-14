@@ -26,6 +26,8 @@ namespace E3Tech.RecipeBuilding.Model
 
         void RemoveBlockFromStep(RecipeStep step, IRecipeBlock obj);
 
+        void RemoveEmptyBlockfromStep(RecipeStep step);
+
         bool CheckEndBlockInRecipe(IList<RecipeStep> recipeSteps);
 
         void Clear();

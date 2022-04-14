@@ -217,6 +217,15 @@ namespace E3Tech.RecipeBuilding.Model
             }
         }
 
+        public void RemoveEmptyBlockfromStep(RecipeStep step)
+        {
+            var deleteStep = recipeSteps.Where(x => x.Name == step.Name).FirstOrDefault();
+            if (deleteStep != null && deleteStep?.BlockOne == null)
+            {
+                recipeSteps.Remove(deleteStep);
+            }
+        }
+
         public bool CheckEndBlockInRecipe(IList<RecipeStep> recipeSteps)
         {
             return recipeRulesValidator.CheckEndBlockInRecipe(recipeSteps);

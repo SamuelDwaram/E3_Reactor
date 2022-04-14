@@ -481,11 +481,23 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     }
                 }
 
-                index = 1;
-                foreach (var item in RecipeSteps)
+               
+            }
+            else
+            {
+                if(SelectedStep.RecipeStep.BlockOne == null)
                 {
-                    item.RecipeStep.BlockOne.Index = index++;
+                   var Recipe = RecipeSteps.Where(x => x.RecipeStep.Name == SelectedStep.RecipeStep.Name).FirstOrDefault();
+                    if(Recipe != null)
+                    recipeBuilder.RemoveEmptyBlockfromStep(Recipe.RecipeStep);
+                    RecipeSteps.Remove(Recipe);
                 }
+            }
+
+            int indexstep = 1;
+            foreach (var item in RecipeSteps)
+            {
+                item.RecipeStep.BlockOne.Index = indexstep++;
             }
         }
 
