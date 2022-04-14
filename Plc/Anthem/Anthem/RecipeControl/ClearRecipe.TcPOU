@@ -71,7 +71,7 @@ END_FOR
 RecipeTags.bDrainStatus := FALSE;
 RecipeTags.bSkipDrain := FALSE;
 RecipeTags.bPauseRecipe := FALSE;
-		
+RecipeTags.bTransferStartTime	 := FALSE;
 ]]></ST>
     </Implementation>
     <LineIds Name="ClearRecipe">
@@ -101,7 +101,7 @@ RecipeTags.bPauseRecipe := FALSE;
       <LineId Id="93" Count="0" />
       <LineId Id="49" Count="0" />
       <LineId Id="120" Count="1" />
-      <LineId Id="68" Count="0" />
+      <LineId Id="127" Count="0" />
       <LineId Id="28" Count="0" />
     </LineIds>
   </POU>

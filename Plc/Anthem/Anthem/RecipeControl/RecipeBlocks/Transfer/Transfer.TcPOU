@@ -5,7 +5,7 @@
 VAR
 	nSource: INT;
 	nDestination: INT;
-	bTransferStartTime : BOOL;
+	
 	nStartTimeInSeconds :UDINT;
 	nTime: UDINT;
 	
@@ -108,11 +108,11 @@ END_IF
 IF RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime = '' THEN
 	RecipeTags.StaredTimeForRecipeBanner := MAIN.concatenatedHourMinuteString;
 END_IF
-IF (bTransferStartTime=FALSE) THEN
+IF (RecipeTags.bTransferStartTime=FALSE) THEN
 //	RecipeControl.StaredTimeForRecipeBanner := MAIN.concatenatedHourMinuteString;
 	RecipeTags.Recipe.Blocks[nCurrentBlock].Properties.sStartTime:=MAIN.sConcatenatedHourMinuteString;
 	nStartTimeInSeconds:= STRING_TO_UDINT(MAIN.sCurrentSecond);
-	bTransferStartTime:=  TRUE;
+	RecipeTags.bTransferStartTime:=  TRUE;
 END_IF
 
 // Time Intervals - Conversion of input time as per selection//
@@ -195,7 +195,7 @@ IF ((fbRTRIGEnable AND NOT(RecipeTags.bRuntimeEdit))  AND RecipeTags.Recipe.Bloc
 	SecondsToAddWhilePause := 0;
 	fbRTRIGEnable := FALSE;
 	nTime := 0;
-	bTransferStartTime := FALSE;
+	RecipeTags.bTransferStartTime := FALSE;
 	//nStartTimeInSeconds := 0;
 	RecipeTags.bBlockStart[nCurrentBlock]  :=FALSE;
 	RecipeTags.bStartTimeEnable[nCurrentBlock] := FALSE;

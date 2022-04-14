@@ -97,9 +97,6 @@
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
-				<Task Id="4" Priority="18" CycleTime="250000" AmsPort="351" AdtTasks="true">
-					<Name>Recipe</Name>
-				</Task>
 			</Tasks>
 		</System>
 		<Plc>
@@ -107,7 +104,7 @@
 				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Anthem\Anthem.tmc">
 					<Name>Anthem Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<Vars VarGrpType="1" ContextId="1" AreaNo="16">
+					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
 							<Name>Modbus.fbModbusRtuMaster_PcCOM.InData</Name>
@@ -169,7 +166,7 @@
 							<Type>INT</Type>
 						</Var>
 					</Vars>
-					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
+					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
 						<Var>
 							<Name>Modbus.fbModbusRtuMaster_PcCOM.OutData</Name>
@@ -316,15 +313,6 @@
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
-							<Name>Recipe_1</Name>
-							<ManualConfig>
-								<OTCID>#x02010040</OTCID>
-							</ManualConfig>
-							<Priority>18</Priority>
-							<CycleTime>25000000</CycleTime>
-						</Context>
-						<Context>
-							<Id NeedCalleeCall="true">1</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>
@@ -334,8 +322,7 @@
 						</Context>
 					</Contexts>
 					<TaskPouOids>
-						<TaskPouOid Prio="18" OTCID="#x08502001"/>
-						<TaskPouOid Prio="20" OTCID="#x08502002"/>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>

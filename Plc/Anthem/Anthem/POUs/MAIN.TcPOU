@@ -52,7 +52,7 @@ VAR
 	
 	bRecipeLocalTimer: BOOL;
 	nOfftimer: UDINT;
-	TimeInSeconds: LREAL;
+	TimeInSeconds: UDINT;
 	
 END_VAR
 ]]></Declaration>
@@ -76,7 +76,7 @@ fb_Assigner(i_TagAssignment := fb_TagAssignment);
 
 RecipeControl.ipStirBlock := iStirBlock;
 RecipeControl.ipN2PurgeBlock := iN2PurgeBlock;
-//RecipeControl();
+RecipeControl();
 
 //=========================================================
 // Analog Scaling
@@ -118,12 +118,19 @@ IF bRecipeLocalTimer  THEN
 	nOfftimer := nOfftimer + 1;
 	
 ELSE
-	nOfftimer := 0;
+	nOfftimer := 0; 
+	TimeInSeconds := 0;
 END_IF
 IO.UpdateFieldPoint := STRING_TO_INT(currentSecond) MOD 60;
 
+IF nOfftimer = 100 THEN
+	TimeInSeconds := TimeInSeconds +1;	
+	nOfftimer := 0;
+END_IF
 
-sCurrentSecond := LREAL_TO_STRING(TimeInSeconds);
+
+
+sCurrentSecond := LREAL_TO_STRING(TimeInSeconds MOD 60);
 sCurrentMinute := INT_TO_STRING(ABS(LREAL_TO_INT(TimeInSeconds/60)));
 sCurrentHour	:= 	INT_TO_STRING(ABS(LREAL_TO_INT(TimeInSeconds/3600)));
 sConcatenatedHourMinuteString := CONCAT(STR1:=sCurrentHour, STR2:= ':');
@@ -147,9 +154,15 @@ sConcatenatedHourMinuteString := CONCAT(STR1:=sConcatenatedHourMinuteString, STR
       <LineId Id="48" Count="1" />
       <LineId Id="95" Count="8" />
       <LineId Id="443" Count="0" />
-      <LineId Id="104" Count="3" />
-      <LineId Id="445" Count="0" />
-      <LineId Id="108" Count="5" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="510" Count="0" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="503" Count="2" />
+      <LineId Id="509" Count="0" />
+      <LineId Id="506" Count="0" />
+      <LineId Id="501" Count="1" />
+      <LineId Id="500" Count="0" />
+      <LineId Id="109" Count="4" />
       <LineId Id="94" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>

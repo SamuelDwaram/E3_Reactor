@@ -18,6 +18,8 @@ VAR_GLOBAL
 	RecipeMessage: STRING;
 	StaredTimeForRecipeBanner: STRING[255];
 	
+	bTransferStartTime : BOOL;
+	
 	bBlockEnd:ARRAY[0..699] OF BOOL;
 	enWaitPause:ARRAY[0..699] OF BOOL;
 	bBlockStart : ARRAY[0..699] OF BOOL;

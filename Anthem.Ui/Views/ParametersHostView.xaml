@@ -111,6 +111,7 @@
         <uc_1:BoolParameter Grid.Row="8" Grid.Column="2" ParamLabel="V51" Tag="Valve_51"/>
         <uc_1:BoolParameter Grid.Row="9" Grid.Column="2" ParamLabel="V45" Tag="Valve_45"/>
         <uc_1:BoolParameter Grid.Row="10" Grid.Column="2" ParamLabel="V34" Tag="Valve_34"/>
+        <uc_1:BoolParameter Grid.Row="11" Grid.Column="1" ParamLabel="V42" Tag="Valve_42"/>
         <uc_1:BoolParameter Grid.Row="11" Grid.Column="2" ParamLabel="V52" Tag="Valve_52"/>
         <!--#endregion-->
 
@@ -231,14 +232,8 @@
             <uc_1:BoolParameter Grid.Column="1" ParamLabel="V30" Tag="Valve_30"/>
             <uc_1:BoolParameter Grid.Column="0" ParamLabel="V29" Tag="Valve_29"/>
         </Grid>
-        <Grid Grid.Row="9" Grid.Column="7">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <uc_1:BoolParameter  Grid.Column="0" ParamLabel="V42" Tag="Valve_42"/>
-            <uc_1:BoolParameter  Grid.Column="1" ParamLabel="V43" Tag="Valve_43"/>
-        </Grid>
+        <uc_1:BoolParameter Grid.Row="9" Grid.Column="7" ParamLabel="V43" Tag="Valve_43"/>
+        
         <Grid Grid.Row="10" Grid.Column="7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
