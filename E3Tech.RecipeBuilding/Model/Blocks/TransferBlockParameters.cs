@@ -76,12 +76,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             set
             {
                 transferMode = value;
-                OnPropertyChanged();
-                if (transferMode == bool.FalseString)
-                {
-                    TimeInterval = null;
-                    IntervalType = null;
-                }
+                OnPropertyChanged();     
             }
         }
 
