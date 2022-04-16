@@ -79,9 +79,9 @@ namespace Anathem.Ui.ViewModels
 
         private void UpdateUi()
         {
-            StirrerFeedback_1 = Convert.ToString(Convert.ToSingle(ParameterDictionary["StirrerFeedback_1"]));
-            StirrerFeedback_2 = Convert.ToString(Convert.ToSingle(ParameterDictionary["StirrerFeedback_2"]));
-            StirrerFeedback_3 = Convert.ToString(Convert.ToSingle(ParameterDictionary["StirrerFeedback_3"]));
+            StirrerFeedback_1 = Convert.ToString(Convert.ToSingle(ParameterDictionary["MVA_StirrerSpeed"]));
+            StirrerFeedback_2 = Convert.ToString(Convert.ToSingle(ParameterDictionary["RV50L_StirrerSpeed"]));
+            StirrerFeedback_3 = Convert.ToString(Convert.ToSingle(ParameterDictionary["RV25L_StirrerSpeed"]));
             Task.Factory.StartNew(new Action(() => RaisePropertyChanged(nameof(ParameterDictionary))), CancellationToken.None, TaskCreationOptions.None, taskScheduler);
         }
         private void ChangeStirrer1SetPoint()
