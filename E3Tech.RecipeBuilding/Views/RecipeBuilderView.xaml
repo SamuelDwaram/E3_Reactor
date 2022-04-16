@@ -794,7 +794,8 @@
                 </ListBox.InputBindings>
             </ListView>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" >
+            <Button Content="Stop Batch" Command="{Binding StopBatchCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsBatchRunning, Converter={StaticResource InverseBooleanToVisibilityConverter}, ConverterParameter=Normal}"></Button>
                 <Button Content="Save" Command="{Binding SaveSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Inverted}"></Button>
                 <Button Content="Import" Command="{Binding ImportSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Inverted}"></Button>
                 <Button Content="Clear" Command="{Binding ClearSeqReceipeCommand}" Style="{StaticResource CommandButtonStyle}" HorizontalAlignment="Right" Visibility="{Binding IsSeqRecipeExecuting, Converter={StaticResource InverseBooleanToVisibilityConverter} , ConverterParameter=Inverted}" ></Button>

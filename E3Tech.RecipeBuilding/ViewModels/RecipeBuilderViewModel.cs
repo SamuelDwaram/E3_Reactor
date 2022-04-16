@@ -53,6 +53,20 @@ namespace E3Tech.RecipeBuilding.ViewModels
             LoadRegisteredBlocks(containerProvider);
             RecipeSteps = new ObservableCollection<RecipeStepViewModel>();
             LoadSteps();
+            CheckIsBatchExecuting();
+        }
+
+        private void CheckIsBatchExecuting()
+        {
+            var value = designExperiment.FetchRunningBatch();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                IsBatchRunning = false;
+            }
+            else
+            {
+                IsBatchRunning = true;
+            }
         }
 
         #region Initialization of Recipe Steps and Registered Recipe Blocks
@@ -252,23 +266,27 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
         private bool ExecuteRecipe()
         {
-
-            Task.Factory.StartNew(() => designExperiment.StartBatchCompact(NewBatchDetails))
-                 .ContinueWith(new Action<Task<bool>>((t) =>
-                 {
-                     if (t.IsCompleted)
+            if (IsBatchRunning == false)
+            {
+                Task.Factory.StartNew(() => designExperiment.StartBatchCompact(NewBatchDetails))
+                     .ContinueWith(new Action<Task<bool>>((t) =>
                      {
-                         if (t.Result)
+                         if (t.IsCompleted)
                          {
-                             //Navigate("Dashboard");
-                             IsBatchNameRequestPopUpOpen = false;
+                             if (t.Result)
+                             {
+                                 //Navigate("Dashboard");
+                                 IsBatchNameRequestPopUpOpen = false;
+                                 IsBatchRunning = true;
+
+                             }
+                             else
+                             {
+                                 MessageBox.Show("Batch Already Exists, Please Re-enter the Batch Details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                             }
                          }
-                         else
-                         {
-                             MessageBox.Show("Batch Already Exists, Please Re-enter the Batch Details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                         }
-                     }
-                 }), taskScheduler);
+                     }), taskScheduler);
+            }
             if (CanStartBatch())
             {
                 recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
@@ -289,29 +307,44 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
         public void ValidateAndOpenPopup()
         {
-            if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
+            if (IsBatchRunning == false)
             {
-                NewBatchDetails.Name = "";
-                NewBatchDetails.ScientistName = "";
-                NewBatchDetails.Comments = "";
-                IsBatchNameRequestPopUpOpen = true;
+                if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
+                {
+                    NewBatchDetails.Name = "";
+                    NewBatchDetails.ScientistName = "";
+                    NewBatchDetails.Comments = "";
+                    IsBatchNameRequestPopUpOpen = true;
+                }
+                else
+                {
+                    MessageBox.Show("Please Add End Block in the Recipe",
+                                    "Recipe Execution Error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                    IsBatchNameRequestPopUpOpen = false;
+
+                }
             }
             else
             {
-                MessageBox.Show("Please Add End Block in the Recipe",
-                                "Recipe Execution Error",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-                IsBatchNameRequestPopUpOpen = false;
+                recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
+                if (IsSeqRecipeExecuting)
+                {
+                    var recipeSeqToExecute = recipeSeqDetail.ElementAt((int)StartSeq - 1);
+                    recipeSeqToExecute.Key.IsExecuting = true;
+                    recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
+                }
+                
             }
 
         }
 
         private bool CanStartBatch()
         {
-            return !string.IsNullOrWhiteSpace(NewBatchDetails.Name)
+            return ((!string.IsNullOrWhiteSpace(NewBatchDetails.Name)
                 && !string.IsNullOrWhiteSpace(NewBatchDetails.ScientistName)
-                && !string.IsNullOrWhiteSpace(NewBatchDetails.Comments)
+                && !string.IsNullOrWhiteSpace(NewBatchDetails.Comments)) || IsBatchRunning)
                 && recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps);
         }
 
@@ -323,8 +356,18 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
         private void OpenEndBatchPopup()
         {
-            IsEndBatchPopUpOpen = true;
-            AdminCredential.PasswordHash = "";
+            if (IsSeqRecipeExecuting)
+            {
+                IsSeqRecipeExecuting = false;
+                if (selectedSeqRecipeModel != null)
+                {
+                    selectedSeqRecipeModel.IsExecuting = false;
+                }
+
+                recipeBuilder.DeleteSeqRecipe();
+            }
+            AbortRecipeExecution();
+
         }
 
         public void EndBatch()
@@ -355,17 +398,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         {
             if (designExperiment.EndBatchCompact(AdminCredential, CurrentBatchDetails.FieldDeviceIdentifier, CurrentBatchDetails.Name, CurrentBatchDetails.FieldDeviceIdentifier))
             {
-                if (IsSeqRecipeExecuting)
-                {
-                    IsSeqRecipeExecuting = false;
-                    if (selectedSeqRecipeModel != null)
-                    {
-                        selectedSeqRecipeModel.IsExecuting = false;
-                    }
-
-                    recipeBuilder.DeleteSeqRecipe();
-                }
-                AbortRecipeExecution();
+                IsBatchRunning = false;
             }
             else
             {
@@ -481,15 +514,15 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     }
                 }
 
-               
+
             }
             else
             {
-                if(SelectedStep.RecipeStep.BlockOne == null)
+                if (SelectedStep.RecipeStep.BlockOne == null)
                 {
-                   var Recipe = RecipeSteps.Where(x => x.RecipeStep.Name == SelectedStep.RecipeStep.Name).FirstOrDefault();
-                    if(Recipe != null)
-                    recipeBuilder.RemoveEmptyBlockfromStep(Recipe.RecipeStep);
+                    var Recipe = RecipeSteps.Where(x => x.RecipeStep.Name == SelectedStep.RecipeStep.Name).FirstOrDefault();
+                    if (Recipe != null)
+                        recipeBuilder.RemoveEmptyBlockfromStep(Recipe.RecipeStep);
                     RecipeSteps.Remove(Recipe);
                 }
             }
@@ -612,23 +645,16 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 int index = 1;
                 foreach (var step in recipeSeqToExecute.Value.ToList())
                 {
-                    if(step?.BlockOne != null)
+                    if (step?.BlockOne != null)
                     {
                         step.BlockOne.Index = index++;
                     }
                     RecipeStepViewModel stepViewModel = containerProvider.Resolve<RecipeStepViewModel>();
-                    stepViewModel.RecipeStep = step;                  
+                    stepViewModel.RecipeStep = step;
                     RecipeSteps.Add(stepViewModel);
                 }
                 IsSeqRecipeExecuting = true;
                 ValidateAndOpenPopup();
-                //var result = ExecuteRecipe();
-
-                //if (result == true)
-                //{
-                //    recipeSeqToExecute.Key.IsExecuting = true;
-                //    recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
-                //}
             }
         }
 
@@ -987,6 +1013,17 @@ namespace E3Tech.RecipeBuilding.ViewModels
             }
         }
 
+        private bool isBatchRunning;
+        public bool IsBatchRunning
+        {
+            get { return isBatchRunning; }
+            set
+            {
+                isBatchRunning = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private bool isSeqRecipeExecuting;
         public bool IsSeqRecipeExecuting
         {
@@ -1232,6 +1269,19 @@ namespace E3Tech.RecipeBuilding.ViewModels
             set => SetProperty(ref previewSequenceCommand, value);
         }
 
+        private ICommand stopBatchCommand;
+        public ICommand StopBatchCommand
+        {
+            get => stopBatchCommand ?? (stopBatchCommand = new DelegateCommand(new Action(StopBatchCommandExecute)));
+            set => SetProperty(ref stopBatchCommand, value);
+        }
+
+        private void StopBatchCommandExecute()
+        {
+            IsEndBatchPopUpOpen = true;
+            AdminCredential.PasswordHash = "";
+        }
+
         private void PreviewSequenceCommandExecute(object obj)
         {
             if (obj is SeqRecipeModel)
@@ -1245,23 +1295,23 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 PreviewBuilderView view = new PreviewBuilderView();
                 List<RecipeBlockPreviewModel> recipeBlockPreviewModels = new List<RecipeBlockPreviewModel>();
                 int no = 1;
-                foreach(var recipeStep in recipeSeqDetail[seqRecipeModel])
+                foreach (var recipeStep in recipeSeqDetail[seqRecipeModel])
                 {
                     RecipeBlockPreviewModel recipeBlockPreviewModel = new RecipeBlockPreviewModel();
                     recipeBlockPreviewModel.Name = recipeStep?.BlockOne.Name;
                     recipeBlockPreviewModel.BlockNo = no++.ToString() + ": ";
                     switch (recipeStep?.BlockOne.Name)
                     {
-                       
+
                         case "Wait":
                             ParameterizedRecipeBlock<WaitBlockParameters> waitBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<WaitBlockParameters>;
                             recipeBlockPreviewModel.PropertyThree = "Time Interval: " + waitBlock.Parameters.TimeInterval + " " + waitBlock.Parameters.IntervalType;
-                            
+
                             break;
                         case "Stirrer":
                             ParameterizedRecipeBlock<StirrerBlockParameters> stirBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<StirrerBlockParameters>;
-                            recipeBlockPreviewModel.PropertyOne ="Set Point: " + stirBlock.Parameters.Destination;
-                            recipeBlockPreviewModel.PropertyTwo = "Destination: " + stirBlock.Parameters.SetPoint;
+                            recipeBlockPreviewModel.PropertyOne = "Set Point: " + stirBlock.Parameters.SetPoint;
+                            recipeBlockPreviewModel.PropertyTwo = "Destination: " + stirBlock.Parameters.Destination;
                             break;
                         case "Transfer":
                             ParameterizedRecipeBlock<TransferBlockParameters> transferBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<TransferBlockParameters>;
@@ -1270,7 +1320,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                             recipeBlockPreviewModel.PropertyThree = "Time Interval: " + transferBlock.Parameters.TimeInterval + " " + transferBlock.Parameters.IntervalType;
                             recipeBlockPreviewModel.PropertyFour = "Transfer Mode: " + (transferBlock.Parameters.TransferMode.Equals(bool.TrueString) ? "Time" : "Level");
                             break;
-           
+
                         case "Drain":
                             ParameterizedRecipeBlock<DrainBlockParameters> drainBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<DrainBlockParameters>;
                             recipeBlockPreviewModel.PropertyOne = "Source: " + drainBlock.Parameters.Source;
@@ -1279,7 +1329,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                         case "N2Purge":
                             ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<N2PurgeBlockParameters>;
                             recipeBlockPreviewModel.PropertyOne = "Source: " + n2PurgeBlock.Parameters.Source;
-                            recipeBlockPreviewModel.PropertyThree ="Time Interval: " + n2PurgeBlock.Parameters.TimeInterval + " " + n2PurgeBlock.Parameters.IntervalType;
+                            recipeBlockPreviewModel.PropertyThree = "Time Interval: " + n2PurgeBlock.Parameters.TimeInterval + " " + n2PurgeBlock.Parameters.IntervalType;
                             break;
                     }
                     recipeBlockPreviewModels.Add(recipeBlockPreviewModel);
