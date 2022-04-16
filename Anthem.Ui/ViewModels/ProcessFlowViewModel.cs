@@ -54,53 +54,53 @@ namespace Anathem.Ui.ViewModels
         }
         private void Test()
         {
-            if (Parameters.ContainsKey("Pressure_1"))
+            if (Parameters.ContainsKey("MVA_Pressure"))
             {
-                Pressure_1 = Parameters["Pressure_1"];
+                Pressure_1 = Parameters["MVA_Pressure"];
             }
-            if (Parameters.ContainsKey("Pressure_2"))
+            if (Parameters.ContainsKey("RV50L_Pressure"))
             {
-                Pressure_2 = Parameters["Pressure_2"];
+                Pressure_2 = Parameters["RV50L_Pressure"];
             }
-            if (Parameters.ContainsKey("Pressure_3"))
+            if (Parameters.ContainsKey("RV25L_Pressure"))
             {
-                Pressure_3 = Parameters["Pressure_3"];
+                Pressure_3 = Parameters["RV25L_Pressure"];
             }
-            if (Parameters.ContainsKey("Temperature_1"))
+            if (Parameters.ContainsKey("MVA_Temperature"))
             {
-                Temperature_1 = Parameters["Temperature_1"];
+                Temperature_1 = Parameters["MVA_Temperature"];
             }
-            if (Parameters.ContainsKey("Temperature_2"))
+            if (Parameters.ContainsKey("RV50L_Temperature"))
             {
-                Temperature_2 = Parameters["Temperature_2"];
+                Temperature_2 = Parameters["RV50L_Temperature"];
             }
-            if (Parameters.ContainsKey("Temperature_3"))
+            if (Parameters.ContainsKey("RV25L_Temperature"))
             {
-                Temperature_3 = Parameters["Temperature_3"];
+                Temperature_3 = Parameters["RV25L_Temperature"];
             }
-            if (Parameters.ContainsKey("ReactorLevel_1"))
+            if (Parameters.ContainsKey("MVA_Level"))
             {
-                Level_1 = Parameters["ReactorLevel_1"];
+                Level_1 = Parameters["MVA_Level"];
             }
-            if (Parameters.ContainsKey("ReactorLevel_2"))
+            if (Parameters.ContainsKey("RV50L_Level"))
             {
-                Level_2 = Parameters["ReactorLevel_2"];
+                Level_2 = Parameters["RV50L_Level"];
             }
-            if (Parameters.ContainsKey("ReactorLevel_3"))
+            if (Parameters.ContainsKey("RV25L_Level"))
             {
-                Level_3 = Parameters["ReactorLevel_3"];
+                Level_3 = Parameters["RV25L_Level"];
             }
-            if (Parameters.ContainsKey("StirrerFeedback_1"))
+            if (Parameters.ContainsKey("MVA_StirrerSpeed"))
             {
-                StirrerFeedback_1 = Parameters["StirrerFeedback_1"];
+                StirrerFeedback_1 = Parameters["MVA_StirrerSpeed"];
             }
-            if (Parameters.ContainsKey("StirrerFeedback_2"))
+            if (Parameters.ContainsKey("RV50L_StirrerSpeed"))
             {
-                StirrerFeedback_2 = Parameters["StirrerFeedback_2"];
+                StirrerFeedback_2 = Parameters["RV50L_StirrerSpeed"];
             }
-            if (Parameters.ContainsKey("StirrerFeedback_3"))
+            if (Parameters.ContainsKey("RV25L_StirrerSpeed"))
             {
-                StirrerFeedback_3 = Parameters["StirrerFeedback_3"];
+                StirrerFeedback_3 = Parameters["RV25L_StirrerSpeed"];
             }
             if (Parameters.ContainsKey("RecipeMessage"))
             {

@@ -64,91 +64,94 @@ namespace Anathem.Ui.ViewModels
 
                 new TrendParameter
                 {
-                    Label = "Reac Temp",
+                    Label = "MVA Temperature",
                     Limits = "-90|200",
-                    FieldPointId = "ReactorMassTemperature",
+                    FieldPointId = "MVA_Temperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
-                    IsLiveTrendParameter = true,
                 },
                 new TrendParameter
                 {
-                    Label = "Vapour Temp",
-                    Limits = "0|200",
-                    FieldPointId = "VapourTemperature",
-                    SensorDataSetId = "sensorDataSet_" + deviceCount,
-                    Units = "°C",
-                    IsLiveTrendParameter = true,
-                },
-
-                 new TrendParameter
-                {
-                    Label = "HC Temp SetPoint",
+                    Label = "RV-50L Temperature",
                     Limits = "-90|200",
-                    FieldPointId = "HeatCoolSetPoint",
+                    FieldPointId = "RV50L_Temperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
-                    IsLiveTrendParameter = true,
                 },
                 new TrendParameter
                 {
-                    Label = "Stirrer RPM",
-                    Limits = "0|200",
-                    FieldPointId = "StirrerCurrentSpeed",
-                    SensorDataSetId = "sensorDataSet_" + deviceCount,
-                    Units = "RPM",
-                    IsLiveTrendParameter = true,
-                },
-                new TrendParameter
-                {
-                    Label = "Vent Temp",
-                    Limits = "0|200",
-                    FieldPointId = "VentTemperature",
+                    Label = "RV-25L Temperature",
+                    Limits = "-90|200",
+                    FieldPointId = "RV25L_Temperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
-
                 },
                 new TrendParameter
                 {
-                    Label = "Pressure",
-                    Limits = "-1|3",
-                    FieldPointId = "ReactorPressure",
+                    Label = "MVA Pressure",
+                    Limits = "0|9",
+                    FieldPointId = "MVA_Pressure",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "Bar",
                 },
-                 new TrendParameter
+                new TrendParameter
                 {
-                    Label = "Jacket Temp",
-                    Limits = "-90|200",
-                    FieldPointId = "JacketTemperature",
+                    Label = "RV-50L Pressure",
+                    Limits = "0|9",
+                    FieldPointId = "RV50L_Pressure",
+                    SensorDataSetId = "sensorDataSet_" + deviceCount,
+                    Units = "Bar",
+                },
+                new TrendParameter
+                {
+                    Label = "RV-25L Pressure",
+                    Limits = "0|9",
+                    FieldPointId = "RV25L_Pressure",
+                    SensorDataSetId = "sensorDataSet_" + deviceCount,
+                    Units = "Bar",
+                },
+                new TrendParameter
+                {
+                    Label = "MVA Level",
+                    Limits = "0|100",
+                    FieldPointId = "MVA_Level",
+                    SensorDataSetId = "sensorDataSet_" + deviceCount,
+                    Units = "%",
+                },
+                new TrendParameter
+                {
+                    Label = "RV-50L Level",
+                    Limits = "0|100",
+                    FieldPointId = "RV50L_Level",
+                    SensorDataSetId = "sensorDataSet_" + deviceCount,
+                    Units = "%",
+                },
+                new TrendParameter
+                {
+                    Label = "RV-25L Level",
+                    Limits = "0|100",
+                    FieldPointId = "RV25L_Level",
+                    SensorDataSetId = "sensorDataSet_" + deviceCount,
+                    Units = "%",
+                },
+                new TrendParameter
+                {
+                    Label = "Chiller Temperature",
+                    Limits = "0|50",
+                    FieldPointId = "ChillerTemperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
                 },
-
                 new TrendParameter
                 {
-                    Label = "Scrubber RPM",
-                    Limits = "0|200",
-                    FieldPointId = "ScrubberCurrentSpeed",
+                    Label = "Chiller Temperature Setpoint",
+                    Limits = "0|100",
+                    FieldPointId = "ChillerSetpoint",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
-                    Units = "RPM",
+                    Units = "°C",
                 },
-                //new TrendParameter
-                //{
-                //    Label = "ReactorpH",
-                //    Limits = "0|14",
-                //    FieldPointId = "ReactorpH",
-                //    SensorDataSetId = "sensorDataSet_" + deviceCount,
-                //    Units = "",
-                //},
-                //new TrendParameter
-                //{
-                //    Label = "Stirrer SetPoint",
-                //    Limits = "0|200",
-                //    FieldPointId = "StirrerSpeedSetPoint",
-                //    SensorDataSetId = "sensorDataSet_" + deviceCount,
-                //    Units = "RPM",
-                //},
+                
+
             };
         }
 

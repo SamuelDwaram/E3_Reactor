@@ -186,16 +186,15 @@
                 </Viewbox>
             </Border>
             <Label Grid.Row="3" Grid.ColumnSpan="3" Content="Reactor Parameters" HorizontalContentAlignment="Center" Background="#1d2532"/>
-            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="0" Tag="Temperature_1" ParamLabel="MVA Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
-            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="1" Tag="Temperature_2" ParamLabel="Reactor Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
-            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="2" Tag="Temperature_3" ParamLabel="Spare RV Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
-            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="0" Tag="Pressure_1" ParamLabel="MVA&#xa;Pressure" Units="bar" Limits="0|9"/>
-            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="1" Tag="Pressure_2" ParamLabel="Reactor Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
-            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="2" Tag="Pressure_3" ParamLabel="Spare RV Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
-            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="0" Tag="ReactorLevel_1" ParamLabel="MVA&#xa;Level" Units="%" Limits="0|100"/>
-            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="1" Tag="ReactorLevel_2" ParamLabel="Reactor Vessel&#xa;Level" Units="%" Limits="0|100"/>
-            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="2" Tag="ReactorLevel_3" ParamLabel="Spare RV Vessel&#xa;Level" Units="%" Limits="0|100"/>
-
+            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="0" Tag="MVA_Temperature" ParamLabel="MVA Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
+            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="1" Tag="RV50L_Temperature" ParamLabel="Reactor Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
+            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="2" Tag="RV25L_Temperature" ParamLabel="Spare RV Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
+            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="0" Tag="MVA_Pressure" ParamLabel="MVA&#xa;Pressure" Units="bar" Limits="0|9"/>
+            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="1" Tag="RV50L_Pressure" ParamLabel="Reactor Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
+            <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="2" Tag="RV25L_Pressure" ParamLabel="Spare RV Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
+            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="0" Tag="MVA_Level" ParamLabel="MVA&#xa;Level" Units="%" Limits="0|100"/>
+            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="1" Tag="RV50L_Level" ParamLabel="Reactor Vessel&#xa;Level" Units="%" Limits="0|100"/>
+            <uc_2:GraphicalParameter Grid.Row="6" Grid.Column="2" Tag="RV25L_Level" ParamLabel="Spare RV Vessel&#xa;Level" Units="%" Limits="0|100"/>
 
 
 
