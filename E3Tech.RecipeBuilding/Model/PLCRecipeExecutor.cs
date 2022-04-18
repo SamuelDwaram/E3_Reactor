@@ -182,7 +182,7 @@ namespace E3Tech.RecipeBuilding
             //waitBlock.Parameters.Ended = "True";
             waitBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
             waitBlock.Parameters.StartedTime = block.Properties.sStartedTime;
-            //waitBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
+            waitBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
             waitBlock.UpdateParameterValue("RemainingTime", block.Properties.sRemainingTime);
             //waitBlock.Parameters.StartedTime = "00:05";
             waitBlock.Parameters.EndedTime = block.Properties.sEndedTime;
@@ -199,6 +199,8 @@ namespace E3Tech.RecipeBuilding
             stirBlock.Parameters.Started = block.Properties.bBlockStarted.ToString();
             stirBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
             stirBlock.Parameters.StartedTime = block.Properties.sStartedTime;
+            stirBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
+
             stirBlock.Parameters.EndedTime = block.Properties.sEndedTime;
             stirBlock.Parameters.SetPoint = block.Properties.lrSetPoint.ToString();
             stirBlock.Parameters.Destination = block.Properties.sDestination;
@@ -229,6 +231,8 @@ namespace E3Tech.RecipeBuilding
             n2PurgeBlock.Parameters.Started = block.Properties.bBlockStarted.ToString();
             n2PurgeBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
             n2PurgeBlock.Parameters.StartedTime = block.Properties.sStartedTime;
+            n2PurgeBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
+
             n2PurgeBlock.Parameters.EndedTime = block.Properties.sEndedTime;
             n2PurgeBlock.Parameters.Source = block.Properties.sSource;
             n2PurgeBlock.Parameters.IntervalType = block.Properties.sIntervalType;
@@ -243,6 +247,8 @@ namespace E3Tech.RecipeBuilding
             drainBlock.Parameters.Started = block.Properties.bBlockStarted.ToString();
             drainBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
             drainBlock.Parameters.StartedTime = block.Properties.sStartedTime;
+            drainBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
+
             drainBlock.Parameters.EndedTime = block.Properties.sEndedTime;
             drainBlock.Parameters.Source = block.Properties.sSource;
             drainBlock.Parameters.IntervalType = block.Properties.sIntervalType;
@@ -257,6 +263,8 @@ namespace E3Tech.RecipeBuilding
             flushBlock.Parameters.Started = block.Properties.bBlockStarted.ToString();
             flushBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
             flushBlock.Parameters.StartedTime = block.Properties.sStartedTime;
+            flushBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
+
             flushBlock.Parameters.EndedTime = block.Properties.sEndedTime;
             flushBlock.Parameters.Source = block.Properties.sSource;
             flushBlock.Parameters.IntervalType = block.Properties.sIntervalType;

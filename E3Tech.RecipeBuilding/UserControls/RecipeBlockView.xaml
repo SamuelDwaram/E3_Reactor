@@ -530,19 +530,19 @@
                                     <Style.Triggers>
 
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
-                                            <Setter Property="Content" Value="Rem Time:"/>
+                                            <Setter Property="Content" Value="Run Time:"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
-                                            <Setter Property="Content" Value="Rem Time:"/>
+                                            <Setter Property="Content" Value="Run Time:"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Wait">
-                                            <Setter Property="Content" Value="Rem Time :"/>
+                                            <Setter Property="Content" Value="Run Time :"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                            <Setter Property="Content" Value="Rem Time :"/>
+                                            <Setter Property="Content" Value="Run Time :"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Parameters.Name}" Value="Transfer">
-                                            <Setter Property="Content" Value="Rem Time:"/>
+                                            <Setter Property="Content" Value="Run Time:"/>
                                         </DataTrigger>
 
                                     </Style.Triggers>
