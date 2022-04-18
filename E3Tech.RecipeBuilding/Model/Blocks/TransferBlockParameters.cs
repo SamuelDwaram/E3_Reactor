@@ -72,15 +72,14 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
         {
             get 
             { 
-                return transferMode ?? bool.FalseString; 
+                return transferMode ?? bool.TrueString; 
             }
             set
             {
                 transferMode = value;
                 OnPropertyChanged();
-                TransferModeString = value;
             }
-        }
+        }    
 
         private string transferModeString;
         public string TransferModeString
@@ -108,7 +107,6 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
                 EndedTime = this.EndedTime?.Clone().ToString(),
                 Enabled = this.Enabled?.Clone().ToString(),
                 RemainingTime = this.RemainingTime?.Clone().ToString(),
-
                 Source = this.Source?.Clone().ToString(),
                 Destination = this.Destination?.Clone().ToString(),
                 Volume = this.Volume?.Clone().ToString(),
