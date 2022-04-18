@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="E3.SystemAlarmManager.Views.AlarmNotificationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:converters="clr-namespace:E3.ReactorManager.Interfaces.UI.Converters;assembly=E3.ReactorManager.Interfaces"
+             xmlns:local="clr-namespace:E3.SystemAlarmManager.Views"
+             x:Name="AlarmNotificationDialog"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="500" Height="250" Width="500">
+    <UserControl.Resources>
+        <converters:FontSizeConverter x:Key="FontSizeCon"/>
+        <Style TargetType="Button" x:Key="CommonButtonStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#32ccdf"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding SetCurrentWindowCommand}" CommandParameter="{Binding ElementName=AlarmNotificationDialog}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Background="Yellow">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Label x:Name="TitleLabel" Content="Alarm!" FontSize="{Binding ElementName=TitleLabel, Path=ActualHeight, Converter={StaticResource FontSizeCon}}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Background="#1d2532" Foreground="White" FontWeight="SemiBold"/>
+        <Grid DockPanel.Dock="Top" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="FontSize" Value="{Binding ElementName=TitleLabel, Path=ActualHeight, Converter={StaticResource FontSizeCon}}" />
+                </Style>
+            </Grid.Resources>
+            <Label Content="Device" Grid.Row="1" Grid.Column="0" FontWeight="SemiBold"/>
+            <Label Content="Parameter" Grid.Row="2" Grid.Column="0" FontWeight="SemiBold"/>
+            <Label Content="Type" Grid.Row="3" Grid.Column="0" FontWeight="SemiBold"/>
+            
+            <Label Content="{Binding SystemAlarm.DeviceLabel}" HorizontalContentAlignment="Left" Grid.Row="1" Grid.Column="1" Foreground="Red" FontWeight="SemiBold"/>
+            <Label Content="{Binding SystemAlarm.FieldPointLabel}" HorizontalContentAlignment="Left" Grid.Row="2" Grid.Column="1" Foreground="Red" FontWeight="SemiBold"/>
+            <Label Content="{Binding SystemAlarm.Type}" HorizontalContentAlignment="Left" Grid.Row="3" Grid.Column="1" Foreground="Red" FontWeight="SemiBold"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Margin="3" Content="Acknowledge" Style="{StaticResource CommonButtonStyle}" DockPanel.Dock="Top" Command="{Binding AcknowledgeAlarmCommand}" CommandParameter="{Binding SystemAlarm.Id}"/>
+        </Grid>
+    </Grid>
+</UserControl>

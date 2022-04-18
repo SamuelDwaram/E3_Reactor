@@ -18,7 +18,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             {
                 destination = value;
                 RaisePropertyChanged();
-                if(Destination == "MVA 25L" || Destination == "RV 50L" || Destination == "RV 25L")
+                if (Destination == "MVA 25L" || Destination == "RV 50L" || Destination == "RV 25L")
                 {
                     TransferMode = bool.TrueString;
                     IsLevelBasedVisible = false;
@@ -52,7 +52,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
             }
         }
 
-        private bool  isLevelBasedVisible = true;
+        private bool isLevelBasedVisible = true;
         public bool IsLevelBasedVisible
         {
             get
@@ -67,27 +67,36 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
         }
 
 
-        
-
         private string transferMode;
         public string TransferMode
         {
-            get => transferMode ?? bool.FalseString;
+            get 
+            { 
+                return transferMode ?? bool.FalseString; 
+            }
             set
             {
                 transferMode = value;
-                OnPropertyChanged();     
+                OnPropertyChanged();
+                TransferModeString = value;
             }
         }
 
         private string transferModeString;
         public string TransferModeString
         {
-            get => this.TransferMode == bool.FalseString ? "Level" : "Time";
-            set { SetProperty(ref transferModeString, value); }
+            get
+            {
+                return this.TransferMode == bool.FalseString ? "Level" : "Time";
+            }
+            set
+            {
+                transferModeString = value;
+                OnPropertyChanged();
+            }
         }
 
-       
+
         public object Clone()
         {
             return new TransferBlockParameters()

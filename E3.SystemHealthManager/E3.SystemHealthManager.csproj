@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{754823F2-12F8-4720-80E6-2F2CFCD6DE44}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>E3.SystemHealthManager</RootNamespace>
+    <AssemblyName>E3.SystemHealthManager</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Satavahana\EcoMotorPanel\EcoMotorPanel.ShellProject\bin\Debug\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\AdminCredentials.cs" />
+    <Compile Include="Models\FailureNotificationInUI.cs" />
+    <Compile Include="Models\SystemFailure.cs" />
+    <Compile Include="Models\SystemFailurePolicy.cs" />
+    <Compile Include="Services\ISystemFailurePoliciesManager.cs" />
+    <Compile Include="Services\ISystemFailuresManager.cs" />
+    <Compile Include="Services\SystemFailurePoliciesManager.cs" />
+    <Compile Include="Services\SystemFailureManager.cs" />
+    <Compile Include="SystemHealthManagerModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ViewModels\SystemFailureNotificationViewModel.cs" />
+    <Compile Include="ViewModels\SystemFailuresConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\SystemFailuresInDeviceViewModel.cs" />
+    <Compile Include="ViewModels\SystemFailuresViewModel.cs" />
+    <Compile Include="Views\SystemFailureNotificationView.xaml.cs">
+      <DependentUpon>SystemFailureNotificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemFailuresConfigurationView.xaml.cs">
+      <DependentUpon>SystemFailuresConfigurationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemFailuresInDeviceView.xaml.cs">
+      <DependentUpon>SystemFailuresInDeviceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemFailuresView.xaml.cs">
+      <DependentUpon>SystemFailuresView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\E3.DialogServices\E3.DialogServices.csproj">
+      <Project>{558DC6A5-A076-4AB4-A001-AAC1A77D5D1C}</Project>
+      <Name>E3.DialogServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.Mediator\E3.Mediator.csproj">
+      <Project>{72adf709-4940-46a3-9121-1b7a7abaa2c1}</Project>
+      <Name>E3.Mediator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.Interfaces\E3.ReactorManager.Interfaces.csproj">
+      <Project>{620c94fe-d355-4801-92b0-f86d1b08fb02}</Project>
+      <Name>E3.ReactorManager.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Expression.Blend.Sdk">
+      <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Unity">
+      <Version>7.1.0.431</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Wpf" Version="7.1.0.431" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\SystemFailureNotificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemFailuresConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemFailuresInDeviceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemFailuresView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlFiles\StoredProcedures.sql" />
+    <Content Include="SqlFiles\Tables.sql" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

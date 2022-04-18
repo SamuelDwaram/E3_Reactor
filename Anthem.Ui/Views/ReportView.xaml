@@ -74,7 +74,7 @@
         <Border Grid.Column="0" BorderThickness="0" Background="#555C6E">
             <Grid Background="#1d2532" VerticalAlignment="Top">
                 <Viewbox>
-                    <userControls:NavigateButtonType_1 Margin="2" ButtonCommand="{Binding NavigateCommand}" ButtonCommandParameter="Dashboard" Loaded="NavigateButtonType_1_Loaded"/>
+                    <userControls:NavigateButtonType_1 Margin="2" ButtonCommand="{Binding NavigateCommand}" ButtonCommandParameter="Dashboard"/>
                 </Viewbox>
             </Grid>
         </Border>
@@ -247,7 +247,7 @@
             </ScrollViewer>
         </Grid>
         <Grid Grid.Column="3" Margin="5" Background="#272e3e">
-            <!--<ContentControl prism:RegionManager.RegionName="ReportPreview"/>-->
+            <ContentControl prism:RegionManager.RegionName="ReportPreview"/>
         </Grid>
     </Grid>
 </UserControl>

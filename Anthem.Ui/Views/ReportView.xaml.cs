@@ -24,10 +24,5 @@ namespace Anathem.Ui.Views
         {
             InitializeComponent();
         }
-
-        private void NavigateButtonType_1_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

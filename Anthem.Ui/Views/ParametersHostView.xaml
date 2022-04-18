@@ -97,6 +97,7 @@
         <uc_1:BoolParameter Grid.Row="7" Grid.Column="1" ParamLabel="V21" Tag="Valve_21"/>
         <uc_1:BoolParameter Grid.Row="8" Grid.Column="1" ParamLabel="V28" Tag="Valve_28"/>
         <uc_1:BoolParameter Grid.Row="9"  Grid.Column="1" ParamLabel="V46" Tag="Valve_46"/>
+        <uc_1:BoolParameter Grid.Row="11" Grid.Column="1" ParamLabel="V42" Tag="Valve_42"/>
         <uc_1:BoolParameter Grid.Row="10" Grid.Column="1" ParamLabel="V33" Tag="Valve_33"/>
         <!--#endregion-->
 

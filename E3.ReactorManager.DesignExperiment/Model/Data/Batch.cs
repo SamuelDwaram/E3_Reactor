@@ -100,47 +100,47 @@ namespace E3.ReactorManager.DesignExperiment.Model.Data
             }
         }
 
-        /// <summary>
-        /// HC Identifier
-        /// </summary>
-        private string _hcIdentifier;
-        public string HCIdentifier
-        {
-            get { return _hcIdentifier; }
-            set
-            {
-                _hcIdentifier = value;
-                RaisePropertyChanged();
-            }
-        }
+        ///// <summary>
+        ///// HC Identifier
+        ///// </summary>
+        //private string _hcIdentifier;
+        //public string HCIdentifier
+        //{
+        //    get { return _hcIdentifier; }
+        //    set
+        //    {
+        //        _hcIdentifier = value;
+        //        RaisePropertyChanged();
+        //    }
+        //}
 
-        /// <summary>
-        /// Stirrer Identifier
-        /// </summary>
-        private string _stirrerIdentifier;
-        public string StirrerIdentifier
-        {
-            get { return _stirrerIdentifier; }
-            set
-            {
-                _stirrerIdentifier = value;
-                RaisePropertyChanged();
-            }
-        }
+        ///// <summary>
+        ///// Stirrer Identifier
+        ///// </summary>
+        //private string _stirrerIdentifier;
+        //public string StirrerIdentifier
+        //{
+        //    get { return _stirrerIdentifier; }
+        //    set
+        //    {
+        //        _stirrerIdentifier = value;
+        //        RaisePropertyChanged();
+        //    }
+        //}
 
-        /// <summary>
-        /// Dosing Pump Usage(Yes or No)
-        /// </summary>
-        private string _dosingPumpUsage;
-        public string DosingPumpUsage
-        {
-            get { return _dosingPumpUsage; }
-            set
-            {
-                _dosingPumpUsage = value;
-                RaisePropertyChanged();
-            }
-        }
+        ///// <summary>
+        ///// Dosing Pump Usage(Yes or No)
+        ///// </summary>
+        //private string _dosingPumpUsage;
+        //public string DosingPumpUsage
+        //{
+        //    get { return _dosingPumpUsage; }
+        //    set
+        //    {
+        //        _dosingPumpUsage = value;
+        //        RaisePropertyChanged();
+        //    }
+        //}
 
         /// <summary>
         /// Describes the chemical database which was being 

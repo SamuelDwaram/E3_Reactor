@@ -38,7 +38,8 @@ namespace E3.ReactorManager.DesignExperiment.ViewModels
         public void StartBatch()
         {
             Task.Factory.StartNew(() => designExperiment.StartBatch(NewBatchDetails))
-                .ContinueWith(new Action<Task<bool>>((t) => {
+                .ContinueWith(new Action<Task<bool>>((t) =>
+                {
                     if (t.IsCompleted)
                     {
                         if (t.Result)
@@ -55,8 +56,8 @@ namespace E3.ReactorManager.DesignExperiment.ViewModels
 
         private bool CanStartBatch()
         {
-            return !string.IsNullOrWhiteSpace(NewBatchDetails.DosingPumpUsage)
-                && !string.IsNullOrWhiteSpace(NewBatchDetails.Name)
+            return /*!string.IsNullOrWhiteSpace(NewBatchDetails.DosingPumpUsage)*/
+                 !string.IsNullOrWhiteSpace(NewBatchDetails.Name)
                 && !string.IsNullOrWhiteSpace(NewBatchDetails.Number)
                 && !string.IsNullOrWhiteSpace(NewBatchDetails.Stage)
                 && !string.IsNullOrWhiteSpace(NewBatchDetails.ScientistName)
@@ -71,10 +72,12 @@ namespace E3.ReactorManager.DesignExperiment.ViewModels
 
         public void GetAvailableFieldDevices()
         {
-            Task.Factory.StartNew(new Func<Dictionary<string, string>>(() => {
+            Task.Factory.StartNew(new Func<Dictionary<string, string>>(() =>
+            {
                 return (from DataRow row in databaseReader.ExecuteReadCommand("select * from dbo.FieldDevices where Type='Reactor'", CommandType.Text).AsEnumerable()
                         select new KeyValuePair<string, string>(row["Identifier"].ToString(), row["Label"].ToString())).ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
-            })).ContinueWith(t => {
+            })).ContinueWith(t =>
+            {
                 AvailableFieldDevices.Clear();
                 foreach (KeyValuePair<string, string> keyValuePair in t.Result)
                 {
@@ -103,30 +106,33 @@ namespace E3.ReactorManager.DesignExperiment.ViewModels
         public void UpdateConnectedHcForSelectedFieldDevice(string deviceId)
         {
             Task.Factory.StartNew(new Func<object, DataTable>(GetConnectedEquipments), deviceId)
-                .ContinueWith(new Action<Task<DataTable>>((t) => {
+                .ContinueWith(new Action<Task<DataTable>>((t) =>
+                {
                     if (t.IsCompleted)
                     {
                         foreach (DataRow row in t.Result.AsEnumerable())
                         {
                             if (row["EquipmentType"].ToString() == "HC")
                             {
-                                NewBatchDetails.HCIdentifier = row["EquipmentName"].ToString();
+                               // NewBatchDetails.HCIdentifier = row["EquipmentName"].ToString();
                             }
                         }
-                    }}));
+                    }
+                }));
         }
 
         public void UpdateConnectedStirrerForSelectedFieldDevice(string deviceId)
         {
             Task.Factory.StartNew(new Func<object, DataTable>(GetConnectedEquipments), deviceId)
-                .ContinueWith(new Action<Task<DataTable>>((t) => {
+                .ContinueWith(new Action<Task<DataTable>>((t) =>
+                {
                     if (t.IsCompleted)
                     {
                         foreach (DataRow row in t.Result.AsEnumerable())
                         {
                             if (row["EquipmentType"].ToString() == "Stirrer")
                             {
-                                NewBatchDetails.StirrerIdentifier = row["EquipmentModel"].ToString();
+                               // NewBatchDetails.StirrerIdentifier = row["EquipmentModel"].ToString();
                             }
                         }
                     }
@@ -155,13 +161,14 @@ namespace E3.ReactorManager.DesignExperiment.ViewModels
 
         public void SelectDosingPumpUsage(string usageStatus)
         {
-            NewBatchDetails.DosingPumpUsage = usageStatus.ToLower() == "yes" ? bool.TrueString : bool.FalseString;
+           // NewBatchDetails.DosingPumpUsage = usageStatus.ToLower() == "yes" ? bool.TrueString : bool.FalseString;
         }
 
         #region Commands
         public ICommand LoadUserDetailsCommand
         {
-            get => new DelegateCommand(() => {
+            get => new DelegateCommand(() =>
+            {
                 UserDetails = (User)Application.Current.Resources["LoggedInUser"];
                 NewBatchDetails.ScientistName = UserDetails.Name;
             });
@@ -184,7 +191,7 @@ namespace E3.ReactorManager.DesignExperiment.ViewModels
         public ICommand StartBatchCommand
         {
             get => _startBatchCommand ?? (_startBatchCommand = new DelegateCommand(StartBatch, CanStartBatch)
-                .ObservesProperty(() => NewBatchDetails.DosingPumpUsage)
+                //.ObservesProperty(() => NewBatchDetails.DosingPumpUsage)
                 .ObservesProperty(() => NewBatchDetails.Name)
                 .ObservesProperty(() => NewBatchDetails.Number)
                 .ObservesProperty(() => NewBatchDetails.Stage)

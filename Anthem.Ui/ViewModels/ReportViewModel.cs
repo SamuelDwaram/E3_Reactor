@@ -1,4 +1,6 @@
-﻿using E3.ReactorManager.Interfaces.DataAbstractionLayer;
+﻿using Anathem.Ui.Model;
+using E3.ReactorManager.DesignExperiment.Model.Data;
+using E3.ReactorManager.Interfaces.DataAbstractionLayer;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -6,61 +8,63 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Anathem.Ui.ViewModels
 {
-    public class ReportsViewModel : BindableBase
+    public class ReportViewModel : BindableBase
     {
         private readonly TaskScheduler taskScheduler;
         private readonly IDatabaseReader databaseReader;
         private readonly IRegionManager regionManager;
-        //private readonly DevicesReportHandler devicesReportHandler;
+        private readonly DevicesReportHandler devicesReportHandler;
 
-        public ReportsViewModel(IDatabaseReader databaseReader, IRegionManager regionManager)
+        public ReportViewModel(IDatabaseReader databaseReader, IRegionManager regionManager, DevicesReportHandler devicesReportHandler)
         {
             taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             this.databaseReader = databaseReader;
             this.regionManager = regionManager;
-           // this.devicesReportHandler = devicesReportHandler;
+            this.devicesReportHandler = devicesReportHandler;
         }
 
-        //private void PrintBatchReport(string reportType)
-        //{
-        //    Task.Factory.StartNew(() => {
-        //        switch (reportType)
-        //        {
-        //            case "pdf":
-        //                devicesReportHandler.PrintBatchPDFReport(SelectedBatch, SelectedBatch.FieldDeviceIdentifier, SelectedBatch.FieldDeviceLabel, SelectedParameters, SelectedBatch.TimeStarted, SelectedBatch.TimeCompleted);
-        //                break;
-        //            case "csv":
-        //                devicesReportHandler.PrintBatchCSVReport(SelectedBatch, SelectedBatch.FieldDeviceIdentifier, SelectedBatch.FieldDeviceLabel, SelectedParameters, SelectedBatch.TimeStarted, SelectedBatch.TimeCompleted);
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //    });
-        //}
+        private void PrintBatchReport(string reportType)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                switch (reportType)
+                {
+                    case "pdf":
+                        devicesReportHandler.PrintBatchPDFReport(SelectedBatch, SelectedBatch.FieldDeviceIdentifier, SelectedBatch.FieldDeviceLabel, SelectedParameters, SelectedBatch.TimeStarted, SelectedBatch.TimeCompleted);
+                        break;
+                    case "csv":
+                        devicesReportHandler.PrintBatchCSVReport(SelectedBatch, SelectedBatch.FieldDeviceIdentifier, SelectedBatch.FieldDeviceLabel, SelectedParameters, SelectedBatch.TimeStarted, SelectedBatch.TimeCompleted);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
 
-        //public void GetCompletedBatches()
-        //{
-        //    Task.Factory.StartNew(new Func<IList<Batch>>(devicesReportHandler.GetCompletedBatches))
-        //        .ContinueWith(new Action<Task<IList<Batch>>>(t => {
-        //            CompletedBatches = t.Result;
-        //            FilteredBatches = CompletedBatches;
-        //            RaisePropertyChanged(nameof(FilteredBatches));
-        //        }));
-        //}
+        public void GetCompletedBatches()
+        {
+            Task.Factory.StartNew(new Func<IList<Batch>>(devicesReportHandler.GetCompletedBatches))
+                .ContinueWith(new Action<Task<IList<Batch>>>(t =>
+                {
+                    CompletedBatches = t.Result;
+                    FilteredBatches = CompletedBatches;
+                    RaisePropertyChanged(nameof(FilteredBatches));
+                }));
+        }
 
         private void GetFieldDeviceParameters()
         {
-            //string deviceId = SelectedBatch.FieldDeviceIdentifier;
-            //Task.Factory.StartNew(new Func<IList<string>>(() => {
-            //    return (from DataRow row in databaseReader.ExecuteReadCommand($"select Label from dbo.FieldPoints where ToBeLogged='true' and SensorDataSetIdentifier in (select Identifier from dbo.SensorsDataSet where FieldDeviceIdentifier='{deviceId}')", CommandType.Text).AsEnumerable()
-            //            select Convert.ToString(row["Label"])).ToList();
-            //})).ContinueWith(new Action<Task<IList<string>>>(t => AvailableFieldDeviceParameters = t.Result));
+            string deviceId = SelectedBatch.FieldDeviceIdentifier;
+            Task.Factory.StartNew(new Func<IList<string>>(() =>
+            {
+                return (from DataRow row in databaseReader.ExecuteReadCommand($"select Label from dbo.FieldPoints where ToBeLogged='true' and SensorDataSetIdentifier in (select Identifier from dbo.SensorsDataSet where FieldDeviceIdentifier='{deviceId}')", CommandType.Text).AsEnumerable()
+                        select Convert.ToString(row["Label"])).ToList();
+            })).ContinueWith(new Action<Task<IList<string>>>(t => AvailableFieldDeviceParameters = t.Result));
         }
 
         public void AddToSelectedParameters(string parameter)
@@ -79,16 +83,16 @@ namespace Anathem.Ui.ViewModels
             }
         }
 
-        //public void SelectBatch(Batch batch)
-        //{
-        //    SelectedBatch = batch;
-        //}
+        public void SelectBatch(Batch batch)
+        {
+            SelectedBatch = batch;
+        }
 
-        //private void SearchTextChanged(string value)
-        //{
-        //    FilteredBatches = CompletedBatches.Where(b => b.Name.Contains(value)).ToList();
-        //    RaisePropertyChanged(nameof(FilteredBatches));
-        //}
+        private void SearchTextChanged(string value)
+        {
+            FilteredBatches = CompletedBatches.Where(b => b.Name.Contains(value)).ToList();
+            RaisePropertyChanged(nameof(FilteredBatches));
+        }
 
         #region Commands
         private ICommand _addToSelectedParametersCommand;
@@ -112,24 +116,24 @@ namespace Anathem.Ui.ViewModels
             set => _getFieldDeviceParametersCommand = value;
         }
 
-        //private ICommand _selectBatchCommand;
-        //public ICommand SelectBatchCommand
-        //{
-        //    get => _selectBatchCommand ?? (_selectBatchCommand = new DelegateCommand<Batch>(SelectBatch));
-        //    set => _selectBatchCommand = value;
-        //}
+        private ICommand _selectBatchCommand;
+        public ICommand SelectBatchCommand
+        {
+            get => _selectBatchCommand ?? (_selectBatchCommand = new DelegateCommand<Batch>(SelectBatch));
+            set => _selectBatchCommand = value;
+        }
 
-        //private ICommand _getCompletedBatchesCommand;
-        //public ICommand GetCompletedBatchesCommand
-        //{
-        //    get => _getCompletedBatchesCommand ?? (_getCompletedBatchesCommand = new DelegateCommand(GetCompletedBatches));
-        //    set => _getCompletedBatchesCommand = value;
-        //}
+        private ICommand _getCompletedBatchesCommand;
+        public ICommand GetCompletedBatchesCommand
+        {
+            get => _getCompletedBatchesCommand ?? (_getCompletedBatchesCommand = new DelegateCommand(GetCompletedBatches));
+            set => _getCompletedBatchesCommand = value;
+        }
 
-        //public ICommand PrintBatchReportCommand
-        //{
-        //    get => new DelegateCommand<string>(PrintBatchReport);
-        //}
+        public ICommand PrintBatchReportCommand
+        {
+            get => new DelegateCommand<string>(PrintBatchReport);
+        }
 
         public ICommand NavigateCommand
         {
@@ -169,10 +173,10 @@ namespace Anathem.Ui.ViewModels
             }
         }
 
-        private IList<string> _availableFieldDeviceParameters;
+        private IList<string> _availableFieldDeviceParameters = new List<string>();
         public IList<string> AvailableFieldDeviceParameters
         {
-            get => _availableFieldDeviceParameters = new List<string>();
+            get { return _availableFieldDeviceParameters; }
             set
             {
                 _availableFieldDeviceParameters = value;
@@ -202,19 +206,19 @@ namespace Anathem.Ui.ViewModels
             }
         }
 
-        //public IList<Batch> FilteredBatches { get; set; } = new List<Batch>();
-        //public IList<Batch> CompletedBatches = new List<Batch>();
+        public IList<Batch> FilteredBatches { get; set; } = new List<Batch>();
+        public IList<Batch> CompletedBatches = new List<Batch>();
 
-        //private Batch _selectedBatch;
-        //public Batch SelectedBatch
-        //{
-        //    get => _selectedBatch ??= new Batch();
-        //    set
-        //    {
-        //        _selectedBatch = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
+        private Batch _selectedBatch;
+        public Batch SelectedBatch
+        {
+            get => _selectedBatch ?? new Batch();
+            set
+            {
+                _selectedBatch = value;
+                RaisePropertyChanged();
+            }
+        }
         #endregion
     }
 }

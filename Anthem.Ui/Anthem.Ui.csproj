@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\UiHelpers.cs" />
+    <Compile Include="Model\DevicesReportHandler.cs" />
     <Compile Include="UiModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -203,8 +204,15 @@
     <PackageReference Include="System.Threading.Tasks">
       <Version>4.3.0</Version>
     </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\E3.ActionComments\E3.ActionComments.csproj">
+      <Project>{72e9197b-eb13-4e43-b61e-c1b248a07424}</Project>
+      <Name>E3.ActionComments</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E3.ActivityMonitor\E3.ActivityMonitor.csproj">
       <Project>{d5d8e076-e10b-45df-b7db-e229fd323687}</Project>
       <Name>E3.ActivityMonitor</Name>
@@ -213,6 +221,10 @@
       <Project>{6A75F5A4-114D-4763-BF18-C81ABC3D7FE5}</Project>
       <Name>E3.AuditTrailManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\E3.Mediator\E3.Mediator.csproj">
+      <Project>{72ADF709-4940-46A3-9121-1B7A7ABAA2C1}</Project>
+      <Name>E3.Mediator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E3.ReactorManager.DesignExperiment\E3.ReactorManager.DesignExperiment.csproj">
       <Project>{9079b332-6e6e-412c-9153-895a4db989d3}</Project>
       <Name>E3.ReactorManager.DesignExperiment</Name>
@@ -220,6 +232,14 @@
     <ProjectReference Include="..\E3.ReactorManager.Interfaces\E3.ReactorManager.Interfaces.csproj">
       <Project>{620c94fe-d355-4801-92b0-f86d1b08fb02}</Project>
       <Name>E3.ReactorManager.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.ReportsManager\E3.ReactorManager.ReportsManager.csproj">
+      <Project>{D7C4E8DC-BBEF-40D0-A852-434C3E843B45}</Project>
+      <Name>E3.ReactorManager.ReportsManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E3.SystemAlarmManager\E3.SystemAlarmManager.csproj">
+      <Project>{618238d6-9c16-4697-bafe-1891f72027b1}</Project>
+      <Name>E3.SystemAlarmManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\E3.TrendsManager\E3.TrendsManager.csproj">
       <Project>{32B42DCC-7CA0-4799-BA97-6B106557416E}</Project>

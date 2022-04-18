@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="E3.SystemAlarmManager.Views.SystemAlarmsManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:userControls="clr-namespace:E3.ReactorManager.Interfaces.UI.UserControls;assembly=E3.ReactorManager.Interfaces"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#555c6e">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="9*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Background="#1d2532" VerticalAlignment="Top">
+            <Viewbox>
+                <userControls:NavigateButtonType_1 Margin="2" ButtonCommand="{Binding NavigateCommand}" ButtonCommandParameter="Dashboard"/>
+            </Viewbox>
+        </Grid>
+        <Grid Background="#272e3e" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" HorizontalAlignment="Left">
+                <Label Content="Alarms" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="40" Foreground="White"/>
+            </Viewbox>
+            <TabControl Grid.Row="1" Background="#1a202c" BorderThickness="0">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border Name="BackgroundPanel" Margin="2" Cursor="Hand">
+                                        <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="5"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="BackgroundPanel" Property="BorderBrush" Value="#4CDCDC"/>
+                                            <Setter TargetName="BackgroundPanel" Property="BorderThickness" Value="1"/>
+                                            <Setter TargetName="BackgroundPanel" Property="Background" Value="#2F515D" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="BackgroundPanel" Property="BorderBrush" Value="#1e2432"/>
+                                            <Setter TargetName="BackgroundPanel" Property="BorderThickness" Value="1"/>
+                                            <Setter TargetName="BackgroundPanel" Property="Background" Value="#1a202c" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem Header="View Alarms">
+                    <ContentControl prism:RegionManager.RegionName="SystemAlarms"/>
+                </TabItem>
+                <TabItem Header="Configure Alarms">
+                    <ContentControl prism:RegionManager.RegionName="ConfigureAlarmPolicies"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</UserControl>
