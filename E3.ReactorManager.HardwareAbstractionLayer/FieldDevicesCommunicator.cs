@@ -335,7 +335,7 @@ namespace E3.ReactorManager.HardwareAbstractionLayer
                 Console.WriteLine("Error message : " + sendCommandFailedException.Message);
                 Console.WriteLine("Error stacktrace : " + sendCommandFailedException.StackTrace);
 
-                logger.Log(LogType.Error, "Failed to Send Command With Value "+ writeValue +" to " + fieldPointLabel + " in " + fieldDeviceIdentifier, sendCommandFailedException);
+                logger.Log(LogType.Error, "Failed to Send Command With Value " + writeValue + " to " + fieldPointLabel + " in " + fieldDeviceIdentifier, sendCommandFailedException);
             }
         }
 
@@ -386,11 +386,44 @@ namespace E3.ReactorManager.HardwareAbstractionLayer
             //Raise FieldPointDataReceived event to notify live data to other modules
             if (FieldPointDataReceived != null)
             {
+                if (fieldPointEventArgs != null && fieldPointEventArgs.FieldPointIdentifier == "RecipeMessage")
+                {
+                    WriteRecipeMessageInDB(fieldPointEventArgs);
+                }
                 var receivers = FieldPointDataReceived.GetInvocationList();
                 foreach (var receiver in receivers)
                 {
                     ((EventHandler<FieldPointDataReceivedArgs>)receiver).BeginInvoke(this, fieldPointEventArgs, null, null);
                 }
+            }
+        }
+
+        private void WriteRecipeMessageInDB(FieldPointDataReceivedArgs fieldPointEventArgs)
+        {
+            if (string.IsNullOrWhiteSpace(fieldPointEventArgs.NewFieldPointData) == false)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    try
+                    {
+                        bool isValid = databaseReader.ValidateRecipeMessage(fieldPointEventArgs.NewFieldPointData);
+                        if (isValid)
+                        {
+                            string queryPart_1 = $"insert into dbo.RuntimeRecipeMessage(RecipeMessage, TimeStamp)";
+                            string queryPart_2 = $"values('";
+
+                            queryPart_2 = queryPart_2 + fieldPointEventArgs.NewFieldPointData +"'," + $" '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
+
+                            databaseWriter.ExecuteWriteCommand($"{queryPart_1} {queryPart_2}", CommandType.Text);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Log(LogType.Error, $"Data Logging failed for Recipe Message : {fieldPointEventArgs.NewFieldPointData}", ex);
+                    }
+
+                });
             }
         }
 

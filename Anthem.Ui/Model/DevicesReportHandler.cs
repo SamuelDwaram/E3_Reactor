@@ -65,11 +65,15 @@ namespace Anathem.Ui.Model
 
         public void PrintBatchPDFReport(Batch selectedBatch, string deviceId, string deviceLabel, IList<string> selectedParameters, DateTime startTime, DateTime endTime)
         {
-            Task.Factory.StartNew(new Func<IList<ReportSection>>(() => AddBatchInfoSection(selectedBatch)))
+            Task.Factory.StartNew(new Func<IList<ReportSection>>(() => 
+                   AddBatchInfoSection(selectedBatch)))
+                .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddRecipeMessageSection(t.Result, startTime, endTime)))
+               
                 .ContinueWith(new Func<Task<IList<ReportSection>>, (IList<ReportSection>, IList<string>, DataTable)>(t => AddDeviceRecordedParametersSection(t.Result, deviceId, deviceLabel, startTime, endTime, selectedParameters)))
                 .ContinueWith(new Func<Task<(IList<ReportSection>, IList<string>, DataTable)>, IList<ReportSection>>(t => AddTrendsSection(t.Result.Item1, deviceId, deviceLabel, t.Result.Item2, t.Result.Item3)), taskScheduler)
                 .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddUserCommentsSection(t.Result, deviceId, deviceLabel, startTime, endTime)))
                 .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddAlarmsSection(t.Result, deviceId, deviceLabel, startTime, endTime)))
+
                 .ContinueWith(new Action<Task<IList<ReportSection>>>(t =>
                 {
                     User loggedInUser = (User)Application.Current.Resources["LoggedInUser"];
@@ -77,6 +81,28 @@ namespace Anathem.Ui.Model
                     unityContainer, $"Generated Report for Batch : {selectedBatch.Name}", loggedInUser.Name, "Batch" });
                     reportPrinter.PrintReportSections("ALCHEMI BATCH REPORT", t.Result, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"Images\report_logo.png"));
                 }));
+        }
+
+        private IList<ReportSection> AddRecipeMessageSection(IList<ReportSection> result,  DateTime startTime, DateTime endTime)
+        {
+            DataTable RecipeMessageDataTable = new DataTable();
+           
+            RecipeMessageDataTable.Columns.Add("Recipe Message", typeof(string));
+            RecipeMessageDataTable.Columns.Add("Time Stamp", typeof(string));
+
+            DataTable fieldDeviceData = databaseReader.ExecuteReadCommand($"select * from dbo.RuntimeRecipeMessage where TimeStamp between '{startTime:yyyy-MM-dd HH:mm:ss}' and '{endTime:yyyy-MM-dd HH:mm:ss}' order by TimeStamp", CommandType.Text);
+            foreach(DataRow item in fieldDeviceData.Rows)
+            {
+                RecipeMessageDataTable.Rows.Add(item);
+            }
+            result.Add(new ReportSection
+            {
+                Title = "Recipe Message",
+                DataType = SectionalDataType.Tablular,
+                Data = RecipeMessageDataTable,
+                EndPageHere = true
+            });
+            return result;
         }
 
         private IList<ReportSection> AddUserCommentsSection(IList<ReportSection> reportSections, string deviceId, string deviceLabel, DateTime startTime, DateTime endTime)

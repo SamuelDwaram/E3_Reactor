@@ -60,9 +60,9 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
                         case SectionalDataType.Tablular:
                             AddTableToPDF(reportSection, pdf);
                             break;
-                        //case SectionalDataType.Image:
-                        //    AddImageToPdf(reportSection, pdf);
-                        //    break;
+                        case SectionalDataType.Image:
+                            AddImageToPdf(reportSection, pdf);
+                            break;
                         default:
                             break;
                     }

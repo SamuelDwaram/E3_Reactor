@@ -64,10 +64,10 @@ namespace E3.ReactorManager.DataAbstractionLayer
         public TcAdsClient GetTwinCATClient(string plcIdentifier, List<Plc> plcList)
         {
             var plc = plcList.Where(client => client.Identifier == plcIdentifier).First();
-            
+
             return plc.TwinCATClient;
         }
-        
+
         /// <summary>
         /// Fetch field devices data from database
         /// </summary>
@@ -186,6 +186,28 @@ namespace E3.ReactorManager.DataAbstractionLayer
 
             return RunningBatch;
         }
+
+        public bool ValidateRecipeMessage(string recipeMessage)
+        {
+            bool result = false;
+            string recipeMessageexist = null;
+            var query = $"select top(1) RecipeMessage from [dbo].RuntimeRecipeMessage  where RecipeMessage='{recipeMessage}'";
+            var dataReader = _dbManager.GetScalarValue(query, CommandType.Text, null);
+            try
+            {
+                recipeMessageexist = dataReader?.ToString();
+                if (recipeMessageexist == null)
+                {
+                    return true;
+                }
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+            return result;
+        }
+
         public IList<FieldPoint> FetchFieldPoints(string sensorDataSetIdentifier)
         {
             List<FieldPoint> fieldPoints = new List<FieldPoint>();

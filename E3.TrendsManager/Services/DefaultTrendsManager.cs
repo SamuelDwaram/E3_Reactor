@@ -119,7 +119,7 @@ namespace E3.TrendsManager.Services
         {
             Dictionary<string, string> parametersInfo = new Dictionary<string, string>();
             parameterList.ToList().ForEach(p => {
-                TrendParameter tp = TrendDevices.First(td => td.DeviceId == deviceId).Parameters.FirstOrDefault(tp => tp.Label == p);
+                TrendParameter tp = TrendDevices.First(td => td.DeviceId == deviceId).Parameters.FirstOrDefault(tp => tp.FieldPointId == p);
                 if (tp == null)
                 {
                     // skip.
