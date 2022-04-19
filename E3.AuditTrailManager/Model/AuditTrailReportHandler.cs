@@ -24,7 +24,7 @@ namespace E3.AuditTrailManager.Model
         public void PrintAuditTrailReport(DateTime selectedStartTime, DateTime selectedEndTime)
         {
             Task.Factory.StartNew(new Func<IList<ReportSection>>(() => GetAuditTrailBetweenTimeStamps(selectedStartTime, selectedEndTime)))
-                .ContinueWith(new Action<Task<IList<ReportSection>>>(t => reportPrinter.PrintReportSections("REPORT", t.Result, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"Images\report_logo.png"))));
+                .ContinueWith(new Action<Task<IList<ReportSection>>>(t => reportPrinter.PrintReportSections("REPORT", t.Result, string.Empty, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"Images\report_logo.png"))));
         }
 
         private IList<ReportSection> GetAuditTrailBetweenTimeStamps(DateTime startTime, DateTime endTime)

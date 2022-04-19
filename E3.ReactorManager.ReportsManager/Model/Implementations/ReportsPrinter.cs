@@ -20,7 +20,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
         public event ClearReportPreviewEventHandler ClearReportPreviewEvent;
         public event ReportGenerationInProgressEventHandler ReportGenerationInProgressEvent;
 
-        public void PrintReportSections(string reportHeader, IList<ReportSection> sections, string reportLogoPath = null)
+        public void PrintReportSections(string reportHeader, IList<ReportSection> sections, string Username, string reportLogoPath = null)
         {
             string fileName = fileBrowser.SaveFile("Report1", ".pdf");
             while (true)
@@ -45,7 +45,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
                 //Invoke report generation in progress 
                 ReportGenerationInProgressEvent?.Invoke();
 
-                var pdf = CreatePDF(fileName, reportHeader, reportLogoPath);
+                var pdf = CreatePDF(fileName, reportHeader, reportLogoPath, Username);
 
                 /* Open Document for Adding content */
                 pdf.Open();
@@ -103,13 +103,13 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
             return false;
         }
 
-        public iTextSharp.text.Document CreatePDF(string fileName, string reportHeader = null, string reportLogoPath = null)
+        public iTextSharp.text.Document CreatePDF(string fileName, string reportHeader = null, string reportLogoPath = null, string UserName = null)
         {
             iTextSharp.text.Document document = new iTextSharp.text.Document(PageSize.A4, 50, 50, 70, 150);
             PdfWriter writer = PdfWriter.GetInstance(document, File.Open(fileName, FileMode.Create));
 
             //using header class (for adding header in each page)
-            writer.PageEvent = new HeaderFooter(reportHeader, reportLogoPath);
+            writer.PageEvent = new HeaderFooter(reportHeader, reportLogoPath, UserName);
 
             return document;
         }

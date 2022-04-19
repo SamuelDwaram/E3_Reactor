@@ -111,6 +111,28 @@ namespace E3.ReactorManager.DataAccessHandler
 
             return reader;
         }
+
+        public DataTable GetDataReaderAsDataTable(string commandText, CommandType commandType, out IDbConnection connection)
+        {
+            IDataReader reader = null;
+            connection = database.CreateConnection();
+            connection.Open();
+
+            var command = database.CreateCommand(commandText, commandType, connection );
+
+            DataTable resultDataTable = new DataTable();
+            reader = command.ExecuteReader();
+            try
+            {
+                resultDataTable.Load(reader);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return resultDataTable;
+        }
+
         public IDataReader GetDataReader(string commandText, CommandType commandType, IDbDataParameter[] parameters)
         {
             using (var connection = database.CreateConnection())

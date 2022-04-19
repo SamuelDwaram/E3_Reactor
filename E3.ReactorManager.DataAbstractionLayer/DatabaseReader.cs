@@ -48,7 +48,7 @@ namespace E3.ReactorManager.DataAbstractionLayer
                     plcList.Add(plc);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw;
             }
@@ -327,6 +327,21 @@ namespace E3.ReactorManager.DataAbstractionLayer
                 _dbManager.CloseConnection(connection);
             }
 
+            return resultDataTable;
+        }
+
+        public DataTable ExecuteReadCommandAsDataTable(string commandText, CommandType commandType)
+        {
+            IDbConnection connection = null ;
+            DataTable resultDataTable = null;
+            try
+            {
+                resultDataTable = _dbManager.GetDataReaderAsDataTable(commandText, commandType, out connection);
+            }
+            finally
+            {
+                _dbManager.CloseConnection(connection);
+            }
             return resultDataTable;
         }
 

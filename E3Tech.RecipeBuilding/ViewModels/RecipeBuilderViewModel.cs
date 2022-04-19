@@ -328,14 +328,25 @@ namespace E3Tech.RecipeBuilding.ViewModels
             }
             else
             {
-                recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
-                if (IsSeqRecipeExecuting)
+                if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
                 {
-                    var recipeSeqToExecute = recipeSeqDetail.ElementAt((int)StartSeq - 1);
-                    recipeSeqToExecute.Key.IsExecuting = true;
-                    recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
+                    recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
+                    if (IsSeqRecipeExecuting)
+                    {
+                        var recipeSeqToExecute = recipeSeqDetail.ElementAt((int)StartSeq - 1);
+                        recipeSeqToExecute.Key.IsExecuting = true;
+                        recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
+                    }
                 }
-                
+                else
+                {
+                    MessageBox.Show("Please Add End Block in the Recipe",
+                                    "Recipe Execution Error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                    IsBatchNameRequestPopUpOpen = false;
+                }
+
             }
 
         }

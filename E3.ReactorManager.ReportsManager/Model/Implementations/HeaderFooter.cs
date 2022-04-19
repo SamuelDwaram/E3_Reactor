@@ -9,19 +9,21 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
     {
         public string ReportHeader { get; set; }
         public string ReportLogoPath { get; set; }
+        public string UserName { get; set; }
 
-        public HeaderFooter(string reportHeader = null, string reportLogoPath = null)
+        public HeaderFooter(string reportHeader = null, string reportLogoPath = null, string userName = null)
         {
             ReportHeader = reportHeader ?? "REPORT";
             ReportLogoPath = reportLogoPath;
+            UserName = userName;
         }
 
         public override void OnStartPage(PdfWriter writer, Document document)
         {
             PdfPTable headerTable = new PdfPTable(3);
-            headerTable.SetTotalWidth(new float[] { 200f,200f,200f });
+            headerTable.SetTotalWidth(new float[] { 100f, 325f, 200f });
             headerTable.HorizontalAlignment = Element.ALIGN_CENTER;
-            
+
 
             PdfPTable footerTable = new PdfPTable(2);
             footerTable.SetTotalWidth(new float[] { 400f, 200f });
@@ -47,7 +49,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
             {
                 Border = 0,
                 Padding = 5,
-                
+
             };
 
             Paragraph headingContent = new Paragraph
@@ -89,19 +91,19 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
             }
 
             #region ValidationFooter
-            PdfPTable table = new PdfPTable(3);
-            table.SetTotalWidth(new float[] { 170f, 170f, 170f });
+            PdfPTable table = new PdfPTable(2);
+            table.SetTotalWidth(new float[] { 250f, 250f });
             table.HorizontalAlignment = Element.ALIGN_CENTER;
             table.SpacingBefore = 50f;
 
             PdfPTable columnTable = new PdfPTable(1);
 
-            string[] data = { "Printed By", "Date : ", "Signature: ", "Verified By", "Date : ", "Signature: ", "Approved By", "Date : ", "Signature: " };
+            string[] data = { "Performed By: " + UserName, "Date: " + DateTime.Now, "Signature: ", "Checked By:", "Date : ", "Signature: " };
             int noOfRows = 3;
 
             for (int i = 0; i < data.Length; i++)
             {
-                if (i != 0 && i % noOfRows == 0)
+                if (i != 0 && i % 3 == 0)
                 {
                     // add columnTable into main table
                     table.AddCell(columnTable);

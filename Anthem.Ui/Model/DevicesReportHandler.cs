@@ -79,21 +79,22 @@ namespace Anathem.Ui.Model
                     User loggedInUser = (User)Application.Current.Resources["LoggedInUser"];
                     mediatorService.NotifyColleagues(InMemoryMediatorMessageContainer.RecordAudit, new object[] {
                     unityContainer, $"Generated Report for Batch : {selectedBatch.Name}", loggedInUser.Name, "Batch" });
-                    reportPrinter.PrintReportSections("ALCHEMI BATCH REPORT", t.Result, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"Images\report_logo.png"));
+                    reportPrinter.PrintReportSections("Anthem Biosciences Pvt Ltd \n BATCH REPORT", t.Result, loggedInUser.Name, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"Images\report_logo.png"));
                 }));
         }
 
         private IList<ReportSection> AddRecipeMessageSection(IList<ReportSection> result,  DateTime startTime, DateTime endTime)
         {
             DataTable RecipeMessageDataTable = new DataTable();
-           
+            RecipeMessageDataTable.Columns.Add("Step No", typeof(int));
             RecipeMessageDataTable.Columns.Add("Recipe Message", typeof(string));
-            RecipeMessageDataTable.Columns.Add("Time Stamp", typeof(string));
-
-            DataTable fieldDeviceData = databaseReader.ExecuteReadCommand($"select * from dbo.RuntimeRecipeMessage where TimeStamp between '{startTime:yyyy-MM-dd HH:mm:ss}' and '{endTime:yyyy-MM-dd HH:mm:ss}' order by TimeStamp", CommandType.Text);
+            string query = $"select * from dbo.RuntimeRecipeMessage where TimeStamp between '{startTime:yyyy-MM-dd HH:mm:ss}' and '{endTime:yyyy-MM-dd HH:mm:ss}' order by TimeStamp Asc";
+            DataTable fieldDeviceData = databaseReader.ExecuteReadCommandAsDataTable(query, CommandType.Text);
+            int index = 1;
             foreach(DataRow item in fieldDeviceData.Rows)
             {
-                RecipeMessageDataTable.Rows.Add(item);
+                RecipeMessageDataTable.Rows.Add(new object[] { index++, item.ItemArray[0] });
+                //RecipeMessageDataTable.Rows.Add(item);
             }
             result.Add(new ReportSection
             {

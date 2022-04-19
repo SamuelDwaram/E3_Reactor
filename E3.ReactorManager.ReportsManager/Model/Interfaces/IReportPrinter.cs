@@ -11,6 +11,6 @@ namespace E3.ReactorManager.ReportsManager.Model.Interfaces
 
         void ClearReportPreview();
 
-        void PrintReportSections(string reportHeader, IList<ReportSection> sections, string reportLogoPath = null);
+        void PrintReportSections(string reportHeader, IList<ReportSection> sections, string loggedInUserName, string reportLogoPath = null);
     }
 }

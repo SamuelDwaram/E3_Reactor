@@ -110,5 +110,7 @@ namespace E3.ReactorManager.Interfaces.DataAbstractionLayer
         string FetchRunningBatch();
 
         bool ValidateRecipeMessage(string recipeMessage);
+
+        DataTable ExecuteReadCommandAsDataTable(string query, CommandType text);
     }
 }
