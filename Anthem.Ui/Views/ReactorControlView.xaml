@@ -186,9 +186,9 @@
                 </Viewbox>
             </Border>
             <Label Grid.Row="3" Grid.ColumnSpan="3" Content="Reactor Parameters" HorizontalContentAlignment="Center" Background="#1d2532"/>
-            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="0" Tag="MVA_Temperature" ParamLabel="MVA Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
-            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="1" Tag="RV50L_Temperature" ParamLabel="Reactor Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
-            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="2" Tag="RV25L_Temperature" ParamLabel="Spare RV Mass&#xa;Temperature" Units="°C" Limits="-90|200"/>
+            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="0" Tag="MVA_Temperature" ParamLabel="MVA Mass&#xa;Temperature" Units="°C" Limits="-20|120"/>
+            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="1" Tag="RV50L_Temperature" ParamLabel="Reactor Mass&#xa;Temperature" Units="°C" Limits="-20|120"/>
+            <uc_2:GraphicalParameter Grid.Row="4" Grid.Column="2" Tag="RV25L_Temperature" ParamLabel="Spare RV Mass&#xa;Temperature" Units="°C" Limits="-20|120"/>
             <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="0" Tag="MVA_Pressure" ParamLabel="MVA&#xa;Pressure" Units="bar" Limits="0|9"/>
             <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="1" Tag="RV50L_Pressure" ParamLabel="Reactor Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
             <uc_2:GraphicalParameter Grid.Row="5" Grid.Column="2" Tag="RV25L_Pressure" ParamLabel="Spare RV Mass&#xa;Pressure" Units="bar" Limits="0|9"/>
@@ -380,9 +380,9 @@
                     <Viewbox Stretch="Fill">
                         <StackPanel Margin="10,0,0,0">
                             <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
-                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=ChillerSetpoint}" NegativeMaximumValue="0" PositiveMaximumValue="50" />
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=ChillerSetpoint}" NegativeMaximumValue="30" PositiveMaximumValue="50" />
                             <Grid>
-                                <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
+                                <Label Content="-30" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
                                 <Label Content="50" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
                             </Grid>
                         </StackPanel>
@@ -401,7 +401,7 @@
             <!--<uc_2:GraphicalParameter Grid.Row="7" Grid.Column="1" Tag="StirrerSetpoint_2" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>-->
             <!--<uc_2:GraphicalParameter Grid.Row="7" Grid.Column="2" Tag="StirrerSetpoint_3" IsEditable="True" ParamDataType="double" Command="{Binding SendCommandToDevice}" ParamLabel="Spare RV Stirrer&#xa;Setpoint" Units="RPM" Limits="0|200"/>-->
             <!--<uc_2:GraphicalParameter Grid.Row="9" Grid.Column="1" Tag="ChillerLevel_1" ParamLabel="Chiller&#xa;Temperature SP"  Units="°C" Limits="0|50"/>-->
-            <uc_2:GraphicalParameter Grid.Row="9" Grid.Column="2" Tag="ReactorLevel_1" ParamLabel="Chiller&#xa;Temperature" Units="°C" Limits="0|50"/>
+            <uc_2:GraphicalParameter Grid.Row="9" Grid.Column="2" Tag="ChillerTemperature" ParamLabel="Chiller&#xa;Temperature" Units="°C" Limits="-20|120" />
 
             <Viewbox Grid.Row="8" Grid.Column="0"
                              Stretch="Fill">

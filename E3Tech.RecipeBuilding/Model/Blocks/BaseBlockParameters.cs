@@ -33,7 +33,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
         private string _startedTime;
         public string StartedTime
         {
-            get => !string.IsNullOrWhiteSpace(_startedTime) ? _startedTime : "00:00";
+            get => !string.IsNullOrWhiteSpace(_startedTime) ? _startedTime : "00:00:00";
             set
             {
                 _startedTime = value;
@@ -44,7 +44,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
         private string _endedTime;
         public string EndedTime
         {
-            get => !string.IsNullOrWhiteSpace(_endedTime) ? _endedTime : "00:00";
+            get => !string.IsNullOrWhiteSpace(_endedTime) ? _endedTime : "00:00:00";
             set
             {
                 _endedTime = value;
@@ -54,7 +54,7 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
         private string _remainingTime;
         public string RemainingTime
         {
-            get => !string.IsNullOrWhiteSpace(_remainingTime) ? _remainingTime : "00:00";
+            get => !string.IsNullOrWhiteSpace(_remainingTime) ? _remainingTime : "00:00:00";
             set
             {
                 _remainingTime = value;

@@ -359,6 +359,9 @@
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="End">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>

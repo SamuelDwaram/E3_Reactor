@@ -70,7 +70,7 @@
                 </ContentControl.Style>
             </ContentControl>
             <Label />
-            <ContentControl prism:RegionManager.RegionName="LiveDateTime">
+            <!--<ContentControl prism:RegionManager.RegionName="LiveDateTime">
                 <ContentControl.Style>
                     <Style TargetType="ContentControl">
                         <Setter Property="Visibility" Value="Hidden" />
@@ -84,7 +84,7 @@
                         </Style.Triggers>
                     </Style>
                 </ContentControl.Style>
-            </ContentControl>
+            </ContentControl>-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Viewbox>
                     <Button Margin="5" BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" FontSize="16" Command="{Binding LogOutCommand}">

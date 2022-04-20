@@ -73,7 +73,7 @@ namespace Anathem.Ui.UserControls
         }
         // Using a DependencyProperty as the backing store for Limits.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LimitsProperty =
-            DependencyProperty.Register("Limits", typeof(string), typeof(GraphicalParameter), new PropertyMetadata("-90|200", 
+            DependencyProperty.Register("Limits", typeof(string), typeof(GraphicalParameter), new PropertyMetadata("-20|120", 
                 (dp, args) => {
                     if (!string.IsNullOrWhiteSpace(args.NewValue.ToString()))
                     {

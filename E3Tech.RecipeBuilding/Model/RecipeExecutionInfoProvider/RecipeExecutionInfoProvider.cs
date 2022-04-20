@@ -48,9 +48,9 @@ namespace E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider
                 case "Drain":
                     AddDrainBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<DrainBlockParameters>, deviceId);
                     break;
-                case "N2Purge":
-                    AddN2PurgeBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<N2PurgeBlockParameters>, deviceId);
-                    break;
+                //case "N2Purge":
+                //    AddN2PurgeBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<N2PurgeBlockParameters>, deviceId);
+                //    break;
                 case "End":
                     AddEndBlockExecutionInfo(recipeBlock as ParameterizedRecipeBlock<EndBlockParameters>, deviceId);
                     break;

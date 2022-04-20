@@ -10,17 +10,17 @@ namespace E3Tech.RecipeBuilding.Helpers
     {
         public static Dictionary<string, List<string>> SourceDestinationPair = new Dictionary<string, List<string>>()
         {
-            { "DCM", new List<string>{ "MVA 25L", "RV 50L" } },
-            { "MVB", new List<string>{  "RV 50L" } },
-            { "AA1", new List<string>{ "MVA 25L", "RV 50L" } },
-            { "AA2", new List<string>{ "MVA 25L", "RV 50L" } },
-            { "Fill In", new List<string> { "R1", "R2", "R3", "R4","R5", "AA1", "AA2", "RV 50L", "DCM" } },
-            { "Flash", new List<string>{  "MVA 25L", "RV 50L" } },
-            { "MVA", new List<string>{ "RV 50L" } },
-            { "R1", new List<string>{  "R3", "R4", "R5", "AA1", "AA2", "MVB", "MVA 25L", "RV 50L" } },
-            { "R2", new List<string>{ "MVA 25L"} },
-            { "R3", new List<string>{ "MVA 25L"} },
-            { "R4", new List<string>{ "MVA 25L"} },
+            { "DCM", new List<string>{ "MVA", "RV 50L", "RV 25L" } },
+            { "MVB", new List<string>{  "RV 50L", "RV 25L" } },
+            { "AA1", new List<string>{ "MVA", "RV 50L", "RV 25L" } },
+            { "AA2", new List<string>{ "MVA", "RV 50L", "RV 25L" } },
+            { "Fill In", new List<string> { "R1", "R2", "R3", "R4", "R5", "AA1", "AA2", "DCM" } },
+            { "Flash", new List<string>{  "MVA", "RV 50L", "RV 25L" } },
+            { "MVA", new List<string>{ "RV 50L", "RV 25L" } },
+            { "R1", new List<string>{  "R3", "R4", "R5", "AA1", "AA2", "MVB", "MVA", "RV 50L", "RV 25L" } },
+            { "R2", new List<string>{ "MVA"} },
+            { "R3", new List<string>{ "MVA"} },
+            { "R4", new List<string>{ "MVA"} },
             { "R5", new List<string>{ "MVB"} }
 
         };

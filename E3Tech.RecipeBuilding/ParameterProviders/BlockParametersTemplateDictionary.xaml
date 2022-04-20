@@ -43,9 +43,9 @@
         </StackPanel>
         <Label Content="Reactor" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
         <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Destination}" SelectedValuePath="Content">
-            <ComboBoxItem>RV_50L</ComboBoxItem>
-            <ComboBoxItem>RV_25L</ComboBoxItem>
             <ComboBoxItem>MVA</ComboBoxItem>
+            <ComboBoxItem>RV 50L</ComboBoxItem>
+            <ComboBoxItem>RV 25L</ComboBoxItem>
         </ComboBox>
     </Grid>
         
@@ -187,8 +187,8 @@
                 <ComboBoxItem>MVA</ComboBoxItem>
                 <ComboBoxItem>MVB</ComboBoxItem>
                 <ComboBoxItem>DCM</ComboBoxItem>
-                <ComboBoxItem>RV_50L</ComboBoxItem>
-                <ComboBoxItem>RV_25L</ComboBoxItem>
+                <ComboBoxItem>RV 50L</ComboBoxItem>
+                <ComboBoxItem>RV 25L</ComboBoxItem>
             </ComboBox>
             <Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
             <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
@@ -242,8 +242,8 @@
                 <ComboBoxItem>MVA</ComboBoxItem>
                 <ComboBoxItem>MVB</ComboBoxItem>
                 <ComboBoxItem>DCM</ComboBoxItem>
-                <ComboBoxItem>RV_50L</ComboBoxItem>
-                <ComboBoxItem>RV_25L</ComboBoxItem>
+                <ComboBoxItem>RV 50L</ComboBoxItem>
+                <ComboBoxItem>RV 25L</ComboBoxItem>
             </ComboBox>
             <Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
             <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
@@ -297,8 +297,8 @@
                 <ComboBoxItem>MVA</ComboBoxItem>
                 <ComboBoxItem>MVB</ComboBoxItem>
                 <ComboBoxItem>DCM</ComboBoxItem>
-                <ComboBoxItem>RV_50L</ComboBoxItem>
-                <ComboBoxItem>RV_25L</ComboBoxItem>
+                <ComboBoxItem>RV 50L</ComboBoxItem>
+                <ComboBoxItem>RV 25L</ComboBoxItem>
             </ComboBox>
             <Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
             <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
