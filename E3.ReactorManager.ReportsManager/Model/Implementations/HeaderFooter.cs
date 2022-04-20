@@ -21,7 +21,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
         public override void OnStartPage(PdfWriter writer, Document document)
         {
             PdfPTable headerTable = new PdfPTable(3);
-            headerTable.SetTotalWidth(new float[] { 100f, 325f, 200f });
+            headerTable.SetTotalWidth(new float[] { 150f, 300f, 200f });
             headerTable.HorizontalAlignment = Element.ALIGN_CENTER;
 
 
