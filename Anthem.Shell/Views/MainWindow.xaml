@@ -129,7 +129,5 @@
             <ContentControl prism:RegionManager.RegionName="SelectedViewPane"/>
         </Grid>
     </Grid>
-    <!--<Grid>
-        <ContentControl prism:RegionManager.RegionName="SelectedViewPane" />
-    </Grid>-->
+  
 </Window>

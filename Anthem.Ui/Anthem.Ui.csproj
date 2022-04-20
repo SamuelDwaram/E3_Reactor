@@ -280,6 +280,7 @@
     <Resource Include="Images\trends-icon.png" />
     <Resource Include="Images\user.png" />
     <Resource Include="Images\usermanagement.png" />
+    <Resource Include="Images\Logo.png" />
     <Content Include="SqlFiles\FieldDevices-Plc-SensorsDataSet-1.sql" />
     <Content Include="SqlFiles\FieldPoints-2.sql" />
     <Content Include="SqlFiles\RecipeFieldPoints-3.sql" />

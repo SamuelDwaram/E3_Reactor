@@ -170,9 +170,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\e3tech_logos.png" />
     <Content Include="Sql Files\Stored Procedures.sql" />
     <Content Include="Sql Files\Tables.sql" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
