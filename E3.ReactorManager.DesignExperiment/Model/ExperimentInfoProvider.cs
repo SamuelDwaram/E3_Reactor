@@ -96,6 +96,7 @@ namespace E3.ReactorManager.DesignExperiment.Model
                     {
                         Identifier = row["Identifier"].ToString(),
                         Name = row["Name"].ToString(),
+                        Number = row["BatchNumber"]?.ToString(),
                         //Number = row["Number"].ToString(),
                         //Stage = row["Stage"].ToString(),
                         ScientistName = row["ScientistName"].ToString(),

@@ -112,7 +112,6 @@
     <Compile Include="Model\Blocks\BaseBlockParameters.cs" />
     <Compile Include="Model\Blocks\DrainBlockParameters.cs" />
     <Compile Include="Model\Blocks\FlushBlockParameters.cs" />
-    <Compile Include="Model\Blocks\N2PurgeBlockParameters.cs" />
     <Compile Include="Model\PlcObjects.cs" />
     <Compile Include="Model\PLCRecipeExecutor.cs" />
     <Compile Include="Model\PLCRecipeReloader.cs" />

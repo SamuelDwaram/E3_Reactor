@@ -145,7 +145,7 @@
             <ComboBoxItem Tag="H">Hours</ComboBoxItem>
         </ComboBox>
     </Grid>
-    <Grid DataContext="{Binding Parameters}" x:Key="N2PurgeBlockParametersTemplate">
+    <!--<Grid DataContext="{Binding Parameters}" x:Key="N2PurgeBlockParametersTemplate">
         <Grid>
             <Grid.Resources>
                 <Style TargetType="Label">
@@ -199,7 +199,7 @@
                 <ComboBoxItem Tag="H">Hours</ComboBoxItem>
             </ComboBox>
         </Grid>
-    </Grid>
+    </Grid>-->
     <Grid DataContext="{Binding Parameters}" x:Key="DrainBlockParametersTemplate">
         <Grid>
             <Grid.Resources>
@@ -231,7 +231,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Source" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
-            <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content">
+            <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding Path=Source}" SelectedValuePath="Content" MinWidth="100">
                 <ComboBoxItem>R1</ComboBoxItem>
                 <ComboBoxItem>R2</ComboBoxItem>
                 <ComboBoxItem>R3</ComboBoxItem>
@@ -245,14 +245,14 @@
                 <ComboBoxItem>RV 50L</ComboBoxItem>
                 <ComboBoxItem>RV 25L</ComboBoxItem>
             </ComboBox>
-            <Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
+            <!--<Label Content="Time Interval" Foreground="White" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
             <TextBox Grid.Row="2" Grid.Column="1" Width="120" VerticalAlignment="Center" Text="{Binding TimeInterval, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Height="23" HorizontalAlignment="Left"/>
             <Label Content="Interval Type" Foreground="White" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Left"/>
             <ComboBox Grid.Row="3" Grid.Column="1" SelectedValue="{Binding Path=IntervalType}" SelectedValuePath="Tag">
                 <ComboBoxItem Tag="S">Seconds</ComboBoxItem>
                 <ComboBoxItem Tag="M">Minutes</ComboBoxItem>
                 <ComboBoxItem Tag="H">Hours</ComboBoxItem>
-            </ComboBox>
+            </ComboBox>-->
         </Grid>
     </Grid>
     <Grid DataContext="{Binding Parameters}" x:Key="FlushBlockParametersTemplate">

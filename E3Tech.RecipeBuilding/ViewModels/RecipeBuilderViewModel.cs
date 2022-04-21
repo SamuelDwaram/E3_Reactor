@@ -89,6 +89,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             }
 
         }
+
         private void LoadRegisteredBlocks(IUnityContainer containerProvider)
         {
             AvailableBlocks = new List<IRecipeBlock>();
@@ -355,7 +356,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
         {
             return ((!string.IsNullOrWhiteSpace(NewBatchDetails.Name)
                 && !string.IsNullOrWhiteSpace(NewBatchDetails.ScientistName)
-                && !string.IsNullOrWhiteSpace(NewBatchDetails.Comments)) || IsBatchRunning)
+                && !string.IsNullOrWhiteSpace(NewBatchDetails.Comments)
+                && !string.IsNullOrWhiteSpace(NewBatchDetails.Number)) || IsBatchRunning)
                 && recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps);
         }
 
@@ -1337,11 +1339,11 @@ namespace E3Tech.RecipeBuilding.ViewModels
                             recipeBlockPreviewModel.PropertyOne = "Source: " + drainBlock.Parameters.Source;
                             recipeBlockPreviewModel.PropertyThree = "Time Interval: " + drainBlock.Parameters.TimeInterval + " " + drainBlock.Parameters.IntervalType;
                             break;
-                        case "N2Purge":
-                            ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<N2PurgeBlockParameters>;
-                            recipeBlockPreviewModel.PropertyOne = "Source: " + n2PurgeBlock.Parameters.Source;
-                            recipeBlockPreviewModel.PropertyThree = "Time Interval: " + n2PurgeBlock.Parameters.TimeInterval + " " + n2PurgeBlock.Parameters.IntervalType;
-                            break;
+                        //case "N2Purge":
+                        //    ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = recipeStep.BlockOne as ParameterizedRecipeBlock<N2PurgeBlockParameters>;
+                        //    recipeBlockPreviewModel.PropertyOne = "Source: " + n2PurgeBlock.Parameters.Source;
+                        //    recipeBlockPreviewModel.PropertyThree = "Time Interval: " + n2PurgeBlock.Parameters.TimeInterval + " " + n2PurgeBlock.Parameters.IntervalType;
+                        //    break;
                     }
                     recipeBlockPreviewModels.Add(recipeBlockPreviewModel);
                 }

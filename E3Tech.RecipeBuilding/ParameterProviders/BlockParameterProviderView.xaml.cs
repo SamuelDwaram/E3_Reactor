@@ -59,23 +59,23 @@ namespace E3Tech.RecipeBuilding.ParameterProviders
                     return;
                 }
             }
-            else if (ViewModel.Parameters is N2PurgeBlockParameters)
-            {
+            //else if (ViewModel.Parameters is N2PurgeBlockParameters)
+            //{
              
-                var n2PurgeBlockParameters = ViewModel.Parameters as N2PurgeBlockParameters;
-                if (n2PurgeBlockParameters.IntervalType == null || n2PurgeBlockParameters.TimeInterval == null || n2PurgeBlockParameters.Source == null)
-                {
-                    Warning.Content = warningContent;
-                    Warning.Visibility = Visibility.Visible;
-                    return;
-                }
-                else if (int.TryParse(n2PurgeBlockParameters.TimeInterval, out convert) == false)
-                {
-                    Warning.Content = TimeIntervalWarning;
-                    Warning.Visibility = Visibility.Visible;
-                    return;
-                }
-            }
+            //    var n2PurgeBlockParameters = ViewModel.Parameters as N2PurgeBlockParameters;
+            //    if (n2PurgeBlockParameters.IntervalType == null || n2PurgeBlockParameters.TimeInterval == null || n2PurgeBlockParameters.Source == null)
+            //    {
+            //        Warning.Content = warningContent;
+            //        Warning.Visibility = Visibility.Visible;
+            //        return;
+            //    }
+            //    else if (int.TryParse(n2PurgeBlockParameters.TimeInterval, out convert) == false)
+            //    {
+            //        Warning.Content = TimeIntervalWarning;
+            //        Warning.Visibility = Visibility.Visible;
+            //        return;
+            //    }
+            //}
             else if (ViewModel.Parameters is TransferBlockParameters)
             {
                 var transferBlockParameters = ViewModel.Parameters as TransferBlockParameters;
@@ -103,18 +103,18 @@ namespace E3Tech.RecipeBuilding.ParameterProviders
             else if (ViewModel.Parameters is DrainBlockParameters)
             {
                 var drainBlockParameters = ViewModel.Parameters as DrainBlockParameters;
-                if (drainBlockParameters.IntervalType == null || drainBlockParameters.TimeInterval == null || drainBlockParameters.Source == null)
+                if (/*drainBlockParameters.IntervalType == null || drainBlockParameters.TimeInterval == null ||*/ drainBlockParameters.Source == null)
                 {
                     Warning.Content = warningContent;
                     Warning.Visibility = Visibility.Visible;
                     return;
                 }
-                else if (int.TryParse(drainBlockParameters.TimeInterval, out convert) == false)
-                {
-                    Warning.Content = TimeIntervalWarning;
-                    Warning.Visibility = Visibility.Visible;
-                    return;
-                }
+                //else if (int.TryParse(drainBlockParameters.TimeInterval, out convert) == false)
+                //{
+                //    Warning.Content = TimeIntervalWarning;
+                //    Warning.Visibility = Visibility.Visible;
+                //    return;
+                //}
             }
             this.DialogResult = true;
         }

@@ -34,8 +34,8 @@ namespace E3Tech.RecipeBuilding.Model.Blocks
                 RemainingTime = this.RemainingTime?.Clone().ToString(),
 
                 Source = this.Source?.Clone().ToString(),
-                TimeInterval = this.TimeInterval?.Clone().ToString(),
-                IntervalType = this.IntervalType?.Clone().ToString(),
+                //TimeInterval = this.TimeInterval?.Clone().ToString(),
+                //IntervalType = this.IntervalType?.Clone().ToString(),
                
             };
         }

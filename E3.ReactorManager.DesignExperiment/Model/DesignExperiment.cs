@@ -177,6 +177,7 @@ namespace E3.ReactorManager.DesignExperiment.Model
                 new DbParameterInfo("@Comments", batchData.Comments, DbType.String),
                 new DbParameterInfo("@State", BatchState.Running, DbType.String),
                 new DbParameterInfo("@TimeStarted", DateTime.Now, DbType.DateTime),
+                new DbParameterInfo("@BatchNumber", batchData.Number, DbType.String),
             };
             databaseWriter.ExecuteWriteCommand("AddBatchCompact", CommandType.StoredProcedure, parameters);
         }

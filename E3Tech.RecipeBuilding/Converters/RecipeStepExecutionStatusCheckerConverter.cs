@@ -73,9 +73,9 @@ namespace E3Tech.RecipeBuilding.Converters
                 case "Transfer":
                     blockEndedStatus = (block as ParameterizedRecipeBlock<TransferBlockParameters>).Parameters.Ended;
                     break;
-                case "N2Purge":
-                    blockEndedStatus = (block as ParameterizedRecipeBlock<N2PurgeBlockParameters>).Parameters.Ended;
-                    break;
+                //case "N2Purge":
+                //    blockEndedStatus = (block as ParameterizedRecipeBlock<N2PurgeBlockParameters>).Parameters.Ended;
+                //    break;
                 case "Drain":
                     blockEndedStatus = (block as ParameterizedRecipeBlock<DrainBlockParameters>).Parameters.Ended;
                     break;

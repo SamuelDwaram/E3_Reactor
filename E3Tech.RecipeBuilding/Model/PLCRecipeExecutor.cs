@@ -154,8 +154,8 @@ namespace E3Tech.RecipeBuilding
                     return GetFlushBlock(block);
                 case "Drain":
                     return GetDrainBlock(block);
-                case "N2Purge":
-                    return GetN2PurgeBlock(block);
+                //case "N2Purge":
+                //    return GetN2PurgeBlock(block);
                 case "End":
                     return GetEndBlock(block);
                 default:
@@ -224,21 +224,21 @@ namespace E3Tech.RecipeBuilding
             return transferBlock;
         }
 
-        private IRecipeBlock GetN2PurgeBlock(Block block)
-        {
-            ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = Activator.CreateInstance<ParameterizedRecipeBlock<N2PurgeBlockParameters>>();
-            n2PurgeBlock.Parameters.Enabled = bool.TrueString;
-            n2PurgeBlock.Parameters.Started = block.Properties.bBlockStarted.ToString();
-            n2PurgeBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
-            n2PurgeBlock.Parameters.StartedTime = block.Properties.sStartedTime;
-            n2PurgeBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
+        //private IRecipeBlock GetN2PurgeBlock(Block block)
+        //{
+        //    ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = Activator.CreateInstance<ParameterizedRecipeBlock<N2PurgeBlockParameters>>();
+        //    n2PurgeBlock.Parameters.Enabled = bool.TrueString;
+        //    n2PurgeBlock.Parameters.Started = block.Properties.bBlockStarted.ToString();
+        //    n2PurgeBlock.Parameters.Ended = block.Properties.bBlockEnded.ToString();
+        //    n2PurgeBlock.Parameters.StartedTime = block.Properties.sStartedTime;
+        //    n2PurgeBlock.Parameters.RemainingTime = block.Properties.sRemainingTime;
 
-            n2PurgeBlock.Parameters.EndedTime = block.Properties.sEndedTime;
-            n2PurgeBlock.Parameters.Source = block.Properties.sSource;
-            n2PurgeBlock.Parameters.IntervalType = block.Properties.sIntervalType;
-            n2PurgeBlock.Parameters.TimeInterval = block.Properties.nInterval.ToString();
-            return n2PurgeBlock;
-        }
+        //    n2PurgeBlock.Parameters.EndedTime = block.Properties.sEndedTime;
+        //    n2PurgeBlock.Parameters.Source = block.Properties.sSource;
+        //    n2PurgeBlock.Parameters.IntervalType = block.Properties.sIntervalType;
+        //    n2PurgeBlock.Parameters.TimeInterval = block.Properties.nInterval.ToString();
+        //    return n2PurgeBlock;
+        //}
 
         private IRecipeBlock GetDrainBlock(Block block)
         {
@@ -251,8 +251,8 @@ namespace E3Tech.RecipeBuilding
 
             drainBlock.Parameters.EndedTime = block.Properties.sEndedTime;
             drainBlock.Parameters.Source = block.Properties.sSource;
-            drainBlock.Parameters.IntervalType = block.Properties.sIntervalType;
-            drainBlock.Parameters.TimeInterval = block.Properties.nInterval.ToString();
+            //drainBlock.Parameters.IntervalType = block.Properties.sIntervalType;
+            //drainBlock.Parameters.TimeInterval = block.Properties.nInterval.ToString();
             return drainBlock;
         }
 
@@ -356,15 +356,15 @@ namespace E3Tech.RecipeBuilding
                 case "Drain":
                     ParameterizedRecipeBlock<DrainBlockParameters> drainBlock = blockOne as ParameterizedRecipeBlock<DrainBlockParameters>;
                     block.Properties.sSource = drainBlock.Parameters.Source;
-                    block.Properties.nInterval = Convert.ToInt32(drainBlock.Parameters.TimeInterval);
-                    block.Properties.sIntervalType = drainBlock.Parameters.IntervalType;
+                    //block.Properties.nInterval = Convert.ToInt32(drainBlock.Parameters.TimeInterval);
+                    //block.Properties.sIntervalType = drainBlock.Parameters.IntervalType;
                     break;
-                case "N2Purge":
-                    ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = blockOne as ParameterizedRecipeBlock<N2PurgeBlockParameters>;
-                    block.Properties.sSource = n2PurgeBlock.Parameters.Source;
-                    block.Properties.nInterval = Convert.ToInt32(n2PurgeBlock.Parameters.TimeInterval);
-                    block.Properties.sIntervalType = n2PurgeBlock.Parameters.IntervalType;
-                    break;
+                //case "N2Purge":
+                //    ParameterizedRecipeBlock<N2PurgeBlockParameters> n2PurgeBlock = blockOne as ParameterizedRecipeBlock<N2PurgeBlockParameters>;
+                //    block.Properties.sSource = n2PurgeBlock.Parameters.Source;
+                //    block.Properties.nInterval = Convert.ToInt32(n2PurgeBlock.Parameters.TimeInterval);
+                //    block.Properties.sIntervalType = n2PurgeBlock.Parameters.IntervalType;
+                //    break;
                 case "End":
                     break;
                 default:

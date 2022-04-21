@@ -65,13 +65,13 @@ namespace E3Tech.RecipeBuilding.Model.RecipeExecutionInfoProvider
             recipeExecutionInfoHandler.AddRecipeExecutionInfo(deviceId, string.Empty, string.Empty, string.Empty, message);
         }
 
-        private void AddN2PurgeBlockExecutionInfo(ParameterizedRecipeBlock<N2PurgeBlockParameters> n2purgeRecipeBlock, string deviceId)
-        {
-            string message = n2purgeRecipeBlock.UiLabel + " started";
-            string duration = DateTime.Parse(n2purgeRecipeBlock.Parameters.EndedTime).Subtract(DateTime.Parse(n2purgeRecipeBlock.Parameters.StartedTime)).TotalMinutes.ToString();
-            recipeExecutionInfoHandler
-                .AddRecipeExecutionInfo(deviceId, n2purgeRecipeBlock.Parameters.StartedTime, n2purgeRecipeBlock.Parameters.EndedTime, duration, message);
-        }
+        //private void AddN2PurgeBlockExecutionInfo(ParameterizedRecipeBlock<N2PurgeBlockParameters> n2purgeRecipeBlock, string deviceId)
+        //{
+        //    string message = n2purgeRecipeBlock.UiLabel + " started";
+        //    string duration = DateTime.Parse(n2purgeRecipeBlock.Parameters.EndedTime).Subtract(DateTime.Parse(n2purgeRecipeBlock.Parameters.StartedTime)).TotalMinutes.ToString();
+        //    recipeExecutionInfoHandler
+        //        .AddRecipeExecutionInfo(deviceId, n2purgeRecipeBlock.Parameters.StartedTime, n2purgeRecipeBlock.Parameters.EndedTime, duration, message);
+        //}
         private void AddDrainBlockExecutionInfo(ParameterizedRecipeBlock<DrainBlockParameters> drainRecipeBlock, string deviceId)
         {
             string message = drainRecipeBlock.UiLabel + " started";

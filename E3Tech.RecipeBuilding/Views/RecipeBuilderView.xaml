@@ -210,7 +210,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="0*"/>
+                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
@@ -239,8 +239,24 @@
                             </Style>
                         </TextBox.Style>
                     </TextBox>
+                    <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
+                        <Label Content="Batch Number" Style="{StaticResource HeaderLabelStyle}"/>
+                    </Viewbox>
+                    <TextBox Text="{Binding NewBatchDetails.Number, UpdateSourceTrigger=LostFocus}" MaxLength="10" 
+                             Grid.Row="2" Grid.Column="1" Margin="5" Width="200" Padding="3">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxValueStyleRecipeName}">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="">
+                                        <Setter Property="BorderBrush" Value="Red"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                     <Viewbox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">
-                        <Label Content="Scientist Name" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Label Content="User Name" Style="{StaticResource HeaderLabelStyle}"/>
                     </Viewbox>
                     <TextBox Text="{Binding NewBatchDetails.ScientistName, UpdateSourceTrigger=PropertyChanged}" MaxLength="15" 
                              Grid.Row="3" Grid.Column="1" Margin="5" Width="200" Padding="3" >

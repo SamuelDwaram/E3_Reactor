@@ -68,7 +68,7 @@ namespace E3Tech.RecipeBuilding
             containerRegistry.Register<IRecipeBlock, ParameterizedRecipeBlock<TransferBlockParameters>>("Transfer");
             containerRegistry.Register<IRecipeBlock, ParameterizedRecipeBlock<DrainBlockParameters>>("Drain");
             //containerRegistry.Register<IRecipeBlock, ParameterizedRecipeBlock<FlushBlockParameters>>("Flush");
-            containerRegistry.Register<IRecipeBlock, ParameterizedRecipeBlock<N2PurgeBlockParameters>>("N2Purge");
+            //containerRegistry.Register<IRecipeBlock, ParameterizedRecipeBlock<N2PurgeBlockParameters>>("N2Purge");
             containerRegistry.Register<IRecipeBlock, ParameterizedRecipeBlock<EndBlockParameters>>("End");
             containerRegistry.Register<IRecipeBlock, RecipeBlock>();
         }

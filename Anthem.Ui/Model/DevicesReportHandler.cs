@@ -65,10 +65,10 @@ namespace Anathem.Ui.Model
 
         public void PrintBatchPDFReport(Batch selectedBatch, string deviceId, string deviceLabel, IList<string> selectedParameters, DateTime startTime, DateTime endTime)
         {
-            Task.Factory.StartNew(new Func<IList<ReportSection>>(() => 
+            Task.Factory.StartNew(new Func<IList<ReportSection>>(() =>
                    AddBatchInfoSection(selectedBatch)))
                 .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddRecipeMessageSection(t.Result, startTime, endTime)))
-               
+
                 .ContinueWith(new Func<Task<IList<ReportSection>>, (IList<ReportSection>, IList<string>, DataTable)>(t => AddDeviceRecordedParametersSection(t.Result, deviceId, deviceLabel, startTime, endTime, selectedParameters)))
                 .ContinueWith(new Func<Task<(IList<ReportSection>, IList<string>, DataTable)>, IList<ReportSection>>(t => AddTrendsSection(t.Result.Item1, deviceId, deviceLabel, t.Result.Item2, t.Result.Item3)), taskScheduler)
                 .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddUserCommentsSection(t.Result, deviceId, deviceLabel, startTime, endTime)))
@@ -83,7 +83,7 @@ namespace Anathem.Ui.Model
                 }));
         }
 
-        private IList<ReportSection> AddRecipeMessageSection(IList<ReportSection> result,  DateTime startTime, DateTime endTime)
+        private IList<ReportSection> AddRecipeMessageSection(IList<ReportSection> result, DateTime startTime, DateTime endTime)
         {
             DataTable RecipeMessageDataTable = new DataTable();
             RecipeMessageDataTable.Columns.Add("Step No", typeof(int));
@@ -91,7 +91,7 @@ namespace Anathem.Ui.Model
             string query = $"select * from dbo.RuntimeRecipeMessage where TimeStamp between '{startTime:yyyy-MM-dd HH:mm:ss}' and '{endTime:yyyy-MM-dd HH:mm:ss}' order by TimeStamp Asc";
             DataTable fieldDeviceData = databaseReader.ExecuteReadCommandAsDataTable(query, CommandType.Text);
             int index = 1;
-            foreach(DataRow item in fieldDeviceData.Rows)
+            foreach (DataRow item in fieldDeviceData.Rows)
             {
                 RecipeMessageDataTable.Rows.Add(new object[] { index++, item.ItemArray[0] });
                 //RecipeMessageDataTable.Rows.Add(item);
@@ -300,26 +300,16 @@ namespace Anathem.Ui.Model
             {
                 return insertNewLine ? $"{Environment.NewLine}(RPM)" : "(RPM)";
             }
-            else if(parameterName.Contains("CurrentSpeed"))
+            else if (parameterName.Contains("CurrentSpeed"))
             {
                 return insertNewLine ? $"{Environment.NewLine}(RPM)" : "(RPM)";
             }
-            else if(parameterName.Contains("Pressure"))
+            else if (parameterName.Contains("Pressure"))
             {
                 return insertNewLine ? $"{Environment.NewLine}(bar)" : "(bar)";
             }
 
             return string.Empty;
-
-            //return parameterName switch
-            //    {
-            //        string p when p.Contains("Temp") => insertNewLine ? $"{Environment.NewLine}(°C)" : "(°C)",
-            //        string p when p.Contains("HeatCoolSetPoint") => insertNewLine ? $"{Environment.NewLine}(°C)" : "(°C)",
-            //        string p when p.Contains("SpeedSetPoint") => insertNewLine ? $"{Environment.NewLine}(RPM)" : "(RPM)",
-            //        string p when p.Contains("CurrentSpeed") => insertNewLine ? $"{Environment.NewLine}(RPM)" : "(RPM)",
-            //        string p when p.Contains("Pressure") => insertNewLine ? $"{Environment.NewLine}(bar)" : "(bar)",
-            //        _ => string.Empty,
-            //    };
         }
 
         private IList<ReportSection> AddBatchInfoSection(Batch selectedBatch)
@@ -333,18 +323,28 @@ namespace Anathem.Ui.Model
                     EndPageHere = true,
                     Data = new List<LabelValuePair>
                     {
-                        new LabelValuePair("Name" , selectedBatch.Name),
+                        new LabelValuePair("Equipment Id", string.Empty),
+                        new LabelValuePair("Equipment Name", string.Empty),
+                        new LabelValuePair("Component" , selectedBatch.FieldDeviceLabel),
+                        new LabelValuePair("Batch Name" , selectedBatch.Name),
+                        new LabelValuePair("Batch Number", selectedBatch.Number),
+                        new LabelValuePair("Process Start Date&Time", selectedBatch.TimeStarted.ToString()),
+                        new LabelValuePair("Process End Date&Time", selectedBatch.TimeCompleted.ToString()),
+                        //new LabelValuePair("Print Interval",string.Empty),
+                        new LabelValuePair("Duration", (selectedBatch.TimeCompleted - selectedBatch.TimeStarted).ToString()),
+                        new LabelValuePair("User Name" , selectedBatch.ScientistName) 
+
                         //new LabelValuePair("Experiment Number" , selectedBatch.Number),
                         //new LabelValuePair("Stage" , selectedBatch.Stage),
-                        new LabelValuePair("Device" , selectedBatch.FieldDeviceLabel),
+                        
                         //new LabelValuePair("HC" , selectedBatch.HCIdentifier),
                         //new LabelValuePair("Stirrer" , selectedBatch.StirrerIdentifier),
                         //new LabelValuePair("Dosing Pump Usage" , selectedBatch.DosingPumpUsage),
-                        new LabelValuePair("Comments" , selectedBatch.Comments),
-                        new LabelValuePair("Time Started" , selectedBatch.TimeStarted.ToString()),
-                        new LabelValuePair("Time Completed" , selectedBatch.TimeCompleted.ToString()),
-                        new LabelValuePair("Duration", (selectedBatch.TimeCompleted - selectedBatch.TimeStarted).ToString()),
-                        new LabelValuePair("Scientist Name" , selectedBatch.ScientistName),
+                        //new LabelValuePair("Comments" , selectedBatch.Comments),
+                        //new LabelValuePair("Time Started" , selectedBatch.TimeStarted.ToString()),
+                        //new LabelValuePair("Time Completed" , selectedBatch.TimeCompleted.ToString()),
+                        //new LabelValuePair("Duration", (selectedBatch.TimeCompleted - selectedBatch.TimeStarted).ToString()),
+                        //new LabelValuePair("Scientist Name" , selectedBatch.ScientistName),
                     }
                 }
             };

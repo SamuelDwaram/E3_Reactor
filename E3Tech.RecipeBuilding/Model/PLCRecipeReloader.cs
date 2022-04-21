@@ -72,8 +72,8 @@ namespace E3Tech.RecipeBuilding
                     return GetWaitBlockInstance(deviceId, block);
                 case "Transfer":
                     return GetTransferBlockInstance(deviceId, block);
-                case "N2Purge":
-                    return GetN2PurgeBlockInstance(deviceId, block);
+                //case "N2Purge":
+                //    return GetN2PurgeBlockInstance(deviceId, block);
                 case "Drain":
                     return GetDrainBlockInstance(deviceId, block);
                 case "End":
@@ -178,22 +178,22 @@ namespace E3Tech.RecipeBuilding
             return waitRecipeBlock;
         }
 
-        private IRecipeBlock GetN2PurgeBlockInstance(string deviceId, Block block)
-        {
-            IRecipeBlock n2PurgeRecipeBlock = new ParameterizedRecipeBlock<N2PurgeBlockParameters>();
+        //private IRecipeBlock GetN2PurgeBlockInstance(string deviceId, Block block)
+        //{
+        //    IRecipeBlock n2PurgeRecipeBlock = new ParameterizedRecipeBlock<N2PurgeBlockParameters>();
 
-            n2PurgeRecipeBlock.UpdateParameterValue("Started", block.Properties.bBlockStarted.ToString());
-            n2PurgeRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
-            n2PurgeRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
-            n2PurgeRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
-            n2PurgeRecipeBlock.UpdateParameterValue("Source", block.Properties.sSource);
-            n2PurgeRecipeBlock.UpdateParameterValue("TimeInterval", Convert.ToString(block.Properties.nInterval));
-            n2PurgeRecipeBlock.UpdateParameterValue("IntervalType", Convert.ToString(block.Properties.sIntervalType));
-            n2PurgeRecipeBlock.UpdateParameterValue("Duration", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitDuration_" + block.StepNo));
-            n2PurgeRecipeBlock.UpdateParameterValue("RemainingTime", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitRemainingTime_" + block.StepNo));
+        //    n2PurgeRecipeBlock.UpdateParameterValue("Started", block.Properties.bBlockStarted.ToString());
+        //    n2PurgeRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
+        //    n2PurgeRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
+        //    n2PurgeRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
+        //    n2PurgeRecipeBlock.UpdateParameterValue("Source", block.Properties.sSource);
+        //    n2PurgeRecipeBlock.UpdateParameterValue("TimeInterval", Convert.ToString(block.Properties.nInterval));
+        //    n2PurgeRecipeBlock.UpdateParameterValue("IntervalType", Convert.ToString(block.Properties.sIntervalType));
+        //    n2PurgeRecipeBlock.UpdateParameterValue("Duration", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitDuration_" + block.StepNo));
+        //    n2PurgeRecipeBlock.UpdateParameterValue("RemainingTime", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitRemainingTime_" + block.StepNo));
 
-            return n2PurgeRecipeBlock;
-        }
+        //    return n2PurgeRecipeBlock;
+        //}
 
         private IRecipeBlock GetDrainBlockInstance(string deviceId, Block block)
         {
@@ -203,8 +203,8 @@ namespace E3Tech.RecipeBuilding
             drainRecipeBlock.UpdateParameterValue("StartedTime", block.Properties.sStartedTime);
             drainRecipeBlock.UpdateParameterValue("Ended", block.Properties.bBlockEnded.ToString());
             drainRecipeBlock.UpdateParameterValue("EndedTime", block.Properties.sEndedTime);
-            drainRecipeBlock.UpdateParameterValue("TimeInterval", Convert.ToString(block.Properties.nInterval));
-            drainRecipeBlock.UpdateParameterValue("IntervalType", Convert.ToString(block.Properties.sIntervalType));
+            //drainRecipeBlock.UpdateParameterValue("TimeInterval", Convert.ToString(block.Properties.nInterval));
+            //drainRecipeBlock.UpdateParameterValue("IntervalType", Convert.ToString(block.Properties.sIntervalType));
             drainRecipeBlock.UpdateParameterValue("Source", block.Properties.sSource);
             drainRecipeBlock.UpdateParameterValue("Duration", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitDuration_" + block.StepNo));
             drainRecipeBlock.UpdateParameterValue("RemainingTime", fieldDevicesCommunicator.ReadFieldPointValue<string>(deviceId, "WaitRemainingTime_" + block.StepNo));
