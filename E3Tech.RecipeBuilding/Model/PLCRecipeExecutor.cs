@@ -251,8 +251,8 @@ namespace E3Tech.RecipeBuilding
 
             drainBlock.Parameters.EndedTime = block.Properties.sEndedTime;
             drainBlock.Parameters.Source = block.Properties.sSource;
-            //drainBlock.Parameters.IntervalType = block.Properties.sIntervalType;
-            //drainBlock.Parameters.TimeInterval = block.Properties.nInterval.ToString();
+            drainBlock.Parameters.IntervalType = block.Properties.sIntervalType;
+            drainBlock.Parameters.TimeInterval = block.Properties.nInterval.ToString();
             return drainBlock;
         }
 

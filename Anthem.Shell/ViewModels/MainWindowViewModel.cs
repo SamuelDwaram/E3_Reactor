@@ -36,7 +36,7 @@ namespace Anathem.Shell.ViewModels
             Task.Factory.StartNew(new Action(UpdateActiveView));
             auditTrailManager = unityContainer.Resolve<IAuditTrailManager>();
             logger = unityContainer.Resolve<ILogger>();
-            unityContainer.Resolve<IActivityMonitor>().ApplicationIsIdle += MainWindowViewModel_ApplicationIsIdle;
+            //unityContainer.Resolve<IActivityMonitor>().ApplicationIsIdle += MainWindowViewModel_ApplicationIsIdle;
             NavigateCommand.Execute("Initialize");
         }
 
