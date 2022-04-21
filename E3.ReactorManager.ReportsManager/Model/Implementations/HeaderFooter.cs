@@ -98,7 +98,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
 
             PdfPTable columnTable = new PdfPTable(1);
 
-            string[] data = { "Performed By: " + UserName, "Date: " + DateTime.Now, "Signature: ", "Checked By:", "Date : ", "Signature: " };
+            string[] data = { "Printed By: " + UserName, "Date: " + DateTime.Now, "Signature: ", "Checked By:", "Date : ", "Signature: " };
             int noOfRows = 3;
 
             for (int i = 0; i < data.Length; i++)

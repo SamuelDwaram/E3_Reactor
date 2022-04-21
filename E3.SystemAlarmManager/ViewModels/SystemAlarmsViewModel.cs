@@ -44,6 +44,7 @@ namespace E3.SystemAlarmManager.ViewModels
                     existingAlarm.RaisedTimeStamp = alarm.RaisedTimeStamp;
                     existingAlarm.AcknowledgedTimeStamp = alarm.AcknowledgedTimeStamp;
                 }
+                RaisePropertyChanged(nameof(SystemAlarms));
             }
 
             //Issue property changed notification to Ui
@@ -108,12 +109,12 @@ namespace E3.SystemAlarmManager.ViewModels
             switch (SelectedAlarmState)
             {
                 case AlarmState.Raised:
-                    return ((IList<SystemAlarm>)sysAlarms).OrderByDescending(al => al.RaisedTimeStamp);
+                    return ((IList<SystemAlarm>)sysAlarms).Where(x=>x.State == SelectedAlarmState).OrderByDescending(al => al.RaisedTimeStamp);
                 case AlarmState.Acknowledged:
-                    return ((IList<SystemAlarm>)sysAlarms).OrderByDescending(al => al.AcknowledgedTimeStamp);
+                    return ((IList<SystemAlarm>)sysAlarms).Where(x => x.State == SelectedAlarmState).OrderByDescending(al => al.AcknowledgedTimeStamp);
                 case AlarmState.Resolved:
                 default:
-                    return ((IList<SystemAlarm>)sysAlarms).OrderByDescending(al => al.TimeStamp);
+                    return ((IList<SystemAlarm>)sysAlarms).Where(x => x.State == SelectedAlarmState).OrderByDescending(al => al.TimeStamp);
             }
         }
 
@@ -135,8 +136,21 @@ namespace E3.SystemAlarmManager.ViewModels
 
         #region Properties
         public IEnumerable<SystemAlarm> SystemAlarms { get; set; } = new List<SystemAlarm>();
-        public IEnumerable<SystemAlarm> FilteredAlarms { get; set; } = new List<SystemAlarm>();
-        
+
+        public IEnumerable<SystemAlarm> filteredAlarms;
+        public IEnumerable<SystemAlarm> FilteredAlarms
+        {
+            get
+            {
+                return filteredAlarms ?? new List<SystemAlarm>();
+            }
+            set
+            {
+                filteredAlarms = value;
+                OnPropertyChanged(nameof(FilteredAlarms));
+            }
+        }
+
         public IEnumerable<AlarmsFilterType> AlarmsFilterTypeValues
         {
             get => Enum.GetValues(typeof(AlarmsFilterType)).Cast<AlarmsFilterType>();

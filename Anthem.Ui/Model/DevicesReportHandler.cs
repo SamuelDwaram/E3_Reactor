@@ -68,12 +68,10 @@ namespace Anathem.Ui.Model
             Task.Factory.StartNew(new Func<IList<ReportSection>>(() =>
                    AddBatchInfoSection(selectedBatch)))
                 .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddRecipeMessageSection(t.Result, startTime, endTime)))
-
                 .ContinueWith(new Func<Task<IList<ReportSection>>, (IList<ReportSection>, IList<string>, DataTable)>(t => AddDeviceRecordedParametersSection(t.Result, deviceId, deviceLabel, startTime, endTime, selectedParameters)))
                 .ContinueWith(new Func<Task<(IList<ReportSection>, IList<string>, DataTable)>, IList<ReportSection>>(t => AddTrendsSection(t.Result.Item1, deviceId, deviceLabel, t.Result.Item2, t.Result.Item3)), taskScheduler)
                 .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddUserCommentsSection(t.Result, deviceId, deviceLabel, startTime, endTime)))
                 .ContinueWith(new Func<Task<IList<ReportSection>>, IList<ReportSection>>(t => AddAlarmsSection(t.Result, deviceId, deviceLabel, startTime, endTime)))
-
                 .ContinueWith(new Action<Task<IList<ReportSection>>>(t =>
                 {
                     User loggedInUser = (User)Application.Current.Resources["LoggedInUser"];
@@ -231,7 +229,7 @@ namespace Anathem.Ui.Model
                     {
                         Title = "BATCH CHART",
                         DataType = SectionalDataType.Image,
-                        Data = new List<object> { trendsManager.PrepareTrendsImageForGivenData(deviceId, dataTableForTrends, parameters) }.ToArray(),
+                         Data = new List<object> { trendsManager.PrepareTrendsImageForGivenData(deviceId, dataTableForTrends, parameters) }.ToArray(),
                         EndPageHere = true
                     }
                 };
@@ -332,7 +330,7 @@ namespace Anathem.Ui.Model
                         new LabelValuePair("Process End Date&Time", selectedBatch.TimeCompleted.ToString()),
                         //new LabelValuePair("Print Interval",string.Empty),
                         new LabelValuePair("Duration", (selectedBatch.TimeCompleted - selectedBatch.TimeStarted).ToString()),
-                        new LabelValuePair("User Name" , selectedBatch.ScientistName) 
+                        new LabelValuePair("Performed by" , selectedBatch.ScientistName) 
 
                         //new LabelValuePair("Experiment Number" , selectedBatch.Number),
                         //new LabelValuePair("Stage" , selectedBatch.Stage),
