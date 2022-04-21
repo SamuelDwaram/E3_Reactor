@@ -236,10 +236,10 @@
                     <Viewbox Stretch="Fill">
                         <StackPanel Margin="10,0,0,0">
                             <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
-                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_1}" NegativeMaximumValue="0" PositiveMaximumValue="200" />
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_1}" NegativeMaximumValue="0" PositiveMaximumValue="100" />
                             <Grid>
                                 <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
-                                <Label Content="200" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
+                                <Label Content="100" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
                             </Grid>
                         </StackPanel>
                     </Viewbox>
@@ -284,10 +284,10 @@
                     <Viewbox Stretch="Fill">
                         <StackPanel Margin="10,0,0,0">
                             <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
-                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_2}" NegativeMaximumValue="0" PositiveMaximumValue="200" />
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_2}" NegativeMaximumValue="0" PositiveMaximumValue="100" />
                             <Grid>
                                 <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
-                                <Label Content="200" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
+                                <Label Content="100" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
                             </Grid>
                         </StackPanel>
                     </Viewbox>
@@ -332,10 +332,10 @@
                     <Viewbox Stretch="Fill">
                         <StackPanel Margin="10,0,0,0">
                             <AnimationUserControls:ProgressBarAnimation Margin="0,0,0,0" HorizontalAlignment="Left" CurrentValue="{Binding ParameterDictionary, 
-                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_3}" NegativeMaximumValue="0" PositiveMaximumValue="200" />
+                                Converter={StaticResource ParameterExtractorCon}, ConverterParameter=StirrerSetpoint_3}" NegativeMaximumValue="0" PositiveMaximumValue="100" />
                             <Grid>
                                 <Label Content="0" Foreground="White" FontSize="15" HorizontalAlignment="Left"/>
-                                <Label Content="200" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
+                                <Label Content="100" Foreground="White" FontSize="15" HorizontalAlignment="Right"/>
                             </Grid>
                         </StackPanel>
                     </Viewbox>
@@ -408,7 +408,7 @@
                 <Border BorderBrush="#FF1E2432" BorderThickness="2">
                     <DockPanel>
                         <Label Content="MVA Stirrer&#xa;Feedback" DockPanel.Dock="Top" Style="{StaticResource HeaderLabelStyle}"/>
-                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_1}" MaximumValue="200"/>
+                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_1}" MaximumValue="100"/>
                     </DockPanel>
                 </Border>
             </Viewbox>
@@ -416,7 +416,7 @@
                 <Border BorderBrush="#FF1E2432" BorderThickness="2">
                     <DockPanel>
                         <Label Content="RV Stirrer&#xa;Feedback" DockPanel.Dock="Top" Style="{StaticResource HeaderLabelStyle}"/>
-                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_2}" MaximumValue="200"/>
+                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_2}" MaximumValue="100"/>
                     </DockPanel>
                 </Border>
             </Viewbox>
@@ -424,7 +424,7 @@
                 <Border BorderBrush="#FF1E2432" BorderThickness="2">
                     <DockPanel>
                         <Label Content="Spare RV Stirrer&#xa;Feedback" DockPanel.Dock="Top" Style="{StaticResource HeaderLabelStyle}"/>
-                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_3}" MaximumValue="200"/>
+                        <AnimationUserControls:CircularGuageAnimation Margin="20,0,20,0" DockPanel.Dock="Bottom" UnitsValue="rpm" CurrentValue="{Binding StirrerFeedback_3}" MaximumValue="100"/>
                     </DockPanel>
                 </Border>
             </Viewbox>

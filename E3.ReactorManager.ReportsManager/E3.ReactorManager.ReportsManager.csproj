@@ -118,9 +118,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\e3tech_logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Images\e3tech_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Sql Files\StoredProcedures.sql" />
     <Content Include="Sql Files\Tables.sql" />
   </ItemGroup>

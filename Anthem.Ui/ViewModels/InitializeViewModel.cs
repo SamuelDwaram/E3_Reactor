@@ -65,7 +65,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "MVA Temperature",
-                    Limits = "-90|200",
+                    Limits = "-30|120",
                     FieldPointId = "MVA_Temperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
@@ -73,7 +73,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "RV-50L Temperature",
-                    Limits = "-90|200",
+                    Limits = "-30|120",
                     FieldPointId = "RV50L_Temperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
@@ -81,7 +81,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "RV-25L Temperature",
-                    Limits = "-90|200",
+                    Limits = "-30|120",
                     FieldPointId = "RV25L_Temperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
@@ -89,7 +89,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "MVA Pressure",
-                    Limits = "0|9",
+                    Limits = "0|5",
                     FieldPointId = "MVA_Pressure",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "Bar",
@@ -97,7 +97,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "RV-50L Pressure",
-                    Limits = "0|9",
+                    Limits = "0|5",
                     FieldPointId = "RV50L_Pressure",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "Bar",
@@ -105,7 +105,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "RV-25L Pressure",
-                    Limits = "0|9",
+                    Limits = "0|5",
                     FieldPointId = "RV25L_Pressure",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "Bar",
@@ -137,7 +137,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "Chiller Temperature",
-                    Limits = "0|50",
+                    Limits = "-30|70",
                     FieldPointId = "ChillerTemperature",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",
@@ -145,7 +145,7 @@ namespace Anathem.Ui.ViewModels
                 new TrendParameter
                 {
                     Label = "Chiller Temperature Setpoint",
-                    Limits = "0|100",
+                    Limits = "-30|70",
                     FieldPointId = "ChillerSetpoint",
                     SensorDataSetId = "sensorDataSet_" + deviceCount,
                     Units = "°C",

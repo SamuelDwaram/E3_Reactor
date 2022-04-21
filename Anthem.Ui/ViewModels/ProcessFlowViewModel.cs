@@ -66,6 +66,10 @@ namespace Anathem.Ui.ViewModels
             {
                 Pressure_3 = Parameters["RV25L_Pressure"];
             }
+            if (Parameters.ContainsKey("InstrumentAirPressure"))
+            {
+                Pressure_3 = Parameters["InstrumentAirPressure"];
+            }
             if (Parameters.ContainsKey("MVA_Temperature"))
             {
                 Temperature_1 = Parameters["MVA_Temperature"];
@@ -78,6 +82,10 @@ namespace Anathem.Ui.ViewModels
             {
                 Temperature_3 = Parameters["RV25L_Temperature"];
             }
+            if (Parameters.ContainsKey("ChillerTemperature"))
+            {
+                Temperature_4 = Parameters["ChillerTemperature"];
+            }
             if (Parameters.ContainsKey("MVA_Level"))
             {
                 Level_1 = Parameters["MVA_Level"];
@@ -89,6 +97,10 @@ namespace Anathem.Ui.ViewModels
             if (Parameters.ContainsKey("RV25L_Level"))
             {
                 Level_3 = Parameters["RV25L_Level"];
+            }
+            if (Parameters.ContainsKey("SSTank_Level"))
+            {
+                Level_4 = Parameters["SSTank_Level"];
             }
             if (Parameters.ContainsKey("MVA_StirrerSpeed"))
             {
@@ -185,6 +197,17 @@ namespace Anathem.Ui.ViewModels
                 RaisePropertyChanged();
             }
         }
+        private string pressure_4;
+
+        public string Pressure_4
+        {
+            get { return pressure_4; }
+            set
+            {
+                pressure_4 = value;
+                RaisePropertyChanged();
+            }
+        }
         private string temperature_1;
 
         public string Temperature_1
@@ -218,6 +241,17 @@ namespace Anathem.Ui.ViewModels
                 RaisePropertyChanged();
             }
         }
+        private string temperature_4;
+
+        public string Temperature_4
+        {
+            get { return temperature_4; }
+            set
+            {
+                temperature_4 = value;
+                RaisePropertyChanged();
+            }
+        }
         private string level_1;
 
         public string Level_1
@@ -248,6 +282,17 @@ namespace Anathem.Ui.ViewModels
             set
             {
                 level_3 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string level_4;
+
+        public string Level_4
+        {
+            get { return level_4; }
+            set
+            {
+                level_4 = value;
                 RaisePropertyChanged();
             }
         }

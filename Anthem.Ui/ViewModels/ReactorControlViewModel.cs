@@ -89,15 +89,15 @@ namespace Anathem.Ui.ViewModels
             //first convert the user entered stirrer Speed SetPoint to integer
             var toBeSetStirrer1SpeedSetPoint = Convert.ToInt16(StirrerSetpoint_1);
 
-            if (toBeSetStirrer1SpeedSetPoint <= 200 && toBeSetStirrer1SpeedSetPoint >= 0)
+            if (toBeSetStirrer1SpeedSetPoint <= 100 && toBeSetStirrer1SpeedSetPoint >= 0)
             {
                 fieldDevicesCommunicator
                         .SendCommandToDevice(DeviceId, "StirrerSetpoint_1", "double", toBeSetStirrer1SpeedSetPoint.ToString());
                 //auditTrailManager.RecordEventAsync($"Changed {DeviceId} Stirrer Speed SetPoint from {OldStirrerSetPoint} to {toBeSetStirrerSpeedSetPoint}", UserDetails.Name, EventTypeEnum.ChangedSetPoint);
             }
-            else if (toBeSetStirrer1SpeedSetPoint > 200)
+            else if (toBeSetStirrer1SpeedSetPoint > 100)
             {
-                MessageBox.Show("Maximum Stirrer Speed is less than 200 rpm");
+                MessageBox.Show("Maximum Stirrer Speed is less than 100 rpm");
                 StirrerSetpoint_1 = null;
             }
             else if (toBeSetStirrer1SpeedSetPoint < 0)
@@ -111,15 +111,15 @@ namespace Anathem.Ui.ViewModels
             //first convert the user entered stirrer Speed SetPoint to integer
             var toBeSetStirrer2SpeedSetPoint = Convert.ToInt16(StirrerSetpoint_2);
 
-            if (toBeSetStirrer2SpeedSetPoint <= 200 && toBeSetStirrer2SpeedSetPoint >= 0)
+            if (toBeSetStirrer2SpeedSetPoint <= 100 && toBeSetStirrer2SpeedSetPoint >= 0)
             {
                 fieldDevicesCommunicator
                         .SendCommandToDevice(DeviceId, "StirrerSetpoint_2", "double", toBeSetStirrer2SpeedSetPoint.ToString());
                 //auditTrailManager.RecordEventAsync($"Changed {DeviceId} Stirrer Speed SetPoint from {OldStirrerSetPoint} to {toBeSetStirrerSpeedSetPoint}", UserDetails.Name, EventTypeEnum.ChangedSetPoint);
             }
-            else if (toBeSetStirrer2SpeedSetPoint > 200)
+            else if (toBeSetStirrer2SpeedSetPoint > 100)
             {
-                MessageBox.Show("Maximum Stirrer Speed is less than 200 rpm");
+                MessageBox.Show("Maximum Stirrer Speed is less than 100 rpm");
                 StirrerSetpoint_2 = null;
             }
             else if (toBeSetStirrer2SpeedSetPoint < 0)
@@ -133,15 +133,15 @@ namespace Anathem.Ui.ViewModels
             //first convert the user entered stirrer Speed SetPoint to integer
             var toBeSetStirrer3SpeedSetPoint = Convert.ToInt16(StirrerSetpoint_3);
 
-            if (toBeSetStirrer3SpeedSetPoint <= 200 && toBeSetStirrer3SpeedSetPoint >= 0)
+            if (toBeSetStirrer3SpeedSetPoint <= 100 && toBeSetStirrer3SpeedSetPoint >= 0)
             {
                 fieldDevicesCommunicator
                         .SendCommandToDevice(DeviceId, "StirrerSetpoint_3", "double", toBeSetStirrer3SpeedSetPoint.ToString());
                 //auditTrailManager.RecordEventAsync($"Changed {DeviceId} Stirrer Speed SetPoint from {OldStirrerSetPoint} to {toBeSetStirrerSpeedSetPoint}", UserDetails.Name, EventTypeEnum.ChangedSetPoint);
             }
-            else if (toBeSetStirrer3SpeedSetPoint > 200)
+            else if (toBeSetStirrer3SpeedSetPoint > 100)
             {
-                MessageBox.Show("Maximum Stirrer Speed is less than 200 rpm");
+                MessageBox.Show("Maximum Stirrer Speed is less than 100 rpm");
                 StirrerSetpoint_3 = null;
             }
             else if (toBeSetStirrer3SpeedSetPoint < 0)
@@ -155,7 +155,7 @@ namespace Anathem.Ui.ViewModels
             //first convert the user entered stirrer Speed SetPoint to integer
             var toBeSetChillerSetPoint = Convert.ToInt16(ChillerSetpoint);
 
-            if (toBeSetChillerSetPoint <= 200 && toBeSetChillerSetPoint >= 0)
+            if (toBeSetChillerSetPoint <= 50 && toBeSetChillerSetPoint >= -25)
             {
                 fieldDevicesCommunicator
                         .SendCommandToDevice(DeviceId, "ChillerSetpoint", "double", toBeSetChillerSetPoint.ToString());
@@ -166,9 +166,9 @@ namespace Anathem.Ui.ViewModels
                 MessageBox.Show("Maximum Chiller Temperature is less than 50 °C");
                 StirrerSetpoint_3 = null;
             }
-            else if (toBeSetChillerSetPoint < 0)
+            else if (toBeSetChillerSetPoint < -25)
             {
-                MessageBox.Show("Minimum  Chiller Temperature is 0 °C");
+                MessageBox.Show("Minimum  Chiller Temperature is -25 °C");
                 StirrerSetpoint_3 = null;
             }
         }

@@ -362,6 +362,9 @@
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Stirrer">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
@@ -404,7 +407,7 @@
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Drain">
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
 
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="N2Purge">
@@ -484,6 +487,7 @@
                                     <DataTrigger Binding="{Binding Parameters.Name}" Value="Start">
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </DataTrigger>
+                                  
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
