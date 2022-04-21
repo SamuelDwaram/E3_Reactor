@@ -1,7 +1,10 @@
-﻿using Prism.Commands;
+﻿using E3.UserManager.Model.Data;
+using E3.UserManager.Model.Interfaces;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Anathem.Ui.ViewModels
@@ -13,13 +16,27 @@ namespace Anathem.Ui.ViewModels
         public DashboardViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
+            UserDetails = (User)Application.Current.Resources["LoggedInUser"];
         }
 
         public ICommand NavigateCommand
         {
-            get => new DelegateCommand<string>(page => regionManager.RequestNavigate("SelectedViewPane", page));
+            get
+            {
+                return new DelegateCommand<string>(page => regionManager.RequestNavigate("SelectedViewPane", page));
+            }
         }
 
-       
+        private User _userDetails;
+        public User UserDetails
+        {
+            get => _userDetails ?? (_userDetails = new User());
+            set
+            {
+                _userDetails = value;
+                RaisePropertyChanged();
+            }
+        }
+
     }
 }

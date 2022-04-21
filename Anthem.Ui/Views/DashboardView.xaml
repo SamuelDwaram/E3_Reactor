@@ -3,11 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:prism="http://prismlibrary.com/"
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:conv="clr-namespace:Anathem.Ui.Converter"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
     <UserControl.Resources>
+        <conv:RoleCheckConverter x:Key="RoleCheckConverter"/>
+        
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -60,8 +63,8 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="black"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <!--<Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>-->
                                 <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -89,7 +92,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Grid.Column="1" Cursor="Hand" >
+        <StackPanel Grid.Row="1" Grid.Column="1" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter=Recipes }"  >
             <Button Grid.Row="1" Grid.Column="1"  CommandParameter="Recipes" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
                 <Image Source="/Anathem.Ui;component/Images/Recipe Control.png"/>
             </Button>
@@ -100,7 +103,7 @@
             </Button>
 
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="2" Cursor="Hand" >
+        <StackPanel Grid.Row="1" Grid.Column="2" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter= ParametersHost }">
             <Button Grid.Row="1" Grid.Column="2" CommandParameter="ReactorControl" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
 
                 <Image Source="/Anathem.Ui;component/Images/Parameter_Host.png" />
@@ -112,7 +115,7 @@
                 </TextBlock>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="3" Cursor="Hand" >
+        <StackPanel Grid.Row="1" Grid.Column="3" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter= ProcessDiagram }" >
             <Button Grid.Row="1" Grid.Column="3" CommandParameter="ProcessFlow" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
                 <Image Source="/Anathem.Ui;component/Images/Process flow diagram.png"/>
             </Button>
@@ -122,7 +125,7 @@
                 </TextBlock>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="4" Cursor="Hand" >
+        <StackPanel Grid.Row="1" Grid.Column="4" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter= UserManagement }" >
             <Button Grid.Row="1" Grid.Column="4" CommandParameter="UserManagement" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
                 <Image Source="/Anathem.Ui;component/Images/user.png"/>
 
@@ -133,7 +136,7 @@
                 </TextBlock>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="1" Cursor="Hand">
+        <StackPanel Grid.Row="2" Grid.Column="1" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter= Reports }">
             <Button Grid.Row="2" Grid.Column="1" CommandParameter="Reports" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
 
                 <Image Source="/Anathem.Ui;component/Images/reports icon.png"/>
@@ -144,7 +147,7 @@
                 </TextBlock>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="2" Cursor="Hand">
+        <StackPanel Grid.Row="2" Grid.Column="2" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter= Trends }">
             <Button Grid.Row="2" Grid.Column="2" CommandParameter="Trends" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
 
                 <Image Source="/Anathem.Ui;component/Images/trends-icon.png"/>
@@ -155,7 +158,7 @@
                 </TextBlock>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="3" Cursor="Hand">
+        <StackPanel Grid.Row="2" Grid.Column="3" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter= Alarms }">
             <Button Grid.Row="2" Grid.Column="3" CommandParameter="Alarms" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
             
                 <Image Source="/Anathem.Ui;component/Images/Alarmicon.png"/>
@@ -166,7 +169,7 @@
                 </TextBlock>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="4" Cursor="Hand">
+        <StackPanel Grid.Row="2" Grid.Column="4" Cursor="Hand" IsEnabled="{Binding UserDetails.Roles, Converter={StaticResource RoleCheckConverter}, ConverterParameter= AuditTrail }">
             <Button Grid.Row="2" Grid.Column="4" CommandParameter="AuditTrail" Style="{DynamicResource ButtonStyle}" Height="300"  Width="300" Background="Transparent" BorderThickness="0">
               
                 <Image Source="/Anathem.Ui;component/Images/audit.png"/>

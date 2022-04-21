@@ -51,9 +51,9 @@ namespace E3.UserManager.Model.Implementations
                 addedUser.UserID = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                 IList<DbParameterInfo> parameters = new List<DbParameterInfo>
                 {
-                    new DbParameterInfo("@UserID", addedUser.UserID, DbType.String),
+                    new DbParameterInfo("@UserID", credentials.Username, DbType.String),
                     new DbParameterInfo("@Name", addedUser.Name, DbType.String),
-                    new DbParameterInfo("@Designation", addedUser.Designation, DbType.String),
+                    new DbParameterInfo("@Designation", addedUser.Roles.FirstOrDefault().Name, DbType.String),
                     new DbParameterInfo("@CurrentStatus", "Active", DbType.String),
                     new DbParameterInfo("@CreatedDate", DateTime.Now, DbType.DateTime),
                     new DbParameterInfo("@Username", credentials.Username, DbType.String),

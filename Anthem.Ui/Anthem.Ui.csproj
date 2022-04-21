@@ -49,6 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter\RoleCheckConverter.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\UiHelpers.cs" />
     <Compile Include="Model\DevicesReportHandler.cs" />
@@ -130,7 +131,9 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="UserControls\BoolParameter.xaml">
       <SubType>Designer</SubType>
