@@ -157,7 +157,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <!--<ColumnDefinition Width="1*"/>-->
                 </Grid.ColumnDefinitions>
                 <Button Grid.Row="1" Grid.Column="0" Command="{Binding PrintBatchReportCommand}" CommandParameter="pdf" Margin="5" Style="{StaticResource CommonButtonStyle}">
                     <DockPanel HorizontalAlignment="Center" Margin="10,0,10,0">
@@ -165,12 +165,12 @@
                         <Label Content="Export Batch PDF Report" Foreground="White"/>
                     </DockPanel>
                 </Button>
-                <Button Grid.Row="1" Grid.Column="1" Command="{Binding PrintBatchReportCommand}" CommandParameter="csv" Margin="5" Style="{StaticResource CommonButtonStyle}">
+                <!--<Button Grid.Row="1" Grid.Column="1" Command="{Binding PrintBatchReportCommand}" CommandParameter="csv" Margin="5" Style="{StaticResource CommonButtonStyle}">
                     <DockPanel HorizontalAlignment="Center" Margin="10,0,10,0">
                         <Path DockPanel.Dock="Left" Height="15" Width="15" Fill="White" Stretch="Fill" Data="M-474.4,267.1v1.3v2h-2.1h-11h-2v-2v-1.3h-2.6v9.5h2.6v4.3h14.9l0-4.3h2.5l0.1-9.5H-474.4z M-476.7,279.1h-10.7 v-2.3h10.7V279.1z"/>
                         <Label Content="Export Batch CSV Report" Foreground="White"/>
                     </DockPanel>
-                </Button>
+                </Button>-->
             </Grid>
         </Grid>
         <Grid Grid.Column="2" Background="#272e3e" Margin="5">

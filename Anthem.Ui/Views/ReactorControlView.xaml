@@ -177,11 +177,11 @@
                         <Button Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
-                                    <uc_1:ButtonOnOffAnimation Tag="ChillerStatus" uiHelpers:UiHelpers.CommandToDevice="{Binding SendCommandToDevice}"/>
+                                    <uc_1:ButtonOnOffAnimation Tag="ChillerStatus" uiHelpers:UiHelpers.CommandToDevice="{Binding SendCommandToDevice}" IsEnabled="False"/>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Label Content="Chiller" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Label Content="Chiller Power Ind" Style="{StaticResource HeaderLabelStyle}"/>
                     </StackPanel>
                 </Viewbox>
             </Border>

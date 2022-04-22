@@ -78,7 +78,8 @@ namespace E3.UserManager.ViewModels
                 }
                 else
                 {
-                    if (userManager.GetUserLoginStatus(user.UserID))
+                    //if (userManager.GetUserLoginStatus(user.UserID))
+                    if (false)
                     {
                         //Skip. don't allow user to login since he is already logged in
                         UsernameErrorMessage = "User already logged in from another system";

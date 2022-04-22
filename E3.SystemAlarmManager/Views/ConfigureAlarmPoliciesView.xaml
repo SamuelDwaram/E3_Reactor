@@ -166,7 +166,7 @@
                     </Style>
                 </RadioButton.Style>
             </RadioButton>
-            <Button Grid.Column="5" Command="{Binding ToggleAdminPopupCommand}">
+            <!--<Button Grid.Column="5" Command="{Binding ToggleAdminPopupCommand}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource CommonButtonStyle}">
                         <Style.Triggers>
@@ -179,7 +179,7 @@
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
-            </Button>
+            </Button>-->
         </Grid>
         <Grid Grid.Row="1" x:Name="AlarmPoliciesListHeaderGrid" Height="30">
             <Grid.ColumnDefinitions>

@@ -192,7 +192,7 @@
         <uc_1:BoolParameter Grid.Row="6" Grid.Column="6" ParamLabel="" Tag=""/>
         <uc_1:BoolParameter Grid.Row="9" Grid.Column="6" ParamLabel="" Tag=""/>
         <uc_1:BoolParameter Grid.Row="9"  Grid.Column="6" ParamLabel="P6" Tag="Pump_6"/>
-        <uc_1:BoolParameter Grid.Row="11" Grid.Column="6" ParamLabel="P7" Tag="Pump_7"/>
+        <uc_1:BoolParameter Grid.Row="12" Grid.Column="6" ParamLabel="P7" Tag="Pump_7"/>
         <!--#endregion-->
 
         <!--#region Column 7 -->
