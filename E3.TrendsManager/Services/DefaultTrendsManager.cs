@@ -66,7 +66,7 @@ namespace E3.TrendsManager.Services
                 }
             });
 
-            query += $"TimeStamp from {trendDevice.DeviceId} where TimeStamp between '{startTime:yyyy-MM-dd HH:mm:ss}' and '{endTime:yyyy-MM-dd HH:mm:ss}'";
+            query += $"TimeStamp from {trendDevice.DeviceId} where TimeStamp between '{startTime:yyyy-MM-dd HH:mm:ss}' and '{endTime:yyyy-MM-dd HH:mm:ss}' order by timestamp asc";
             //fetch data from db using query
             databaseReader.ExecuteReadCommand(query, CommandType.Text).AsEnumerable().ToList()
                 .ForEach(dataRecord => {
@@ -173,7 +173,7 @@ namespace E3.TrendsManager.Services
                     DisableAnimations = true,
                     LegendLocation = LegendLocation.Top,
                     Height = 480,
-                    Width = 650,
+                    Width = 550,
                     AxisY = axisY,
                     AxisX = new AxesCollection
                     {

@@ -253,7 +253,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Label Margin="10,-5,0,0" Content="Raactor Stirrer&#xa;Setpoint" Style="{StaticResource HeaderLabelStyleSetpointBox}" />
+                    <Label Margin="10,-5,0,0" Content="Reactor Stirrer&#xa;Setpoint" Style="{StaticResource HeaderLabelStyleSetpointBox}" />
                 </Grid>
                 <Grid Grid.Row="1">
                     <Viewbox HorizontalAlignment="Left">

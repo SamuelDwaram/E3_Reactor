@@ -68,7 +68,7 @@ namespace Anathem.Ui.ViewModels
             }
             if (Parameters.ContainsKey("InstrumentAirPressure"))
             {
-                Pressure_3 = Parameters["InstrumentAirPressure"];
+                Pressure_4 = Parameters["InstrumentAirPressure"];
             }
             if (Parameters.ContainsKey("MVA_Temperature"))
             {
@@ -161,9 +161,33 @@ namespace Anathem.Ui.ViewModels
         public string DeviceId { get; } = "Reactor_1";
         public ICommand NavigateCommand => new DelegateCommand<string>(page => regionManager.RequestNavigate("SelectedViewPane", page));
         public Dictionary<string, string> Parameters { get; } = new Dictionary<string, string>();
+        private void ChangeChillerSetPoint()
+        {
+            //first convert the user entered stirrer Speed SetPoint to integer
+            var toBeSetChillerSetPoint = Convert.ToInt16(Temperature_5);
 
+            if (toBeSetChillerSetPoint <= 50 && toBeSetChillerSetPoint >= -25)
+            {
+                fieldDevicesCommunicator
+                        .SendCommandToDevice(DeviceId, "ChillerSetpoint", "double", toBeSetChillerSetPoint.ToString());
+                //auditTrailManager.RecordEventAsync($"Changed {DeviceId} Stirrer Speed SetPoint from {OldStirrerSetPoint} to {toBeSetStirrerSpeedSetPoint}", UserDetails.Name, EventTypeEnum.ChangedSetPoint);
+            }
+            else if (toBeSetChillerSetPoint > 50)
+            {
+                MessageBox.Show("Maximum Chiller Temperature is less than 50 °C");
+                Temperature_5 = null;
+            }
+            else if (toBeSetChillerSetPoint < -25)
+            {
+                MessageBox.Show("Minimum  Chiller Temperature is -25 °C");
+                Temperature_5 = null;
+            }
+        }
 
-
+        public ICommand ChangeChillerSetPointCommand
+        {
+            get => new DelegateCommand(ChangeChillerSetPoint);
+        }
         private string pressure_1;
 
         public string Pressure_1
@@ -249,6 +273,17 @@ namespace Anathem.Ui.ViewModels
             set
             {
                 temperature_4 = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string temperature_5;
+
+        public string Temperature_5
+        {
+            get { return temperature_5; }
+            set
+            {
+                temperature_5 = value;
                 RaisePropertyChanged();
             }
         }

@@ -78,10 +78,14 @@ namespace Anathem.Ui.Helpers
                     };
                 }
 
-                ba.MouseLeftButtonDown += (sender, args) => {
-                    ButtonOnOffAnimation button = sender as ButtonOnOffAnimation;
-                    GetCommandToDevice(button).Execute($"{button.Tag}|bool|{!Convert.ToBoolean(ButtonOnOffAnimation.GetStatus(button) ?? bool.FalseString)}");
-                };
+                if (ba.IsEnabled)
+                {
+                    ba.MouseLeftButtonDown += (sender, args) => {
+                        ButtonOnOffAnimation button = sender as ButtonOnOffAnimation;
+                        GetCommandToDevice(button).Execute($"{button.Tag}|bool|{!Convert.ToBoolean(ButtonOnOffAnimation.GetStatus(button) ?? bool.FalseString)}");
+                    };
+                }
+                
             }
         }
         #endregion

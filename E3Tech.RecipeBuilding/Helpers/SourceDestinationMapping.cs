@@ -15,7 +15,7 @@ namespace E3Tech.RecipeBuilding.Helpers
             { "AA1", new List<string>{ "MVA", "RV 50L", "RV 25L" } },
             { "AA2", new List<string>{ "MVA", "RV 50L", "RV 25L" } },
             { "Fill In", new List<string> { "R1", "R2", "R3", "R4", "R5", "AA1", "AA2", "DCM" } },
-            { "Flash", new List<string>{  "MVA", "RV 50L", "RV 25L" } },
+            { "Flush", new List<string>{  "MVA", "RV 50L", "RV 25L" } },
             { "MVA", new List<string>{ "RV 50L", "RV 25L" } },
             { "R1", new List<string>{  "R3", "R4", "R5", "AA1", "AA2", "MVB", "MVA", "RV 50L", "RV 25L" } },
             { "R2", new List<string>{ "MVA"} },

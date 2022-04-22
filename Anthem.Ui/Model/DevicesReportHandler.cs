@@ -203,9 +203,9 @@ namespace Anathem.Ui.Model
                     parametersDataTable.Columns.Add($"Pressure{GetParameterUnits("Pressure", true)}", typeof(double));
                     parameterValues.Add(parameter.Value);
                 }
-                if (parameter.Key.Contains("PH"))
+                if (parameter.Key.Contains("Level"))
                 {
-                    parametersDataTable.Columns.Add("pH", typeof(double));
+                    parametersDataTable.Columns.Add("%", typeof(double));
                     parameterValues.Add(parameter.Value);
                 }
                 if (parameter.Key.Contains("Speed"))
@@ -229,7 +229,7 @@ namespace Anathem.Ui.Model
                     {
                         Title = "BATCH CHART",
                         DataType = SectionalDataType.Image,
-                         Data = new List<object> { trendsManager.PrepareTrendsImageForGivenData(deviceId, dataTableForTrends, parameters) }.ToArray(),
+                        Data = new List<object> { trendsManager.PrepareTrendsImageForGivenData(deviceId, dataTableForTrends, parameters) }.ToArray(),
                         EndPageHere = true
                     }
                 };
@@ -298,13 +298,17 @@ namespace Anathem.Ui.Model
             {
                 return insertNewLine ? $"{Environment.NewLine}(RPM)" : "(RPM)";
             }
-            else if (parameterName.Contains("CurrentSpeed"))
+            else if (parameterName.Contains("Speed"))
             {
                 return insertNewLine ? $"{Environment.NewLine}(RPM)" : "(RPM)";
             }
             else if (parameterName.Contains("Pressure"))
             {
                 return insertNewLine ? $"{Environment.NewLine}(bar)" : "(bar)";
+            }
+            else if (parameterName.Contains("Level"))
+            {
+                return insertNewLine ? $"{Environment.NewLine}(%)" : "(%)";
             }
 
             return string.Empty;
