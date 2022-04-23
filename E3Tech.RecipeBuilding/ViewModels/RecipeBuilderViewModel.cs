@@ -1,4 +1,5 @@
 ﻿using E3.AuditTrailManager.Model;
+using E3.AuditTrailManager.Model.Enums;
 using E3.ReactorManager.DesignExperiment.Model;
 using E3.ReactorManager.DesignExperiment.Model.Data;
 using E3.ReactorManager.Interfaces.HardwareAbstractionLayer;
@@ -296,6 +297,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             }
             if (CanStartBatch())
             {
+                User currentUser = (User)Application.Current.Resources["LoggedInUser"];
                 recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
                 if (IsSeqRecipeExecuting)
                 {
@@ -395,6 +397,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             Task.Factory.StartNew(new Action(TerminateBatch))
                 .ContinueWith(new Action<Task>(ClosePopup), taskScheduler);
         }
+
         public void ClosePopup(Task task)
         {
             if (task.IsCompleted)
@@ -415,7 +418,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
         private void TerminateBatch()
         {
-            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+            
 
             if (designExperiment.EndBatchCompact(AdminCredential, CurrentBatchDetails.FieldDeviceIdentifier, CurrentBatchDetails.Name, CurrentBatchDetails.FieldDeviceIdentifier))
             {
@@ -438,6 +441,9 @@ namespace E3Tech.RecipeBuilding.ViewModels
                                           "PauseRecipe",
                                           "bool",
                                           Boolean.TrueString);
+            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+            auditTrail.RecordEventAsync( currentUser.Name + " has paused the recipe.", currentUser.Name, EventTypeEnum.Batch);
+
         }
         private void ResumeRecipe()
         {
@@ -446,6 +452,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
                                           "PauseRecipe",
                                           "bool",
                                           Boolean.FalseString);
+            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+            auditTrail.RecordEventAsync(currentUser.Name + " has resumed the recipe.", currentUser.Name, EventTypeEnum.Recipe);
         }
 
         private void SkipDrainExecution()
@@ -579,6 +587,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
             recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
             UpdateIsEditEnable();
             recipeExecutor.SaveUpdatedBlockExecution(DeviceId);
+            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+            auditTrail.RecordEventAsync(currentUser.Name + " has changed runtimer recipe.", currentUser.Name, EventTypeEnum.Recipe);
         }
 
         #region Abort Recipe & Abort RecipeBlock Execution
@@ -605,6 +615,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
         public void AbortRecipeExecution()
         {
             recipeExecutor.AbortRecipeExecution(DeviceId);
+            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+            auditTrail.RecordEventAsync(currentUser.Name + " has Stopped the recipe.", currentUser.Name, EventTypeEnum.Recipe);
         }
 
         private bool CanAbortRecipeExecution()

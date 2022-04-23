@@ -79,6 +79,10 @@
       <Project>{1e93468b-7230-4fc3-bc2e-9b039232afd8}</Project>
       <Name>E3.ReactorManager.DataAccessHandler</Name>
     </ProjectReference>
+    <ProjectReference Include="..\E3.ReactorManager.DesignExperiment\E3.ReactorManager.DesignExperiment.csproj">
+      <Project>{9079B332-6E6E-412C-9153-895A4DB989D3}</Project>
+      <Name>E3.ReactorManager.DesignExperiment</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E3.ReactorManager.Interfaces\E3.ReactorManager.Interfaces.csproj">
       <Project>{620C94FE-D355-4801-92B0-F86D1B08FB02}</Project>
       <Name>E3.ReactorManager.Interfaces</Name>
