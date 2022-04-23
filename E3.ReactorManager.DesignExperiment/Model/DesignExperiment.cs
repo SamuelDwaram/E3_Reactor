@@ -77,7 +77,8 @@ namespace E3.ReactorManager.DesignExperiment.Model
         private void UpdateBatchStatusCompact(string batchIdentifier, string batchName, string deviceIdContainingBatch)
         {
             databaseWriter.EndBatchCompact(batchIdentifier);
-            auditTrailManager.RecordEventAsync(" ended Batch " + batchName + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(deviceIdContainingBatch), "user", EventTypeEnum.Batch);
+            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+            auditTrailManager.RecordEventAsync(currentUser.Name + " has  ended Batch " + batchName + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(deviceIdContainingBatch), currentUser.Name, EventTypeEnum.Batch);
             fieldDevicesCommunicator.SendCommandToDevice(deviceIdContainingBatch, "RunningBatchStatus", "bool", bool.FalseString);
         }
 
@@ -85,7 +86,7 @@ namespace E3.ReactorManager.DesignExperiment.Model
         {
             databaseWriter.EndBatch(batchIdentifier, cleanedBy, cleaningSolvent);
             User currentUser = (User)Application.Current.Resources["LoggedInUser"];
-            auditTrailManager.RecordEventAsync(currentUser.Name + "has ended Batch " + batchName + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(deviceIdContainingBatch), cleanedBy, EventTypeEnum.Batch);
+            auditTrailManager.RecordEventAsync(currentUser.Name + " has ended Batch " + batchName + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(deviceIdContainingBatch), cleanedBy, EventTypeEnum.Batch);
             fieldDevicesCommunicator.SendCommandToDevice(deviceIdContainingBatch, "RunningBatchStatus", "bool", bool.FalseString);
         }
 
@@ -142,7 +143,7 @@ namespace E3.ReactorManager.DesignExperiment.Model
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "RunningBatchStatus", "bool", bool.TrueString);
                 SaveBatchToDatabaseCompact(currentBatchData);
                 User currentUser = (User)Application.Current.Resources["LoggedInUser"];
-                auditTrailManager.RecordEventAsync(currentUser.Name + "has created Batch " + currentBatchData.Name + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(currentBatchData.FieldDeviceIdentifier), currentBatchData.ScientistName, EventTypeEnum.Batch);
+                auditTrailManager.RecordEventAsync(currentUser.Name + " has started Batch " + currentBatchData.Name + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(currentBatchData.FieldDeviceIdentifier), currentUser.Name, EventTypeEnum.Batch);
 
                 return true;
             }
@@ -160,7 +161,8 @@ namespace E3.ReactorManager.DesignExperiment.Model
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "BatchScientistName", "string", currentBatchData.ScientistName);
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "RunningBatchStatus", "bool", bool.TrueString);
                 SaveBatchToDatabase(currentBatchData);
-                auditTrailManager.RecordEventAsync(currentBatchData.ScientistName + " created Batch " + currentBatchData.Name + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(currentBatchData.FieldDeviceIdentifier), currentBatchData.ScientistName, EventTypeEnum.Batch);
+                User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+                auditTrailManager.RecordEventAsync(currentUser.Name + " has started Batch " + currentBatchData.Name + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(currentBatchData.FieldDeviceIdentifier), currentUser.Name, EventTypeEnum.Batch);
 
                 return true;
             }
