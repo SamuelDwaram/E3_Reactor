@@ -278,6 +278,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\E3.AuditTrailManager\E3.AuditTrailManager.csproj">
+      <Project>{6A75F5A4-114D-4763-BF18-C81ABC3D7FE5}</Project>
+      <Name>E3.AuditTrailManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E3.Mediator\E3.Mediator.csproj">
       <Project>{72adf709-4940-46a3-9121-1b7a7abaa2c1}</Project>
       <Name>E3.Mediator</Name>

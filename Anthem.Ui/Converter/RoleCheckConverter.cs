@@ -18,8 +18,11 @@ namespace Anathem.Ui.Converter
                 if (value is IList<Role>)
                 {
                     IList<Role> Values = value as IList<Role>;
-                    bool result = Values.First().ModulesAccessable.Any(x => x.Trim() == parameter.ToString().Trim());
-                    return result;
+                    if (Values.Count > 0)
+                    {
+                        bool result = Values.First().ModulesAccessable.Any(x => x.Trim() == parameter.ToString().Trim());
+                        return result;
+                    }
                 }
             }
             return false;

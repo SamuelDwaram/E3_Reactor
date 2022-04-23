@@ -16,6 +16,13 @@ namespace Anathem.Ui.ViewModels
         public DashboardViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
+           
+        }
+
+        public ICommand LoadedCommand => new DelegateCommand(Loaded);
+
+        private void Loaded()
+        {
             UserDetails = (User)Application.Current.Resources["LoggedInUser"];
         }
 

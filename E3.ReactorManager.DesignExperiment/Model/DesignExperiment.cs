@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using E3.AuditTrailManager.Model;
 using E3.AuditTrailManager.Model.Enums;
 using E3.ReactorManager.DesignExperiment.Model.Data;
@@ -79,25 +80,24 @@ namespace E3.ReactorManager.DesignExperiment.Model
             auditTrailManager.RecordEventAsync(" ended Batch " + batchName + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(deviceIdContainingBatch), "user", EventTypeEnum.Batch);
             fieldDevicesCommunicator.SendCommandToDevice(deviceIdContainingBatch, "RunningBatchStatus", "bool", bool.FalseString);
         }
+
         private void UpdateBatchStatus(string batchIdentifier, string batchName, string deviceIdContainingBatch, string cleanedBy, string cleaningSolvent)
         {
             databaseWriter.EndBatch(batchIdentifier, cleanedBy, cleaningSolvent);
-            auditTrailManager.RecordEventAsync(cleanedBy + " ended Batch " + batchName + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(deviceIdContainingBatch), cleanedBy, EventTypeEnum.Batch);
+            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+            auditTrailManager.RecordEventAsync(currentUser.Name + "has ended Batch " + batchName + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(deviceIdContainingBatch), cleanedBy, EventTypeEnum.Batch);
             fieldDevicesCommunicator.SendCommandToDevice(deviceIdContainingBatch, "RunningBatchStatus", "bool", bool.FalseString);
         }
-      
 
-        
+
+
         private string ValidateCredentials(Credential adminCredential)
         {
             User userDetails = userManager.AuthenticateCredential(adminCredential);
 
             if (userDetails != null)
             {
-                if (userDetails.Roles.Any(role => role.ModulesAccessable.Any(module => module == "DesignExperiment")))
-                {
-                    return userDetails.Name;
-                }
+                return userDetails.Name;
             }
 
             return string.Empty;
@@ -141,7 +141,8 @@ namespace E3.ReactorManager.DesignExperiment.Model
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "BatchScientistName", "string", currentBatchData.ScientistName);
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "RunningBatchStatus", "bool", bool.TrueString);
                 SaveBatchToDatabaseCompact(currentBatchData);
-                auditTrailManager.RecordEventAsync(currentBatchData.ScientistName + " created Batch " + currentBatchData.Name + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(currentBatchData.FieldDeviceIdentifier), currentBatchData.ScientistName, EventTypeEnum.Batch);
+                User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+                auditTrailManager.RecordEventAsync(currentUser.Name + "has created Batch " + currentBatchData.Name + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(currentBatchData.FieldDeviceIdentifier), currentBatchData.ScientistName, EventTypeEnum.Batch);
 
                 return true;
             }
@@ -232,13 +233,18 @@ namespace E3.ReactorManager.DesignExperiment.Model
                  */
                 return false;
             }
-            
+
             return true;
         }
 
         public string FetchRunningBatch()
         {
             return databaseReader.FetchRunningBatch();
+        }
+
+        public string GetRunningBatchName()
+        {
+            return databaseReader.GetRunningBatchName();
         }
     }
 }

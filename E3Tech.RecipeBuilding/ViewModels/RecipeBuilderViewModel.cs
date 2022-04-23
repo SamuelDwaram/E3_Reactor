@@ -1,4 +1,5 @@
-﻿using E3.ReactorManager.DesignExperiment.Model;
+﻿using E3.AuditTrailManager.Model;
+using E3.ReactorManager.DesignExperiment.Model;
 using E3.ReactorManager.DesignExperiment.Model.Data;
 using E3.ReactorManager.Interfaces.HardwareAbstractionLayer;
 using E3.ReactorManager.Interfaces.HardwareAbstractionLayer.Data;
@@ -30,6 +31,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private readonly IRecipeReloader recipeReloader;
         private readonly IRecipeExecutor recipeExecutor;
         private readonly IUnityContainer containerProvider;
+        private readonly IAuditTrailManager auditTrail;
         private RecipeStepViewModel selectedStep;
         private readonly IFieldDevicesCommunicator fieldDevicesCommunicator;
         private readonly List<PropertyInfo> existingProperties = new List<PropertyInfo>(typeof(RecipeBuilderViewModel).GetProperties());
@@ -38,7 +40,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private Dictionary<SeqRecipeModel, IList<RecipeStep>> recipeSeqDetail;
 
 
-        public RecipeBuilderViewModel(IUnityContainer containerProvider, IRecipeExecutor recipeExecutor, IFieldDevicesCommunicator fieldDevicesCommunicator, IRecipeBuilder recipeBuilder, IRecipeReloader recipeReloader, IDesignExperiment designExperiment)
+        public RecipeBuilderViewModel(IUnityContainer containerProvider, IRecipeExecutor recipeExecutor, IFieldDevicesCommunicator fieldDevicesCommunicator, IRecipeBuilder recipeBuilder, IRecipeReloader recipeReloader, IDesignExperiment designExperiment, IAuditTrailManager auditTrailManager)
         {
             taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             this.designExperiment = designExperiment;
@@ -50,6 +52,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             this.containerProvider = containerProvider;
             this.recipeBuilder = recipeBuilder;
             this.recipeReloader = recipeReloader;
+            this.auditTrail = auditTrailManager;
             LoadRegisteredBlocks(containerProvider);
             RecipeSteps = new ObservableCollection<RecipeStepViewModel>();
             LoadSteps();
@@ -61,10 +64,13 @@ namespace E3Tech.RecipeBuilding.ViewModels
             var value = designExperiment.FetchRunningBatch();
             if (string.IsNullOrWhiteSpace(value))
             {
+                
                 IsBatchRunning = false;
             }
             else
             {
+                CurrentBatchDetails.FieldDeviceIdentifier = value;
+                CurrentBatchDetails.Name = designExperiment.GetRunningBatchName();
                 IsBatchRunning = true;
             }
         }
@@ -409,6 +415,8 @@ namespace E3Tech.RecipeBuilding.ViewModels
 
         private void TerminateBatch()
         {
+            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+
             if (designExperiment.EndBatchCompact(AdminCredential, CurrentBatchDetails.FieldDeviceIdentifier, CurrentBatchDetails.Name, CurrentBatchDetails.FieldDeviceIdentifier))
             {
                 IsBatchRunning = false;
@@ -439,6 +447,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                                           "bool",
                                           Boolean.FalseString);
         }
+
         private void SkipDrainExecution()
         {
             fieldDevicesCommunicator
@@ -526,8 +535,6 @@ namespace E3Tech.RecipeBuilding.ViewModels
                         index++;
                     }
                 }
-
-
             }
             else
             {

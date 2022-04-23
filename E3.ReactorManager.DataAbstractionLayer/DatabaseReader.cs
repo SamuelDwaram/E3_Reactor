@@ -1,4 +1,5 @@
 ﻿using E3.ReactorManager.DataAccessHandler;
+using E3.ReactorManager.DesignExperiment.Model.Data;
 using E3.ReactorManager.Interfaces.DataAbstractionLayer;
 using E3.ReactorManager.Interfaces.DataAbstractionLayer.Data;
 using E3.ReactorManager.Interfaces.Framework.Logging;
@@ -168,6 +169,7 @@ namespace E3.ReactorManager.DataAbstractionLayer
 
             return sensorsDataSets;
         }
+
         public string FetchRunningBatch()
         {
             string RunningBatch;
@@ -185,6 +187,26 @@ namespace E3.ReactorManager.DataAbstractionLayer
             }
 
             return RunningBatch;
+        }
+
+        public string GetRunningBatchName()
+        {
+            string runningBatchName = null;
+            var dataReader = _dbManager.GetScalarValue($"select top(1) Name from [dbo].BatchTableCompact  where State='Running' order by TimeStarted desc", CommandType.Text, null);
+
+            try
+            {
+                runningBatchName = dataReader?.ToString();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+            }
+
+            return runningBatchName;
         }
 
         public bool ValidateRecipeMessage(string recipeMessage)

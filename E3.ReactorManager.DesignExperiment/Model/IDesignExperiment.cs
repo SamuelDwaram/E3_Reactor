@@ -19,6 +19,7 @@ namespace E3.ReactorManager.DesignExperiment.Model
         /// </summary>
         /// <param name="currentBatch"></param>
         bool StartBatchCompact(Batch currentBatchData);
+
         bool StartBatch(Batch currentBatchData);
 
         /// <summary>
@@ -27,6 +28,7 @@ namespace E3.ReactorManager.DesignExperiment.Model
         /// <param name="batchName"></param>
         /// <returns></returns>
         bool ValidateBatchCompact(string batchName);
+
         bool ValidateBatch(string batchName, string batchNumber, string batchStage);
 
         /// <summary>
@@ -36,7 +38,11 @@ namespace E3.ReactorManager.DesignExperiment.Model
         /// <param name="batchName"></param>
         /// <returns></returns>
         bool EndBatch(Credential adminCredential, string batchIdentifier, string batchName, string deviceIdContainingBatch, string cleaningSolvent);
+
         bool EndBatchCompact(Credential adminCredential, string batchIdentifier, string batchName, string deviceIdContainingBatch);
+
+        string GetRunningBatchName();
+
         string FetchRunningBatch();
     }
 }
