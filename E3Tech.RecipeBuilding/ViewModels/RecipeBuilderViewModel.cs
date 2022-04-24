@@ -306,6 +306,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                              else
                              {
                                  IsSeqRecipeExecuting = false;
+                                 IsBatchNameRequestPopUpOpen = false;
                                  MessageBox.Show("Batch Already Exists, Please Re-enter the Batch Details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                  
                              }

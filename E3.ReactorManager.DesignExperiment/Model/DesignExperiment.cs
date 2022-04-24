@@ -142,7 +142,7 @@ namespace E3.ReactorManager.DesignExperiment.Model
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "BatchStatus", "string", "Running");
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "BatchScientistName", "string", currentUser.Name);
                 fieldDevicesCommunicator.SendCommandToDevice(currentBatchData.FieldDeviceIdentifier, "RunningBatchStatus", "bool", bool.TrueString);
-                SaveBatchToDatabaseCompact(currentBatchData);
+                SaveBatchToDatabaseCompact(currentBatchData, currentUser.Name);
                 
                 auditTrailManager.RecordEventAsync(currentUser.Name + " has started Batch " + currentBatchData.Name + " in " + fieldDevicesCommunicator.GetFieldDeviceLabel(currentBatchData.FieldDeviceIdentifier), currentUser.Name, EventTypeEnum.Batch);
 
@@ -171,13 +171,13 @@ namespace E3.ReactorManager.DesignExperiment.Model
             return false;
         }
 
-        private void SaveBatchToDatabaseCompact(Batch batchData)
+        private void SaveBatchToDatabaseCompact(Batch batchData, string UserName)
         {
             IList<DbParameterInfo> parameters = new List<DbParameterInfo>
             {
                 new DbParameterInfo("@Identifier", DateTime.Now.ToString("yyyyMMddHHmmssfff"), DbType.String),
                 new DbParameterInfo("@Name", batchData.Name, DbType.String),
-                //new DbParameterInfo("@ScientistName", batchData.ScientistName, DbType.String),
+                new DbParameterInfo("@ScientistName", UserName, DbType.String),
                 new DbParameterInfo("@Comments", batchData.Comments, DbType.String),
                 new DbParameterInfo("@State", BatchState.Running, DbType.String),
                 new DbParameterInfo("@TimeStarted", DateTime.Now, DbType.DateTime),
