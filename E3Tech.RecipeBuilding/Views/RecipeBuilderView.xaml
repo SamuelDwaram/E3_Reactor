@@ -214,7 +214,6 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.7*"/>
@@ -255,27 +254,12 @@
                             </Style>
                         </TextBox.Style>
                     </TextBox>
+                    
                     <Viewbox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">
-                        <Label Content="User Name" Style="{StaticResource HeaderLabelStyle}"/>
-                    </Viewbox>
-                    <TextBox Text="{Binding NewBatchDetails.ScientistName, UpdateSourceTrigger=PropertyChanged}" MaxLength="15" 
-                             Grid.Row="3" Grid.Column="1" Margin="5" Width="200" Padding="3" >
-                        <TextBox.Style>
-                            <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxValueStyleRecipeName}">
-                                <Style.Triggers>
-                                    <Trigger Property="Text" Value="">
-                                        <Setter Property="BorderBrush" Value="Red"/>
-                                        <Setter Property="BorderThickness" Value="1"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                    <Viewbox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right">
                         <Label Content="Comments" Style="{StaticResource HeaderLabelStyle}"/>
                     </Viewbox>
                     <TextBox Text="{Binding NewBatchDetails.Comments, UpdateSourceTrigger=PropertyChanged}" MaxLength="25" 
-                             Grid.Row="4" Grid.Column="1" Margin="5" Width="200" Padding="3">
+                             Grid.Row="3" Grid.Column="1" Margin="5" Width="200" Padding="3">
                         <TextBox.Style>
                             <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxValueStyleRecipeName}">
                                 <Style.Triggers>
@@ -287,12 +271,12 @@
                             </Style>
                         </TextBox.Style>
                     </TextBox>
-                    <Viewbox Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                    <Viewbox Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Label Content="Do You Want To Start The Batch ?" Height="60" Style="{StaticResource UnitsLabelStyle}"/>
                     </Viewbox>
-                    <Button Grid.Row="6" Grid.Column="0" Margin="132,14,32,10" Content="Yes" Style="{StaticResource CommandButtonStyle}" Command="{Binding StartRecipeCommand}"/>
+                    <Button Grid.Row="5" Grid.Column="0" Margin="132,14,32,10" Content="Yes" Style="{StaticResource CommandButtonStyle}" Command="{Binding StartRecipeCommand}"/>
 
-                    <Button Grid.Row="6" Grid.Column="1" Margin="136,12,116,12" Content="No" Style="{StaticResource CommandButtonStyle}" Command="{Binding CloseBatchNamePopupCommand}" >
+                    <Button Grid.Row="5" Grid.Column="1" Margin="136,12,116,12" Content="No" Style="{StaticResource CommandButtonStyle}" Command="{Binding CloseBatchNamePopupCommand}" >
 
                         <!--<Button.Triggers>-->
                         <!--<EventTrigger RoutedEvent="Button.Click">

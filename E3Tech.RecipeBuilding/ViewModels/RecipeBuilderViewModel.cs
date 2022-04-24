@@ -272,7 +272,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
             ExecuteRecipe();
         }
 
-        private bool ExecuteRecipe()
+        private void ExecuteRecipe()
         {
             if (IsBatchRunning == false)
             {
@@ -286,32 +286,40 @@ namespace E3Tech.RecipeBuilding.ViewModels
                                  //Navigate("Dashboard");
                                  IsBatchNameRequestPopUpOpen = false;
                                  IsBatchRunning = true;
+                                 if (CanStartBatch())
+                                 {
+                                     User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+                                     recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
+                                     if (IsSeqRecipeExecuting)
+                                     {
+                                         var recipeSeqToExecute = recipeSeqDetail.ElementAt((int)StartSeq - 1);
+                                         recipeSeqToExecute.Key.IsExecuting = true;
+                                         recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
+                                     }
+                                 }
+                                 else
+                                 {
+                                     IsSeqRecipeExecuting = false;
+                                 }
 
                              }
                              else
                              {
+                                 IsSeqRecipeExecuting = false;
                                  MessageBox.Show("Batch Already Exists, Please Re-enter the Batch Details", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                 
                              }
                          }
                      }), taskScheduler);
             }
-            if (CanStartBatch())
-            {
-                User currentUser = (User)Application.Current.Resources["LoggedInUser"];
-                recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
-                if (IsSeqRecipeExecuting)
-                {
-                    var recipeSeqToExecute = recipeSeqDetail.ElementAt((int)StartSeq - 1);
-                    recipeSeqToExecute.Key.IsExecuting = true;
-                    recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
-                }
-                return true;
-            }
-            else
-            {
-            }
-            IsSeqRecipeExecuting = false;
-            return false;
+            //if (CanStartBatch())
+            //{
+                
+            //}
+            //else
+            //{
+            //}
+            //IsSeqRecipeExecuting = false;
         }
 
         public void ValidateAndOpenPopup()
@@ -321,7 +329,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
                 if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
                 {
                     NewBatchDetails.Name = "";
-                    NewBatchDetails.ScientistName = "";
+                    //NewBatchDetails.ScientistName = "";
                     NewBatchDetails.Comments = "";
                     IsBatchNameRequestPopUpOpen = true;
                 }
@@ -363,7 +371,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         private bool CanStartBatch()
         {
             return ((!string.IsNullOrWhiteSpace(NewBatchDetails.Name)
-                && !string.IsNullOrWhiteSpace(NewBatchDetails.ScientistName)
+                //&& !string.IsNullOrWhiteSpace(NewBatchDetails.ScientistName)
                 && !string.IsNullOrWhiteSpace(NewBatchDetails.Comments)
                 && !string.IsNullOrWhiteSpace(NewBatchDetails.Number)) || IsBatchRunning)
                 && recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps);
@@ -911,6 +919,14 @@ namespace E3Tech.RecipeBuilding.ViewModels
                     RecipeSteps.Add(stepViewModel);
                     SelectedStep = stepViewModel;
                 }
+                else
+                {
+                    recipeBuilder.RemoveStep(step);
+                }
+            }
+            else
+            {
+                
             }
             int index = 1;
             foreach (var item in RecipeSteps)
@@ -1165,7 +1181,7 @@ namespace E3Tech.RecipeBuilding.ViewModels
         {
             get => _startRecipeCommand ?? (_startRecipeCommand = new DelegateCommand(new Action(StartRecipe))
                 .ObservesProperty(() => NewBatchDetails.Name)
-                .ObservesProperty(() => NewBatchDetails.ScientistName)
+                //.ObservesProperty(() => NewBatchDetails.ScientistName)
                 .ObservesProperty(() => NewBatchDetails.Comments));
             set => _startRecipeCommand = value;
         }
