@@ -179,13 +179,13 @@ namespace E3Tech.RecipeBuilding.ViewModels
                             keyvalueRecipeDetail.Key.IsExecuting = true;
                             recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
                             User currentUser = (User)Application.Current.Resources["LoggedInUser"];
-                            auditTrail.RecordEventAsync(currentUser.Name + " has executing Seq Recipe :  " + keyvalueRecipeDetail.Key.RecipeName, currentUser.Name, EventTypeEnum.SequenceRecipe);
+                            auditTrail.RecordEventAsync(currentUser.Name + " has executing Seq Recipe : " + keyvalueRecipeDetail.Key.RecipeName, currentUser.Name, EventTypeEnum.SequenceRecipe);
                         }
                     }
                     else
                     {
                         User currentUser = (User)Application.Current.Resources["LoggedInUser"];
-                        auditTrail.RecordEventAsync(currentUser.Name + " has Ended the Seq recipe :  " + keyvalueRecipeDetail.Key.RecipeName, currentUser.Name, EventTypeEnum.SequenceRecipe);
+                        auditTrail.RecordEventAsync(currentUser.Name + " has Ended the Seq recipe : " + keyvalueRecipeDetail.Key.RecipeName, currentUser.Name, EventTypeEnum.SequenceRecipe);
                         IsSeqRecipeExecuting = false;
                     }
                 }
