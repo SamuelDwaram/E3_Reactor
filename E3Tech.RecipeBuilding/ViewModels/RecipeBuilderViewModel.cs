@@ -178,10 +178,14 @@ namespace E3Tech.RecipeBuilding.ViewModels
                             recipeExecutor.Execute(DeviceId, recipeBuilder.RecipeSteps);
                             keyvalueRecipeDetail.Key.IsExecuting = true;
                             recipeBuilder.SaveSeqRecipeWhileExecuting(recipeSeqDetail.Keys.ToList(), StartSeq, EndSeq);
+                            User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+                            auditTrail.RecordEventAsync(currentUser.Name + " has executing Seq Recipe :  " + keyvalueRecipeDetail.Key.RecipeName, currentUser.Name, EventTypeEnum.SequenceRecipe);
                         }
                     }
                     else
                     {
+                        User currentUser = (User)Application.Current.Resources["LoggedInUser"];
+                        auditTrail.RecordEventAsync(currentUser.Name + " has Ended the Seq recipe :  " + keyvalueRecipeDetail.Key.RecipeName, currentUser.Name, EventTypeEnum.SequenceRecipe);
                         IsSeqRecipeExecuting = false;
                     }
                 }
@@ -241,7 +245,17 @@ namespace E3Tech.RecipeBuilding.ViewModels
         #region Export & Import Recipe
         private void ExportRecipe()
         {
-            recipeBuilder.Export();
+            if (recipeBuilder.CheckEndBlockInRecipe(recipeBuilder.RecipeSteps))
+            {
+                recipeBuilder.Export();
+            }
+            else
+            {
+                MessageBox.Show("Please add End Block in the Recipe before export",
+                                    "Recipe Execution Error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+            }
         }
 
         private void ImportRecipe()

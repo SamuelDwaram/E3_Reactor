@@ -8,6 +8,7 @@
         ModifiedUser,
         SwitchedOn,
         SwitchedOff,
-        Recipe
+        Recipe,
+        SequenceRecipe
     }
 }
