@@ -13,7 +13,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
 
         public HeaderFooter(string reportHeader = null, string reportLogoPath = null, string userName = null)
         {
-            ReportHeader = reportHeader ?? "REPORT";
+            ReportHeader = reportHeader ?? "AUDIT REPORT";
             ReportLogoPath = reportLogoPath;
             UserName = userName;
         }
@@ -98,7 +98,7 @@ namespace E3.ReactorManager.ReportsManager.Model.Implementations
 
             PdfPTable columnTable = new PdfPTable(1);
 
-            string[] data = { "Printed By: " + UserName, "Date: " + DateTime.Now, "Signature: ", "Checked By:", "Date : ", "Signature: " };
+            string[] data = { "Printed By: " + UserName, "Date & Time: " + DateTime.Now, "Signature: ", "Checked By:", "Date & Time: ", "Signature: " };
             int noOfRows = 3;
 
             for (int i = 0; i < data.Length; i++)

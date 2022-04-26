@@ -77,7 +77,7 @@ namespace Anathem.Ui.Model
                     User loggedInUser = (User)Application.Current.Resources["LoggedInUser"];
                     mediatorService.NotifyColleagues(InMemoryMediatorMessageContainer.RecordAudit, new object[] {
                     unityContainer, $"Generated Report for Batch : {selectedBatch.Name}", loggedInUser.Name, "Batch" });
-                    reportPrinter.PrintReportSections("Anthem Biosciences Pvt Ltd \n BATCH REPORT", t.Result, loggedInUser.Name, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"Images\report_logo.png"));
+                    reportPrinter.PrintReportSections("Anthem Biosciences Pvt Ltd \n \n BATCH REPORT", t.Result, loggedInUser.Name, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"Images\report_logo.png"));
                 }));
         }
 
@@ -325,16 +325,16 @@ namespace Anathem.Ui.Model
                     EndPageHere = true,
                     Data = new List<LabelValuePair>
                     {
-                        new LabelValuePair("Equipment Id", string.Empty),
-                        new LabelValuePair("Equipment Name", string.Empty),
-                        new LabelValuePair("Component" , selectedBatch.FieldDeviceLabel),
+                        new LabelValuePair("Equipment Id", "CL-PTS-01"),
+                        new LabelValuePair("Equipment Name", "Peptide Synthesizer"),
+                        //new LabelValuePair("Component" , selectedBatch.FieldDeviceLabel),
                         new LabelValuePair("Batch Name" , selectedBatch.Name),
                         new LabelValuePair("Batch Number", selectedBatch.Number),
                         new LabelValuePair("Process Start Date&Time", selectedBatch.TimeStarted.ToString()),
                         new LabelValuePair("Process End Date&Time", selectedBatch.TimeCompleted.ToString()),
                         //new LabelValuePair("Print Interval",string.Empty),
                         new LabelValuePair("Duration", (selectedBatch.TimeCompleted - selectedBatch.TimeStarted).ToString()),
-                        new LabelValuePair("Performed by" , selectedBatch.ScientistName) 
+                        new LabelValuePair("Initiated by" , selectedBatch.ScientistName) 
 
                         //new LabelValuePair("Experiment Number" , selectedBatch.Number),
                         //new LabelValuePair("Stage" , selectedBatch.Stage),
