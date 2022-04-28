@@ -241,7 +241,7 @@
                     <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
                         <Label Content="Batch Number" Style="{StaticResource HeaderLabelStyle}"/>
                     </Viewbox>
-                    <TextBox Text="{Binding NewBatchDetails.Number, UpdateSourceTrigger=LostFocus}" MaxLength="10" 
+                    <TextBox Text="{Binding NewBatchDetails.Number, UpdateSourceTrigger=LostFocus}" MaxLength="15" 
                              Grid.Row="2" Grid.Column="1" Margin="5" Width="200" Padding="3">
                         <TextBox.Style>
                             <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxValueStyleRecipeName}">
