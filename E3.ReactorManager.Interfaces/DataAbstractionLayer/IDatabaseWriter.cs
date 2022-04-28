@@ -64,5 +64,10 @@ namespace E3.ReactorManager.Interfaces.DataAbstractionLayer
         void LogReactorImage(string fieldDeviceIdentifier, byte[] imgBytes);
 
         void LogReactorImageWithFieldDeviceParameters(string fieldDeviceIdentifier, byte[] imgBytes, Dictionary<string, string> deviceParametersData);
+
+        void UpdateCredentialAttempt(int result, string userName);
+
+        void UpdateUserAsInvalid(string userName);
+        void ResetWrongCredentialAttempt(string userID);
     }
 }

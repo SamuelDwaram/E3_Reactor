@@ -40,7 +40,7 @@ namespace E3.UserManager.ViewModels
         public void UpdateUser()
         {
             logger.Log(LogType.Information, "Updating User : " + SelectedUser.Name + " property " + FieldToBeUpdated + " to " + UpdatedValue);
-            userManager.UpdateUser(SelectedUser.UserID, SelectedUser.Name, FieldToBeUpdated, UpdatedValue);
+            userManager.UpdatePassword(SelectedUser.UserID, SelectedUser.Name, FieldToBeUpdated, UpdatedValue);
         }
         #endregion
 

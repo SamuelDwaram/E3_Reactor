@@ -59,6 +59,9 @@ namespace E3.ReactorManager.Interfaces.DataAbstractionLayer
         #endregion
 
         #region New User Management Functions
+
+        int GetWrongCredentialAttempt(string userId);
+
         DataTable GetAllUsersInTheDatabase();
 
         DataTable AuthenticateCredentials(string username, string password);
@@ -114,5 +117,7 @@ namespace E3.ReactorManager.Interfaces.DataAbstractionLayer
         bool ValidateRecipeMessage(string recipeMessage);
 
         DataTable ExecuteReadCommandAsDataTable(string query, CommandType text);
+
+        bool GetPasswordValidation(string updatedValue);
     }
 }

@@ -3,6 +3,7 @@ using E3.UserManager.Model.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,6 +13,7 @@ namespace E3.UserManager.ViewModels
     public class ModifyPasswordViewModel : BindableBase
     {
         private readonly IUserManager userManager;
+        string errorMessage = null;
 
         public ModifyPasswordViewModel(User tobeModifiedUser, IUserManager userManager)
         {
@@ -22,7 +24,12 @@ namespace E3.UserManager.ViewModels
         #region Commands
         public ICommand UpdateUserCommand
         {
-            get => new DelegateCommand<string>(updatedPassword => userManager.UpdateUser(TobeModifiedUser.UserID, TobeModifiedUser.Name, "Password", updatedPassword));
+            get => new DelegateCommand<string>(updatedPassword => UpdatePassword(updatedPassword));
+        }
+
+        private void UpdatePassword(string updatedPassword)
+        {
+            errorMessage = userManager.UpdatePassword(TobeModifiedUser.UserID, TobeModifiedUser.Name, "Password", updatedPassword);
         }
 
         public ICommand LoadWindowCommand
@@ -33,7 +40,7 @@ namespace E3.UserManager.ViewModels
         public ICommand CloseWindowCommand
         {
             get => new DelegateCommand(() => {
-                if (CurrentWindow != null)
+                if (CurrentWindow != null && errorMessage == null)
                 {
                     CurrentWindow.Close();
                 }

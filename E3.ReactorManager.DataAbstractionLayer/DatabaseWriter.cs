@@ -300,5 +300,38 @@ namespace E3.ReactorManager.DataAbstractionLayer
             Console.WriteLine("Inserted Id : " + lastId);
         }
         #endregion
+
+        public void UpdateCredentialAttempt(int result, string userName)
+        {
+            int connection;
+            try
+            {
+                if (result == 2)
+                {
+                    _dbManager.Insert($"update dbo.Users set CrendentialTried = {result + 1} , CurrentStatus='InActive' where Name='{userName}'", CommandType.Text, null, out connection);
+                }
+                else
+                {
+                    _dbManager.Insert($"update dbo.Users set CrendentialTried = {result + 1} where UserId='{userName}'", CommandType.Text, null, out connection);
+                }
+            }
+            catch(Exception e)
+            {
+                
+            }
+            
+        }
+
+        public void UpdateUserAsInvalid(string userName)
+        {
+            int connection;
+            _dbManager.Insert($"update dbo.Users set CurrentStatus='InActive' where Name='{userName}'", CommandType.Text, null, out connection);
+        }
+
+        public void ResetWrongCredentialAttempt(string userID)
+        {
+            int connection;
+            _dbManager.Insert($"update dbo.Users set CrendentialTried = 0 where UserId='{userID}'", CommandType.Text, null, out connection);
+        }
     }
 }

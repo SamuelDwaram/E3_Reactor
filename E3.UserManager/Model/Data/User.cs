@@ -79,6 +79,17 @@ namespace E3.UserManager.Model.Data
             }
         }
 
+        private string _CreatedDateFormat;
+        public string CreatedDateFormat
+        {
+            get => _CreatedDateFormat;
+            set
+            {
+                _CreatedDateFormat = value;
+                RaisePropertyChanged();
+            }
+        }
+
         /// <summary>
         /// Date when user details like Password are modified
         /// </summary>
@@ -121,8 +132,8 @@ namespace E3.UserManager.Model.Data
 
         private void CheckForPasswordExpiry(DateTime lastModifiedDate)
         {
-            PasswordExpired = DateTime.Now.Subtract(lastModifiedDate).Days >= 30;
-            DaysRemainingInPasswordExpiry = 30 - DateTime.Now.Subtract(lastModifiedDate).Days;
+            PasswordExpired = DateTime.Now.Subtract(lastModifiedDate).Days >= 60;
+            DaysRemainingInPasswordExpiry = 60 - DateTime.Now.Subtract(lastModifiedDate).Days;
         }
     }
 }

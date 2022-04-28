@@ -13,6 +13,7 @@ using Unity;
 using E3.Mediator.Services;
 using E3.Mediator.Models;
 using System.Windows;
+using System.Globalization;
 
 namespace E3.UserManager.Model.Implementations
 {
@@ -88,6 +89,30 @@ namespace E3.UserManager.Model.Implementations
                     }).ToList().FirstOrDefault();
         }
 
+        public bool UpdateWrongCredential(string UserName, bool IsWrongCredential)
+        {
+            
+            if(IsWrongCredential)
+            {
+               int result = databaseReader.GetWrongCredentialAttempt(UserName);
+                if(result >= 0)
+                {
+                    databaseWriter.UpdateCredentialAttempt(result, UserName);
+                }
+                
+            }
+            else
+            {
+                databaseWriter.UpdateUserAsInvalid(UserName);
+            }
+            return false;
+        }
+
+        public void ResetWrongCredentialAttempt(string userID)
+        {
+            databaseWriter.ResetWrongCredentialAttempt(userID);
+        }
+
         public IList<User> GetAllUsers()
         {
             logger.Log(LogType.DatabaseCall, "Getting all users in the Database");
@@ -100,6 +125,7 @@ namespace E3.UserManager.Model.Implementations
                         Roles = roleManager.GetAssignedRolesOfUser(row["UserID"].ToString()),
                         CurrentStatus = (UserStatus)Enum.Parse(typeof(UserStatus), row["CurrentStatus"].ToString()),
                         CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
+                        CreatedDateFormat = Convert.ToDateTime(row["CreatedDate"]).ToString("MM/dd/yyyy hh:mm tt"),
                         ModifiedDate = row["ModifiedDate"] == null ? default : Convert.ToDateTime(row["ModifiedDate"]),
                     }).ToList();
         }
@@ -107,6 +133,33 @@ namespace E3.UserManager.Model.Implementations
         public bool IsValidPasswordFormat(string password)
         {
             return Regex.IsMatch(password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\da-zA-Z]).{8,15}$");
+        }
+
+        public string UpdatePassword(string userId, string nameOfUser, string fieldToBeUpdated, string updatedValue)
+        {
+            if (fieldToBeUpdated == "Password")
+            {
+                if (!IsValidPasswordFormat(updatedValue))
+                {
+                    MessageBox.Show("Invalid Password Format", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //Check whether Password is in valid format
+                    return "Invalid Password Format";
+                }
+                else if (ValidatePassword(updatedValue) == false)
+                {
+                    MessageBox.Show("Password already Exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //Check whether Password is in valid format
+                    return "Password already Exist.";
+                }
+            }
+            UpdateUser(userId, nameOfUser, fieldToBeUpdated, updatedValue);
+            return null;
+        }
+
+        private bool ValidatePassword(string updatedValue)
+        {
+            bool result = databaseReader.GetPasswordValidation(updatedValue);
+            return result;
         }
 
         public void UpdateUser(string userId, string nameOfUser, string fieldToBeUpdated, string updatedValue)
@@ -119,6 +172,7 @@ namespace E3.UserManager.Model.Implementations
                     //Check whether Password is in valid format
                     return;
                 }
+                
             }
             logger.Log(LogType.DatabaseCall, "Updating " + fieldToBeUpdated + " with " + updatedValue + " of User with Id" + userId);
             databaseWriter.UpdateUser(userId, fieldToBeUpdated, updatedValue);

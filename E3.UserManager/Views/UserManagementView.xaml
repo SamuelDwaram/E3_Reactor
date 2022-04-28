@@ -276,7 +276,7 @@
                                     </Grid.Resources>
                                     <Label Grid.Column="0" Content="{Binding Name}"/>
                                     <Label Grid.Column="1" Content="{Binding Roles[0].Name}"/>
-                                    <Label Grid.Column="2" Content="{Binding CreatedDate}"/>
+                                    <Label Grid.Column="2" Content="{Binding CreatedDateFormat}"/>
                                     <Label Grid.Column="3" Content="{Binding CurrentStatus}"/>
                                     <Button Grid.Column="4" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.ChangeUserStatusCommand}" CommandParameter="{Binding}">
                                         <Button.Style>

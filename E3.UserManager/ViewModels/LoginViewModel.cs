@@ -70,6 +70,7 @@ namespace E3.UserManager.ViewModels
 
                 if (user == null)
                 {
+                    userManager.UpdateWrongCredential(Username, true);
                     auditTrailManager.RecordEventAsync($"Unauthorized login with {Username}", string.Empty, EventTypeEnum.UserManagement);
                     UsernameErrorMessage = "Please Enter Valid Username";
                     PasswordErrorMessage = "Please Enter Valid Password";
@@ -121,7 +122,14 @@ namespace E3.UserManager.ViewModels
 
         public void CheckForPasswordExpiryAndLogin(User user)
         {
-            if (user.DaysRemainingInPasswordExpiry <= 7)
+            if(user.DaysRemainingInPasswordExpiry <= 0)
+            {
+                userManager.UpdateWrongCredential(Username, false);
+                PasswordErrorMessage = "Password Expired. Please contact Admin";
+                PasswordError = true;
+                return;
+            }
+            else if (user.DaysRemainingInPasswordExpiry <= 10)
             {
                 MessageBoxResult messageBoxResult = MessageBox.Show($"Your password is expiring in {user.DaysRemainingInPasswordExpiry} days. Would you like to change?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (messageBoxResult == MessageBoxResult.Yes)
@@ -141,6 +149,8 @@ namespace E3.UserManager.ViewModels
         {
             //Add User details to the application resources
             Application.Current.Resources["LoggedInUser"] = user;
+
+            userManager.ResetWrongCredentialAttempt(user.UserID);
 
             //Log Audit Trail as User Logged in
             auditTrailManager.RecordEventAsync(user.Name + " logged in", user.Name, EventTypeEnum.UserManagement);

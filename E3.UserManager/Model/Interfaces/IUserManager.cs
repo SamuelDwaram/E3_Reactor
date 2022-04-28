@@ -25,6 +25,12 @@ namespace E3.UserManager.Model.Interfaces
         void UpdateUser(string userId, string nameOfUser, string fieldToBeUpdated, string updatedValue);
 
         /// <summary>
+        /// Edit User
+        /// </summary>
+        /// <param name="user"></param>
+        string UpdatePassword(string userId, string nameOfUser, string fieldToBeUpdated, string updatedValue);
+
+        /// <summary>
         /// loginState = 0 - User Logged out
         /// loginState = 1 - User Logged In
         /// </summary>
@@ -47,7 +53,11 @@ namespace E3.UserManager.Model.Interfaces
         /// <returns></returns>
         User AuthenticateCredential(Credential credential);
 
+        bool UpdateWrongCredential(string UserName, bool IsWrongCredential);
+
         event UpdateUserInfoInUI UpdateUserInfoInUIEvent;
+
+        void ResetWrongCredentialAttempt(string userID);
     }
 
     public delegate void UpdateUserInfoInUI(User user, string updatedProperty);

@@ -87,6 +87,10 @@
       <Project>{620C94FE-D355-4801-92B0-F86D1B08FB02}</Project>
       <Name>E3.ReactorManager.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\E3.UserManager\E3.UserManager.csproj">
+      <Project>{69AC2A36-9A64-4F29-ADFE-3595248EABF8}</Project>
+      <Name>E3.UserManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

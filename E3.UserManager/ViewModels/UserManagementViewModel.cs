@@ -13,6 +13,8 @@ using System.Windows.Input;
 using Unity;
 using E3.UserManager.Views;
 using System.Windows;
+using E3.AuditTrailManager.Model;
+using E3.AuditTrailManager.Model.Enums;
 
 namespace E3.UserManager.ViewModels
 {
@@ -24,13 +26,15 @@ namespace E3.UserManager.ViewModels
         private readonly IRegionManager regionManager;
         private readonly IDialogServiceProvider dialogServiceProvider;
         private readonly IUnityContainer unityContainer;
+        private readonly IAuditTrailManager auditTrail;
 
-        public UserManagementViewModel(IRegionManager regionManager, IUnityContainer containerProvider, IUserManager userManager, IRoleManager roleManager, ILogger logger, IDialogServiceProvider dialogServiceProvider)
+        public UserManagementViewModel(IRegionManager regionManager, IUnityContainer containerProvider, IUserManager userManager, IRoleManager roleManager, ILogger logger, IDialogServiceProvider dialogServiceProvider, IAuditTrailManager auditTrailManager)
         {
             this.regionManager = regionManager;
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.logger = logger;
+            this.auditTrail = auditTrailManager;
             this.dialogServiceProvider = dialogServiceProvider;
             unityContainer = containerProvider;
 
@@ -112,8 +116,15 @@ namespace E3.UserManager.ViewModels
         public void CreateNewUser()
         {
             Task.Factory.StartNew(new Action(AddUserToTheSystem))
+                .ContinueWith(new Action<Task>(UpdateAuditTrail))
                 .ContinueWith(new Action<Task>(RefreshUsersListInUI))
                 .ContinueWith(new Action<Task>(ResetNewUserDetailsInUI));
+        }
+
+        private void UpdateAuditTrail(Task task)
+        {
+            if (task.Exception == null)
+                auditTrail.RecordEventAsync(UserDetails.Name + " has Created User : " + NewCredentials.Username, UserDetails.Name, EventTypeEnum.UserManagement);
         }
 
         private void ResetNewUserDetailsInUI(Task task)
@@ -142,6 +153,7 @@ namespace E3.UserManager.ViewModels
 
         private void AddUserToTheSystem()
         {
+
             userManager.AddUser(NewUser, NewCredentials);
         }
         #endregion
@@ -185,6 +197,8 @@ namespace E3.UserManager.ViewModels
         {
             User user = (User)userObject;
             logger.Log(LogType.Information, "Updating Current Status of User : " + user.UserID);
+           // auditTrail.RecordEventAsync(UserDetails.Name + " has made " + (user.CurrentStatus == UserStatus.Active ? "Disable" : "Enable") + " for User : " + user.UserID, UserDetails.Name, EventTypeEnum.UserManagement);
+            
             userManager.UpdateUser(user.UserID, user.Name, "CurrentStatus", (user.CurrentStatus == UserStatus.Active ? UserStatus.InActive : UserStatus.Active).ToString());
             GetAllUsers();
         }

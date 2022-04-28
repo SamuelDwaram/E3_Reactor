@@ -1,10 +1,10 @@
 ﻿using E3.ReactorManager.DataAccessHandler;
-using E3.ReactorManager.DesignExperiment.Model.Data;
 using E3.ReactorManager.Interfaces.DataAbstractionLayer;
 using E3.ReactorManager.Interfaces.DataAbstractionLayer.Data;
 using E3.ReactorManager.Interfaces.Framework.Logging;
 using E3.ReactorManager.Interfaces.HardwareAbstractionLayer;
 using E3.ReactorManager.Interfaces.HardwareAbstractionLayer.Data;
+using E3.UserManager.Model.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -223,7 +223,7 @@ namespace E3.ReactorManager.DataAbstractionLayer
                     return true;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }
@@ -354,7 +354,7 @@ namespace E3.ReactorManager.DataAbstractionLayer
 
         public DataTable ExecuteReadCommandAsDataTable(string commandText, CommandType commandType)
         {
-            IDbConnection connection = null ;
+            IDbConnection connection = null;
             DataTable resultDataTable = null;
             try
             {
@@ -592,6 +592,73 @@ namespace E3.ReactorManager.DataAbstractionLayer
             };
 
             return GetResultFromDatabase("GetAssignedRolesOfUser", CommandType.StoredProcedure, parameters);
+        }
+
+        public int GetWrongCredentialAttempt(string UserName)
+        {
+            int result = 0;
+            IList<User> users = new List<User>();
+            IDataReader dataReader = null;
+            IDbConnection connection = null;
+
+            
+            try
+            {
+                dataReader = _dbManager.GetDataReader($"select * from dbo.Users where Name='{UserName}'", CommandType.Text, null, out connection);
+                while (dataReader.Read())
+                {
+                    if (string.IsNullOrWhiteSpace(dataReader["UserId"].ToString()))
+                    {
+                        result = -1;
+                    }
+                    else
+                    {
+                        result = dataReader["CrendentialTried"].ToString() == null ? 0 : int.Parse(dataReader["CrendentialTried"].ToString());
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+                throw;
+            }
+            finally
+            {
+                dataReader.Close();
+                _dbManager.CloseConnection(connection);
+            }
+            return result;
+        }
+
+        public bool GetPasswordValidation(string updatedValue)
+        {
+            bool result = true;
+            IList<User> users = new List<User>();
+            IDataReader dataReader = null;
+            IDbConnection connection = null;
+
+
+            try
+            {
+                dataReader = _dbManager.GetDataReader($"select * from dbo.Credentials where Password='{updatedValue}'", CommandType.Text, null, out connection);
+                while (dataReader.Read())
+                {
+                    result = false;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                throw;
+            }
+            finally
+            {
+                dataReader.Close();
+                _dbManager.CloseConnection(connection);
+            }
+            return result;
         }
         #endregion
     }

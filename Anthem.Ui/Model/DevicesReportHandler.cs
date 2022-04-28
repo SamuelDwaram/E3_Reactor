@@ -316,6 +316,8 @@ namespace Anathem.Ui.Model
 
         private IList<ReportSection> AddBatchInfoSection(Batch selectedBatch)
         {
+            TimeSpan Time = (selectedBatch.TimeCompleted - selectedBatch.TimeStarted);
+            string DuarationValue = Time.Days + " Days " + Time.Hours % 24 + " Hrs " + Time.Minutes % 60 + " Mins";
             return new List<ReportSection>
             {
                 new ReportSection
@@ -333,7 +335,7 @@ namespace Anathem.Ui.Model
                         new LabelValuePair("Process Start Date&Time", selectedBatch.TimeStarted.ToString()),
                         new LabelValuePair("Process End Date&Time", selectedBatch.TimeCompleted.ToString()),
                         //new LabelValuePair("Print Interval",string.Empty),
-                        new LabelValuePair("Duration", (selectedBatch.TimeCompleted - selectedBatch.TimeStarted).ToString()),
+                        new LabelValuePair("Duration", DuarationValue),
                         new LabelValuePair("Performed by" , selectedBatch.ScientistName) 
 
                         //new LabelValuePair("Experiment Number" , selectedBatch.Number),
