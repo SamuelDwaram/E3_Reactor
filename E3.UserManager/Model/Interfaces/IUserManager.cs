@@ -54,6 +54,7 @@ namespace E3.UserManager.Model.Interfaces
         User AuthenticateCredential(Credential credential);
 
         bool UpdateWrongCredential(string UserName, bool IsWrongCredential);
+        int GetWrongCredentialAttempt(string username);
 
         event UpdateUserInfoInUI UpdateUserInfoInUIEvent;
 

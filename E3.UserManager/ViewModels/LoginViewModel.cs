@@ -46,10 +46,19 @@ namespace E3.UserManager.ViewModels
 
             if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
             {
-                AuthenticationInProgress = true;
+                int AttemptNo = userManager.GetWrongCredentialAttempt(Username);
+                if (AttemptNo < 3)
+                {
+                    AuthenticationInProgress = true;
 
-                Task.Factory.StartNew(new Func<User>(ValidateUserCredentials))
-                    .ContinueWith(new Action<Task<User>>(UpdateUserDetailsAndValidationStatus), taskScheduler);
+                    Task.Factory.StartNew(new Func<User>(ValidateUserCredentials))
+                        .ContinueWith(new Action<Task<User>>(UpdateUserDetailsAndValidationStatus), taskScheduler);
+                }
+                else
+                {
+                    UsernameErrorMessage = "User not active. Please contact Admin";
+                    UserNameError = true;
+                }
             }
             else
             {

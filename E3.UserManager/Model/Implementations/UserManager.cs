@@ -113,6 +113,11 @@ namespace E3.UserManager.Model.Implementations
             databaseWriter.ResetWrongCredentialAttempt(userID);
         }
 
+        public int GetWrongCredentialAttempt(string username)
+        {
+            return databaseReader.GetWrongCredentialAttempt(username);
+        }
+
         public IList<User> GetAllUsers()
         {
             logger.Log(LogType.DatabaseCall, "Getting all users in the Database");
