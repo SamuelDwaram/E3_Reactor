@@ -49,7 +49,7 @@
 
         <!--#region PFD-->
         <!--<uc_1:BoolParameter Grid.Column="0" Tag="Valve_1" ParamLabel="V1"/>-->
-        <Image Grid.Column="1" HorizontalAlignment="Left"  Name="MyImg" Source="/Anathem.Ui;component/Images/PID_7.png" Width="1699" Margin="0,0,0,0" />
+        <Image Grid.Column="1" HorizontalAlignment="Left"  Name="MyImg" Source="/Anathem.Ui;component/Images/TS2.png" Width="1699" Margin="0,0,0,0" />
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -466,7 +466,7 @@
                     </TransformGroup>
                 </uc_2:BoolParameterProcessFlow.RenderTransform>
             </uc_2:BoolParameterProcessFlow>
-            <Rectangle Grid.Column="12" Grid.Row="20" Margin="0,59,6,3" Fill="#003900" Grid.ColumnSpan="2"/>
+            <Rectangle Grid.Column="12" Grid.Row="20" Margin="0,59,6,3" Fill="#212830" Grid.ColumnSpan="2"/>
 
             <uc_2:BoolParameterProcessFlow Grid.Column="10" Grid.Row="20" Tag="Valve_15" ParamLabel="V15" Height="30" Width="38" Margin="25,88,11,6" Grid.ColumnSpan="2" Grid.RowSpan="2" >
                 <uc_2:BoolParameterProcessFlow.RenderTransform>

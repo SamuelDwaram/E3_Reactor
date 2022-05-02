@@ -75,6 +75,10 @@ namespace Anathem.Ui.ViewModels
             {
                 StirrerSetpoint_3 = data;
             }
+            else if (fpId.Contains(nameof(ChillerSetpoint)))
+            {
+                ChillerSetpoint = data;
+            }
         }
 
         private void UpdateUi()

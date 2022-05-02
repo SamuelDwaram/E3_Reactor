@@ -604,7 +604,7 @@ namespace E3.ReactorManager.DataAbstractionLayer
             
             try
             {
-                dataReader = _dbManager.GetDataReader($"select * from dbo.Users where Name='{UserName}'", CommandType.Text, null, out connection);
+                dataReader = _dbManager.GetDataReader($"select * from dbo.Users where UserId='{UserName}'", CommandType.Text, null, out connection);
                 while (dataReader.Read())
                 {
                     if (string.IsNullOrWhiteSpace(dataReader["UserId"].ToString()))

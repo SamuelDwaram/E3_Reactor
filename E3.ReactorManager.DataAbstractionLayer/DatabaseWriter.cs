@@ -308,7 +308,7 @@ namespace E3.ReactorManager.DataAbstractionLayer
             {
                 if (result == 2)
                 {
-                    _dbManager.Insert($"update dbo.Users set CrendentialTried = {result + 1} , CurrentStatus='InActive' where Name='{userName}'", CommandType.Text, null, out connection);
+                    _dbManager.Insert($"update dbo.Users set CrendentialTried = {result + 1} , CurrentStatus='InActive' where UserID='{userName}'", CommandType.Text, null, out connection);
                 }
                 else
                 {

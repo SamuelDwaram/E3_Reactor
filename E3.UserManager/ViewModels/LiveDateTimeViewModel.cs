@@ -17,7 +17,7 @@ namespace E3.UserManager.ViewModels
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            LiveDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            LiveDateTime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
         }
 
         #region Properties

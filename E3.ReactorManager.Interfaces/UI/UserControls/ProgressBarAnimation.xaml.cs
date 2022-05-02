@@ -92,7 +92,7 @@ namespace E3.ReactorManager.Interfaces.UI.UserControls
         {
             float cur = Convert.ToSingle(string.IsNullOrWhiteSpace(CurrentValue) ? "0" : CurrentValue);
             float neg = Convert.ToSingle(string.IsNullOrWhiteSpace(NegativeMaximumValue) ? "0" : NegativeMaximumValue);
-            float pos = Convert.ToSingle(PositiveMaximumValue);
+            float pos = Convert.ToSingle(string.IsNullOrWhiteSpace(PositiveMaximumValue) ? "0" : PositiveMaximumValue);
             
             if(cur >= -1 * neg && cur <= pos)
             {
@@ -112,12 +112,14 @@ namespace E3.ReactorManager.Interfaces.UI.UserControls
                 else if (cur == 0)
                 {
                     ProgressBarPositiveGraphic.Width = PositiveProgressBarArea.Width;
+                    //ProgressBarPositiveGraphic.Width = 0;
                     ProgressBarNegativeGraphic.Width = 0;
                 }
             }
             else
             {
                 ProgressBarPositiveGraphic.Width = PositiveProgressBarArea.Width;
+                //ProgressBarPositiveGraphic.Width = 0;
                 ProgressBarNegativeGraphic.Width = 0;
             }
         }
