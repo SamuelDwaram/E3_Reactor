@@ -130,6 +130,8 @@ namespace E3.UserManager.Model.Data
             set => SetProperty(ref _passwordExpired, value);
         }
 
+        public bool IsFirstPasswordNotModified { get; set; }
+
         private void CheckForPasswordExpiry(DateTime lastModifiedDate)
         {
             PasswordExpired = DateTime.Now.Subtract(lastModifiedDate).Days >= 60;

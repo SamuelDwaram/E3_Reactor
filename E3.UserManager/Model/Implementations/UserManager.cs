@@ -86,20 +86,21 @@ namespace E3.UserManager.Model.Implementations
                         CurrentStatus = (UserStatus)Enum.Parse(typeof(UserStatus), row["CurrentStatus"].ToString()),
                         CreatedDate = DateTime.Parse(row["CreatedDate"].ToString()),
                         ModifiedDate = row["ModifiedDate"] == null ? default : Convert.ToDateTime(row["ModifiedDate"]),
+                        IsFirstPasswordNotModified = (bool)row["IsFirstPasswordNotModified"]
                     }).ToList().FirstOrDefault();
         }
 
         public bool UpdateWrongCredential(string UserName, bool IsWrongCredential)
         {
-            
-            if(IsWrongCredential)
+
+            if (IsWrongCredential)
             {
-               int result = databaseReader.GetWrongCredentialAttempt(UserName);
-                if(result >= 0)
+                int result = databaseReader.GetWrongCredentialAttempt(UserName);
+                if (result >= 0)
                 {
                     databaseWriter.UpdateCredentialAttempt(result, UserName);
                 }
-                
+
             }
             else
             {
@@ -177,7 +178,7 @@ namespace E3.UserManager.Model.Implementations
                     //Check whether Password is in valid format
                     return;
                 }
-                
+
             }
             logger.Log(LogType.DatabaseCall, "Updating " + fieldToBeUpdated + " with " + updatedValue + " of User with Id" + userId);
             databaseWriter.UpdateUser(userId, fieldToBeUpdated, updatedValue);

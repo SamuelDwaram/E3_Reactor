@@ -138,9 +138,17 @@ namespace E3.UserManager.ViewModels
                 PasswordError = true;
                 return;
             }
-            else if (user.DaysRemainingInPasswordExpiry <= 10)
+            else if (user.DaysRemainingInPasswordExpiry <= 10 || user.IsFirstPasswordNotModified)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show($"Your password is expiring in {user.DaysRemainingInPasswordExpiry} days. Would you like to change?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult messageBoxResult =  (MessageBoxResult)2;
+                if (user.DaysRemainingInPasswordExpiry <= 10)
+                {
+                    messageBoxResult = MessageBox.Show($"Your password is expiring in {user.DaysRemainingInPasswordExpiry} days. Would you like to change?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                }
+                else if(user.IsFirstPasswordNotModified)
+                {
+                    messageBoxResult = MessageBox.Show($"Your PassWord need to be change. Would you like to change Now?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                }
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     ModifyPasswordViewModel modifyPasswordViewModel = new ModifyPasswordViewModel(user, userManager);
@@ -150,7 +158,7 @@ namespace E3.UserManager.ViewModels
                     return;
                 }
             }
-
+           
             LoginToSystem(user);
         }
 
